@@ -1,0 +1,92 @@
+{
+    "name": "Walgreens",
+    "description": "Walgreens is your home for Pharmacy, Photo and Health & Wellness products. Refill your prescriptions online, create memories with Walgreens Photo, and shop products for home delivery or Ship to Store. Walgreens. Trusted Since 1901.",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/276-walgreens.jpg",
+    "tags": [
+        "api lifeycle",
+        "drugs",
+        "have api",
+        "healthcare",
+        "photos",
+        "prescriptions"
+    ],
+    "created": "2019-12-19",
+    "modified": "2019-12-19",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/walgreens\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "Walgreens",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/276-walgreens.jpg",
+            "humanURL": "https:\/\/walgreens.com",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/walgreens-openapi.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "API.json - Authoritative",
+            "url": "http:\/\/apis.io\/apisdef\/legacy\/walgreeens.json"
+        },
+        {
+            "type": "Base",
+            "url": "https:\/\/services.walgreens.com\/api\/"
+        },
+        {
+            "type": "Blog",
+            "url": "https:\/\/developer.walgreens.com\/blog"
+        },
+        {
+            "type": "Blog RSS",
+            "url": "https:\/\/developer.walgreens.com\/blog\/feed"
+        },
+        {
+            "type": "Crunchbase",
+            "url": "http:\/\/www.crunchbase.com\/company\/walgreen"
+        },
+        {
+            "type": "Crunchbase",
+            "url": "https:\/\/crunchbase.com\/organization\/walgreens"
+        },
+        {
+            "type": "Developers",
+            "url": "https:\/\/developer.walgreens.com"
+        },
+        {
+            "type": "Email",
+            "url": "privacy.office@walgreens.com"
+        },
+        {
+            "type": "Email",
+            "url": "Customerservice@mail2.walgreens.com"
+        },
+        {
+            "type": "Email",
+            "url": "iplaw@walgreens.com"
+        },
+        {
+            "type": "Github",
+            "url": "https:\/\/github.com\/walgreensapi"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/walgreensapi"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/Walgreens"
+        },
+        {
+            "type": "Website",
+            "url": "https:\/\/walgreens.com"
+        }
+    ]
+}
