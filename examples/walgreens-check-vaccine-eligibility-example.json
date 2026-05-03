@@ -1,0 +1,73 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://services.walgreens.com/api/vaccine/scheduling/eligibility/v1",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "apiKey": "YOUR_API_KEY",
+      "affId": "YOUR_AFFILIATE_ID",
+      "state": "IL",
+      "dob": "1990-05-15"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "state": "IL",
+      "age": 35,
+      "dob": "05/15/1990",
+      "eligibleVaccineList": [
+        {
+          "vaccineCode": "207",
+          "displayName": "COVID-19 Vaccine",
+          "eligible": true,
+          "vaccineType": "COVID",
+          "vaccineDisplayOrder": 1,
+          "multiDose": false,
+          "seriesNumber": "1",
+          "group": "COVID-19",
+          "serviceId": "covid19-moderna",
+          "restrictions": [],
+          "warnings": []
+        },
+        {
+          "vaccineCode": "150",
+          "displayName": "Influenza Vaccine",
+          "eligible": true,
+          "vaccineType": "FLU",
+          "vaccineDisplayOrder": 2,
+          "multiDose": false,
+          "seriesNumber": "1",
+          "group": "Seasonal",
+          "serviceId": "flu-standard",
+          "restrictions": [],
+          "warnings": []
+        },
+        {
+          "vaccineCode": "93",
+          "displayName": "RSV Vaccine",
+          "eligible": true,
+          "vaccineType": "RSV",
+          "vaccineDisplayOrder": 3,
+          "multiDose": false,
+          "seriesNumber": "1",
+          "group": "Respiratory",
+          "serviceId": "rsv-adult",
+          "restrictions": [
+            {
+              "code": "AGE_MIN",
+              "message": "Recommended for adults 60 and older, or at risk adults 18-59",
+              "vaccineCode": "93",
+              "minimumAge": 18,
+              "maximumAge": 120
+            }
+          ],
+          "warnings": []
+        }
+      ],
+      "inEligibleVaccineList": []
+    }
+  }
+}

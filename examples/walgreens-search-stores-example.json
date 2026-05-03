@@ -1,0 +1,67 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://services.walgreens.com/api/stores/search/v2",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "apiKey": "YOUR_API_KEY",
+      "affId": "YOUR_AFFILIATE_ID",
+      "lat": 41.876468,
+      "lng": -87.639176,
+      "s": 5,
+      "p": 1,
+      "r": 5,
+      "requestType": "locator",
+      "filterOptions": ["t4hr_rx", "dt"]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "filter": {
+        "filterOptions": ["t4hr_rx", "dt"]
+      },
+      "results": [
+        {
+          "storeNumber": "4152",
+          "latitude": "41.878522",
+          "longitude": "-87.635487",
+          "distance": 0.3,
+          "storeSeoUrl": "https://www.walgreens.com/locator/walgreens-200+s+state+st-chicago-il-60604/id=4152",
+          "mapUrl": "https://maps.google.com/?q=41.878522,-87.635487",
+          "photoInd": "Y",
+          "emerActiveInd": "N",
+          "store": {
+            "storeType": "retail",
+            "storeNumber": "4152",
+            "name": "Walgreens",
+            "brand": "Walgreens",
+            "storeBrand": "WAG",
+            "storeOpenTime": "07:00 AM",
+            "storeCloseTime": "10:00 PM",
+            "pharmacyOpenTime": "09:00 AM",
+            "pharmacyCloseTime": "09:00 PM",
+            "timeZone": "CDT",
+            "address": {
+              "zip": "60604",
+              "locationName": "State & Adams",
+              "city": "Chicago",
+              "street": "200 S State St",
+              "county": "Cook",
+              "state": "IL"
+            },
+            "serviceIndicators": ["pharmacy", "drive-thru", "24hr_pharmacy", "photo", "flu_shots"],
+            "phone": {
+              "number": "6309",
+              "areaCode": "312",
+              "faxNumber": "3126309001",
+              "type": "STORE"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

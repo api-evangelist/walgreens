@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/walgreens/main/json-schema/walgreens-store-schema.json",
+  "title": "Walgreens Store",
+  "description": "Schema for a Walgreens or Duane Reade retail store location",
+  "type": "object",
+  "properties": {
+    "storeNumber": {
+      "type": "string",
+      "description": "Unique Walgreens store identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Store name"
+    },
+    "brand": {
+      "type": "string",
+      "description": "Store brand (Walgreens or Duane Reade)",
+      "enum": ["Walgreens", "Duane Reade"]
+    },
+    "storeType": {
+      "type": "string",
+      "description": "Type of store location"
+    },
+    "latitude": {
+      "type": "string",
+      "description": "Store latitude coordinate"
+    },
+    "longitude": {
+      "type": "string",
+      "description": "Store longitude coordinate"
+    },
+    "npiCode": {
+      "type": "string",
+      "description": "National Provider Identifier code for pharmacy"
+    },
+    "timeZone": {
+      "type": "string",
+      "description": "Store timezone identifier"
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string",
+          "description": "Street address"
+        },
+        "city": {
+          "type": "string",
+          "description": "City name"
+        },
+        "state": {
+          "type": "string",
+          "description": "Two-letter US state code",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "zip": {
+          "type": "string",
+          "description": "Zip code",
+          "pattern": "^[0-9]{5}(-[0-9]{4})?$"
+        },
+        "county": {
+          "type": "string",
+          "description": "County name"
+        },
+        "locationName": {
+          "type": "string",
+          "description": "Location name or landmark identifier"
+        },
+        "intersection": {
+          "type": "string",
+          "description": "Nearest cross street intersection"
+        }
+      },
+      "required": ["street", "city", "state", "zip"]
+    },
+    "phone": {
+      "type": "object",
+      "properties": {
+        "areaCode": {
+          "type": "string",
+          "pattern": "^[0-9]{3}$"
+        },
+        "number": {
+          "type": "string"
+        },
+        "faxNumber": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "storeOpenTime": {
+      "type": "string",
+      "description": "Store opening time in HH:MM AM/PM format"
+    },
+    "storeCloseTime": {
+      "type": "string",
+      "description": "Store closing time in HH:MM AM/PM format"
+    },
+    "pharmacyOpenTime": {
+      "type": "string",
+      "description": "Pharmacy opening time"
+    },
+    "pharmacyCloseTime": {
+      "type": "string",
+      "description": "Pharmacy closing time"
+    },
+    "serviceIndicators": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of available store services"
+    },
+    "emerActiveInd": {
+      "type": "string",
+      "enum": ["Y", "N"],
+      "description": "Emergency status active indicator"
+    },
+    "distance": {
+      "type": "number",
+      "description": "Distance in miles from search coordinates"
+    }
+  },
+  "required": ["storeNumber", "name", "brand", "address"]
+}

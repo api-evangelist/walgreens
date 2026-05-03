@@ -1,0 +1,231 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Walgreens Pharmacy and Healthcare"
+  description: >-
+    Workflow capability combining Walgreens Store Locator and Vaccine Scheduling APIs
+    for pharmacy and healthcare applications. Enables end-to-end patient workflows:
+    finding nearby Walgreens pharmacies, checking vaccine eligibility, discovering
+    available appointment slots, and booking immunization appointments. Designed
+    for healthcare applications, patient portals, and wellness platforms.
+  tags:
+    - Walgreens
+    - Pharmacy
+    - Healthcare
+    - Vaccines
+    - Immunizations
+    - Store Locator
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      WALGREENS_API_KEY: WALGREENS_API_KEY
+      WALGREENS_AFFILIATE_ID: WALGREENS_AFFILIATE_ID
+
+capability:
+  consumes:
+    - import: walgreens-store-locator
+      location: ./shared/store-locator.yaml
+    - import: walgreens-vaccine-scheduling
+      location: ./shared/vaccine-scheduling.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: walgreens-pharmacy-healthcare-api
+      description: "Unified REST API for Walgreens pharmacy and healthcare workflows."
+      resources:
+        - path: /v1/stores
+          name: stores
+          description: "Search and find Walgreens pharmacy locations"
+          operations:
+            - method: POST
+              name: search-stores
+              description: "Find nearby Walgreens pharmacy locations by address or coordinates"
+              call: "walgreens-store-locator.search-stores"
+              outputParameters:
+                - type: array
+                  mapping: "$.results"
+        - path: /v1/stores/{storeNo}
+          name: store-detail
+          description: "Get details for a specific pharmacy location"
+          operations:
+            - method: GET
+              name: get-store-details
+              description: "Get detailed hours and services for a specific Walgreens"
+              call: "walgreens-store-locator.get-store-details"
+              with:
+                storeNo: "rest.storeNo"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/store-numbers
+          name: store-numbers
+          description: "List all Walgreens store numbers"
+          operations:
+            - method: GET
+              name: list-store-numbers
+              description: "Get complete list of all Walgreens store numbers"
+              call: "walgreens-store-locator.list-store-numbers"
+              outputParameters:
+                - type: array
+                  mapping: "$.store"
+        - path: /v1/vaccine-eligibility
+          name: vaccine-eligibility
+          description: "Check patient vaccine eligibility"
+          operations:
+            - method: POST
+              name: check-vaccine-eligibility
+              description: "Determine which vaccines a patient is eligible for"
+              call: "walgreens-vaccine-scheduling.check-vaccine-eligibility"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/vaccine-timeslots
+          name: vaccine-timeslots
+          description: "Find available vaccine appointment times"
+          operations:
+            - method: POST
+              name: get-vaccine-timeslots
+              description: "Get available vaccine appointment timeslots near a location"
+              call: "walgreens-vaccine-scheduling.get-vaccine-timeslots"
+              outputParameters:
+                - type: array
+                  mapping: "$.locations"
+        - path: /v1/vaccine-appointments
+          name: vaccine-appointments
+          description: "Create and manage vaccine appointments"
+          operations:
+            - method: POST
+              name: hold-vaccine-appointment
+              description: "Hold a vaccine appointment timeslot"
+              call: "walgreens-vaccine-scheduling.hold-vaccine-appointment"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/vaccine-appointments/{engagementId}/patient
+          name: vaccine-appointment-patient
+          description: "Register patient for vaccine appointment"
+          operations:
+            - method: POST
+              name: attach-patient-to-appointment
+              description: "Register patient information for a held appointment"
+              call: "walgreens-vaccine-scheduling.attach-patient-to-appointment"
+              with:
+                engagementId: "rest.engagementId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/vaccine-appointments/{engagementId}/confirm
+          name: vaccine-appointment-confirm
+          description: "Confirm a vaccine appointment"
+          operations:
+            - method: PATCH
+              name: confirm-vaccine-appointment
+              description: "Finalize a vaccine appointment booking"
+              call: "walgreens-vaccine-scheduling.confirm-vaccine-appointment"
+              with:
+                engagementId: "rest.engagementId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9080
+      namespace: walgreens-pharmacy-healthcare-mcp
+      transport: http
+      description: "MCP server for AI-assisted Walgreens pharmacy and healthcare workflows."
+      tools:
+        - name: search-walgreens-pharmacies
+          description: >-
+            Find Walgreens pharmacy locations near an address, zip code, or coordinates.
+            Supports filtering by services like 24-hour pharmacy, drive-thru, or flu shots.
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "walgreens-store-locator.search-stores"
+          with:
+            lat: "tools.lat"
+            lng: "tools.lng"
+            address: "tools.address"
+            zip: "tools.zip"
+            r: "tools.radius"
+            s: "tools.pageSize"
+            p: "tools.page"
+            filterOptions: "tools.filterOptions"
+          outputParameters:
+            - type: array
+              mapping: "$.results"
+        - name: get-pharmacy-details
+          description: "Get detailed hours, services, and contact information for a specific Walgreens pharmacy"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "walgreens-store-locator.get-store-details"
+          with:
+            storeNo: "tools.storeNo"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: check-vaccine-eligibility
+          description: >-
+            Check which vaccines a patient is eligible for based on their state and
+            date of birth. Returns eligible and ineligible vaccine lists with details.
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "walgreens-vaccine-scheduling.check-vaccine-eligibility"
+          with:
+            state: "tools.state"
+            dob: "tools.dob"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: find-vaccine-appointments
+          description: >-
+            Find available vaccine appointment times at Walgreens locations near a
+            specified zip code. Returns locations with available dates and time slots.
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "walgreens-vaccine-scheduling.get-vaccine-timeslots"
+          with:
+            state: "tools.state"
+            zipCode: "tools.zipCode"
+            dob: "tools.dob"
+            vaccine: "tools.vaccine"
+            appointmentAvailability: "tools.appointmentAvailability"
+            position: "tools.position"
+          outputParameters:
+            - type: array
+              mapping: "$.locations"
+        - name: hold-vaccine-appointment
+          description: "Reserve a specific vaccine appointment slot at a Walgreens location"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "walgreens-vaccine-scheduling.hold-vaccine-appointment"
+          with:
+            locationId: "tools.locationId"
+            appointmentDate: "tools.appointmentDate"
+            slot: "tools.slot"
+            channel: "tools.channel"
+            vaccines: "tools.vaccines"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: confirm-vaccine-appointment
+          description: "Finalize a held vaccine appointment to complete the booking"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "walgreens-vaccine-scheduling.confirm-vaccine-appointment"
+          with:
+            engagementId: "tools.engagementId"
+          outputParameters:
+            - type: object
+              mapping: "$."

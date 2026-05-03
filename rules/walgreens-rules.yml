@@ -1,0 +1,116 @@
+extends: [[spectral:oas, recommended]]
+rules:
+  walgreens-api-key-required:
+    description: All Walgreens API requests must include apiKey in the request body
+    message: "Walgreens API operations must require apiKey authentication parameter"
+    severity: error
+    given: "$.paths[*][post,patch,put].requestBody.content.application/json.schema.required"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            const: apiKey
+
+  walgreens-affiliate-id-required:
+    description: All Walgreens API requests must include affId in the request body
+    message: "Walgreens API operations must require affId affiliate identifier parameter"
+    severity: error
+    given: "$.paths[*][post,patch,put].requestBody.content.application/json.schema.required"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            const: affId
+
+  walgreens-base-url-consistency:
+    description: All Walgreens API servers must use services.walgreens.com for production
+    message: "Production server URL should use services.walgreens.com domain"
+    severity: warn
+    given: "$.servers[*].url"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://services(-qa)?\\.walgreens\\.com"
+
+  walgreens-operation-ids:
+    description: All Walgreens API operations must have operationId
+    message: "Operation must have an operationId"
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: operationId
+      function: truthy
+
+  walgreens-operation-summaries:
+    description: All Walgreens API operations must have a summary
+    message: "Operation must have a summary"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: summary
+      function: truthy
+
+  walgreens-request-content-type:
+    description: POST and PATCH operations must specify application/json content type
+    message: "POST/PATCH requests should specify application/json content type"
+    severity: warn
+    given: "$.paths[*][post,patch].requestBody.content"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required:
+            - "application/json"
+
+  walgreens-versioned-paths:
+    description: API paths should include a version segment
+    message: "API path should include a version segment (e.g. /v1/, /v2/)"
+    severity: warn
+    given: "$.paths"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          patternProperties:
+            "^/api/[a-z]+/(v[0-9]+|scheduling)/":
+              type: object
+
+  walgreens-https-only:
+    description: All Walgreens API server URLs must use HTTPS
+    message: "Server URL must use HTTPS"
+    severity: error
+    given: "$.servers[*].url"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  walgreens-error-responses:
+    description: All Walgreens API operations should document error responses
+    message: "Operation should document 400 and 403 error responses"
+    severity: warn
+    given: "$.paths[*][post,patch,put,get].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["400"]
+            - required: ["403"]
+            - required: ["500"]
+
+  walgreens-response-schema:
+    description: Successful responses should have a schema defined
+    message: "200/201 response should define a response schema"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch].responses[200,201].content.application/json"
+    then:
+      field: schema
+      function: truthy

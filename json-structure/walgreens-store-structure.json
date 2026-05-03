@@ -1,0 +1,182 @@
+{
+  "title": "Walgreens Store Structure",
+  "description": "JSON structure documentation for the Walgreens store data model",
+  "type": "object",
+  "fields": [
+    {
+      "name": "storeNumber",
+      "type": "string",
+      "description": "Unique store identifier",
+      "example": "4152",
+      "required": true
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "description": "Store display name",
+      "example": "Walgreens",
+      "required": true
+    },
+    {
+      "name": "brand",
+      "type": "string",
+      "description": "Store brand: Walgreens or Duane Reade",
+      "example": "Walgreens",
+      "required": true,
+      "enum": ["Walgreens", "Duane Reade"]
+    },
+    {
+      "name": "latitude",
+      "type": "string",
+      "description": "Store latitude coordinate as string",
+      "example": "41.878522",
+      "required": false
+    },
+    {
+      "name": "longitude",
+      "type": "string",
+      "description": "Store longitude coordinate as string",
+      "example": "-87.635487",
+      "required": false
+    },
+    {
+      "name": "distance",
+      "type": "number",
+      "description": "Distance in miles from search point",
+      "example": 0.3,
+      "required": false
+    },
+    {
+      "name": "timeZone",
+      "type": "string",
+      "description": "Store timezone",
+      "example": "CDT",
+      "required": false
+    },
+    {
+      "name": "address",
+      "type": "object",
+      "description": "Store physical address",
+      "required": true,
+      "fields": [
+        {
+          "name": "street",
+          "type": "string",
+          "description": "Street address",
+          "example": "200 S State St",
+          "required": true
+        },
+        {
+          "name": "city",
+          "type": "string",
+          "description": "City name",
+          "example": "Chicago",
+          "required": true
+        },
+        {
+          "name": "state",
+          "type": "string",
+          "description": "Two-letter US state code",
+          "example": "IL",
+          "required": true
+        },
+        {
+          "name": "zip",
+          "type": "string",
+          "description": "Zip code",
+          "example": "60604",
+          "required": true
+        },
+        {
+          "name": "county",
+          "type": "string",
+          "description": "County name",
+          "example": "Cook",
+          "required": false
+        },
+        {
+          "name": "locationName",
+          "type": "string",
+          "description": "Location name or landmark",
+          "example": "State & Adams",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "phone",
+      "type": "object",
+      "description": "Store phone contact",
+      "required": false,
+      "fields": [
+        {
+          "name": "areaCode",
+          "type": "string",
+          "description": "3-digit area code",
+          "example": "312"
+        },
+        {
+          "name": "number",
+          "type": "string",
+          "description": "7-digit phone number",
+          "example": "6309000"
+        },
+        {
+          "name": "faxNumber",
+          "type": "string",
+          "description": "Full fax number",
+          "example": "3126309001"
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "description": "Phone type identifier",
+          "example": "STORE"
+        }
+      ]
+    },
+    {
+      "name": "storeOpenTime",
+      "type": "string",
+      "description": "Store opening time",
+      "example": "07:00 AM",
+      "required": false
+    },
+    {
+      "name": "storeCloseTime",
+      "type": "string",
+      "description": "Store closing time",
+      "example": "10:00 PM",
+      "required": false
+    },
+    {
+      "name": "pharmacyOpenTime",
+      "type": "string",
+      "description": "Pharmacy opening time",
+      "example": "09:00 AM",
+      "required": false
+    },
+    {
+      "name": "pharmacyCloseTime",
+      "type": "string",
+      "description": "Pharmacy closing time",
+      "example": "09:00 PM",
+      "required": false
+    },
+    {
+      "name": "serviceIndicators",
+      "type": "array",
+      "description": "List of available services at the store",
+      "example": ["pharmacy", "drive-thru", "24hr_pharmacy", "photo"],
+      "required": false
+    },
+    {
+      "name": "emerActiveInd",
+      "type": "string",
+      "description": "Emergency status indicator: Y or N",
+      "example": "N",
+      "required": false,
+      "enum": ["Y", "N"]
+    }
+  ]
+}

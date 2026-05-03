@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/walgreens/main/json-schema/walgreens-vaccine-appointment-schema.json",
+  "title": "Walgreens Vaccine Appointment",
+  "description": "Schema for a Walgreens vaccine appointment engagement",
+  "type": "object",
+  "properties": {
+    "engagementId": {
+      "type": "string",
+      "description": "Unique identifier for the appointment engagement"
+    },
+    "locationId": {
+      "type": "string",
+      "description": "Walgreens store location identifier"
+    },
+    "appointmentDate": {
+      "type": "string",
+      "description": "Appointment date/time in ISO 8601 format with timezone offset",
+      "format": "date-time"
+    },
+    "slot": {
+      "type": "string",
+      "description": "Selected time slot",
+      "pattern": "^[0-9]{1,2}:[0-9]{2} (am|pm)$"
+    },
+    "channel": {
+      "type": "string",
+      "enum": ["Web", "Mobile"],
+      "description": "Client channel used for booking"
+    },
+    "engagementType": {
+      "type": "string",
+      "enum": ["Guest"],
+      "description": "Engagement type"
+    },
+    "vaccines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Vaccine code identifier"
+          },
+          "productId": {
+            "type": "string",
+            "description": "Vaccine product identifier"
+          },
+          "vaccineName": {
+            "type": "string",
+            "description": "Human-readable vaccine name"
+          },
+          "rxRequired": {
+            "type": "boolean",
+            "description": "Whether a prescription is required"
+          }
+        },
+        "required": ["code", "productId", "rxRequired"]
+      },
+      "minItems": 1,
+      "maxItems": 4
+    },
+    "patient": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "description": "Patient first name"
+        },
+        "middleName": {
+          "type": "string",
+          "description": "Patient middle name"
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Patient last name"
+        },
+        "dob": {
+          "type": "string",
+          "format": "date",
+          "description": "Patient date of birth"
+        },
+        "gender": {
+          "type": "string",
+          "enum": ["male", "female", "other", "unknown"],
+          "description": "Patient gender"
+        },
+        "contact": {
+          "type": "object",
+          "properties": {
+            "phones": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {"type": "string"},
+                  "number": {"type": "string"},
+                  "smsConsent": {
+                    "type": "string",
+                    "enum": ["Agree", "Disagree"]
+                  }
+                }
+              }
+            },
+            "emails": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {"type": "string"},
+                  "address": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": ["firstName", "lastName", "dob", "gender"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["held", "confirmed", "cancelled"],
+      "description": "Appointment booking status"
+    }
+  },
+  "required": ["locationId", "appointmentDate", "slot", "vaccines"]
+}

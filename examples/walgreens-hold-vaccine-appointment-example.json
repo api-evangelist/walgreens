@@ -1,0 +1,32 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://services.walgreens.com/api/vaccine/scheduling/hold/v1",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "apiKey": "YOUR_API_KEY",
+      "affId": "YOUR_AFFILIATE_ID",
+      "locationId": "store-4152",
+      "appointmentDate": "2026-05-10T09:30:00-05:00",
+      "slot": "09:30 am",
+      "channel": "Mobile",
+      "client": "MyHealthApp",
+      "engagementType": "Guest",
+      "vaccines": [
+        {
+          "code": "207",
+          "productId": "covid-moderna-2026",
+          "rxRequired": false
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "engagementId": "eng-a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+    }
+  }
+}

@@ -1,0 +1,333 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Walgreens Vaccine Scheduling API"
+  description: >-
+    Shared capability definition for the Walgreens Vaccine Scheduling API. Provides
+    end-to-end vaccine appointment management including eligibility checking,
+    timeslot availability, appointment holds, patient registration, and booking
+    confirmation for 19+ vaccine types across all Walgreens US locations.
+  tags:
+    - Walgreens
+    - Vaccines
+    - Healthcare
+    - Scheduling
+    - Immunizations
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      WALGREENS_API_KEY: WALGREENS_API_KEY
+      WALGREENS_AFFILIATE_ID: WALGREENS_AFFILIATE_ID
+
+capability:
+  consumes:
+    - type: http
+      namespace: walgreens-vaccine-scheduling
+      baseUri: https://services.walgreens.com
+      description: "Walgreens vaccine and immunization appointment scheduling API"
+      authentication:
+        type: apikey
+        key: apiKey
+        value: "{{WALGREENS_API_KEY}}"
+        placement: body
+      resources:
+        - name: eligibility
+          path: /api/vaccine/scheduling/eligibility/v1
+          description: "Check vaccine eligibility by state and date of birth"
+          operations:
+            - name: check-vaccine-eligibility
+              method: POST
+              description: "Determine vaccine eligibility for a patient by state and DOB"
+              inputParameters:
+                - name: state
+                  in: body
+                  type: string
+                  required: true
+                  description: "Two-character US state code"
+                - name: dob
+                  in: body
+                  type: string
+                  required: true
+                  description: "Patient date of birth in YYYY-MM-DD format"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: timeslots
+          path: /api/vaccine/scheduling/timeslots/v1
+          description: "Get available vaccine appointment timeslots"
+          operations:
+            - name: get-vaccine-timeslots
+              method: POST
+              description: "Retrieve available appointment timeslots for vaccines near a location"
+              inputParameters:
+                - name: state
+                  in: body
+                  type: string
+                  required: true
+                  description: "Two-character US state code"
+                - name: zipCode
+                  in: body
+                  type: string
+                  required: true
+                  description: "Location zip code"
+                - name: dob
+                  in: body
+                  type: string
+                  required: true
+                  description: "Patient date of birth"
+                - name: vaccine
+                  in: body
+                  type: array
+                  required: true
+                  description: "Array of vaccine codes to search"
+                - name: appointmentAvailability
+                  in: body
+                  type: object
+                  required: true
+                  description: "Date range for appointment search"
+                - name: position
+                  in: body
+                  type: object
+                  required: true
+                  description: "Geographic coordinates for distance sorting"
+              outputRawFormat: json
+              outputParameters:
+                - name: locations
+                  type: array
+                  value: "$.locations"
+        - name: hold
+          path: /api/vaccine/scheduling/hold/v1
+          description: "Hold a vaccine appointment timeslot"
+          operations:
+            - name: hold-vaccine-appointment
+              method: POST
+              description: "Reserve a specific vaccine appointment timeslot"
+              inputParameters:
+                - name: locationId
+                  in: body
+                  type: string
+                  required: true
+                  description: "Store location identifier"
+                - name: appointmentDate
+                  in: body
+                  type: string
+                  required: true
+                  description: "ISO format appointment date/time"
+                - name: slot
+                  in: body
+                  type: string
+                  required: true
+                  description: "Time slot to hold"
+                - name: channel
+                  in: body
+                  type: string
+                  required: true
+                  description: "Web or Mobile"
+                - name: vaccines
+                  in: body
+                  type: array
+                  required: true
+                  description: "Vaccine selection objects"
+              outputRawFormat: json
+              outputParameters:
+                - name: engagementId
+                  type: string
+                  value: "$.engagementId"
+        - name: patient
+          path: /api/vaccine/scheduling/patient/v1
+          description: "Attach patient information to an appointment"
+          operations:
+            - name: attach-patient-to-appointment
+              method: POST
+              description: "Register patient PII for a held vaccine appointment"
+              inputParameters:
+                - name: engagementId
+                  in: body
+                  type: string
+                  required: true
+                  description: "Engagement ID from hold response"
+                - name: partnerId
+                  in: body
+                  type: string
+                  required: true
+                  description: "Client application name"
+                - name: firstName
+                  in: body
+                  type: string
+                  required: true
+                  description: "Patient first name"
+                - name: lastName
+                  in: body
+                  type: string
+                  required: true
+                  description: "Patient last name"
+                - name: dob
+                  in: body
+                  type: string
+                  required: true
+                  description: "Patient date of birth"
+                - name: gender
+                  in: body
+                  type: string
+                  required: true
+                  description: "Patient gender"
+                - name: contact
+                  in: body
+                  type: object
+                  required: true
+                  description: "Patient contact information"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: confirm
+          path: /api/vaccine/scheduling/confirm/v1
+          description: "Confirm a vaccine appointment"
+          operations:
+            - name: confirm-vaccine-appointment
+              method: PATCH
+              description: "Finalize a held vaccine appointment reservation"
+              inputParameters:
+                - name: engagementId
+                  in: body
+                  type: string
+                  required: true
+                  description: "Engagement ID from hold response"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8111
+      namespace: walgreens-vaccine-scheduling-api
+      resources:
+        - path: /v1/vaccine-eligibility
+          name: vaccine-eligibility
+          description: "Check vaccine eligibility"
+          operations:
+            - method: POST
+              name: check-vaccine-eligibility
+              description: "Check if a patient is eligible for specific vaccines"
+              call: "walgreens-vaccine-scheduling.check-vaccine-eligibility"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/vaccine-timeslots
+          name: vaccine-timeslots
+          description: "Get available vaccine timeslots"
+          operations:
+            - method: POST
+              name: get-vaccine-timeslots
+              description: "Get available vaccine appointment timeslots near a location"
+              call: "walgreens-vaccine-scheduling.get-vaccine-timeslots"
+              outputParameters:
+                - type: array
+                  mapping: "$.locations"
+        - path: /v1/vaccine-appointments
+          name: vaccine-appointments
+          description: "Manage vaccine appointments"
+          operations:
+            - method: POST
+              name: hold-vaccine-appointment
+              description: "Hold a vaccine appointment timeslot"
+              call: "walgreens-vaccine-scheduling.hold-vaccine-appointment"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/vaccine-appointments/{engagementId}/patient
+          name: vaccine-appointment-patient
+          description: "Attach patient to appointment"
+          operations:
+            - method: POST
+              name: attach-patient-to-appointment
+              description: "Attach patient information to a held appointment"
+              call: "walgreens-vaccine-scheduling.attach-patient-to-appointment"
+              with:
+                engagementId: "rest.engagementId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/vaccine-appointments/{engagementId}/confirm
+          name: vaccine-appointment-confirm
+          description: "Confirm a vaccine appointment"
+          operations:
+            - method: PATCH
+              name: confirm-vaccine-appointment
+              description: "Confirm a held vaccine appointment"
+              call: "walgreens-vaccine-scheduling.confirm-vaccine-appointment"
+              with:
+                engagementId: "rest.engagementId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9111
+      namespace: walgreens-vaccine-scheduling-mcp
+      transport: http
+      tools:
+        - name: check-vaccine-eligibility
+          description: "Check if a patient is eligible for specific vaccines based on state and date of birth"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "walgreens-vaccine-scheduling.check-vaccine-eligibility"
+          with:
+            state: "tools.state"
+            dob: "tools.dob"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-vaccine-timeslots
+          description: "Find available vaccine appointment timeslots at Walgreens locations near a zip code"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "walgreens-vaccine-scheduling.get-vaccine-timeslots"
+          with:
+            state: "tools.state"
+            zipCode: "tools.zipCode"
+            dob: "tools.dob"
+            vaccine: "tools.vaccine"
+            appointmentAvailability: "tools.appointmentAvailability"
+            position: "tools.position"
+          outputParameters:
+            - type: array
+              mapping: "$.locations"
+        - name: hold-vaccine-appointment
+          description: "Reserve a specific vaccine appointment timeslot at a Walgreens location"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "walgreens-vaccine-scheduling.hold-vaccine-appointment"
+          with:
+            locationId: "tools.locationId"
+            appointmentDate: "tools.appointmentDate"
+            slot: "tools.slot"
+            channel: "tools.channel"
+            vaccines: "tools.vaccines"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: confirm-vaccine-appointment
+          description: "Finalize a held vaccine appointment booking"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "walgreens-vaccine-scheduling.confirm-vaccine-appointment"
+          with:
+            engagementId: "tools.engagementId"
+          outputParameters:
+            - type: object
+              mapping: "$."

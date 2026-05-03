@@ -1,0 +1,73 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://services.walgreens.com/api/vaccine/scheduling/timeslots/v1",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "apiKey": "YOUR_API_KEY",
+      "affId": "YOUR_AFFILIATE_ID",
+      "state": "IL",
+      "zipCode": "60601",
+      "dob": "1990-05-15",
+      "vaccine": ["207", "150"],
+      "appointmentAvailability": {
+        "startDateTime": "2026-05-10"
+      },
+      "position": {
+        "latitude": 41.8827,
+        "longitude": -87.6233
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "locations": [
+        {
+          "locationId": "store-4152",
+          "name": "Walgreens",
+          "storenumber": "4152",
+          "description": "200 S State St Chicago IL",
+          "position": {
+            "latitude": 41.878522,
+            "longitude": -87.635487
+          },
+          "address": {
+            "line1": "200 S State St",
+            "city": "Chicago",
+            "state": "IL",
+            "country": "USA",
+            "zip": "60604"
+          },
+          "phone": [
+            {
+              "type": "STORE",
+              "number": "312-630-9000"
+            }
+          ],
+          "distance": 0.3,
+          "timeZone": "America/Chicago",
+          "appointmentAvailability": [
+            {
+              "manufacturer": [
+                {
+                  "productId": "covid-moderna-2026",
+                  "vaccineCode": "207",
+                  "vaccineName": "COVID-19 mRNA Vaccine",
+                  "category": "COVID-19",
+                  "prescriptionRequired": false
+                }
+              ],
+              "date": "2026-05-10",
+              "day": "Sunday",
+              "slots": ["09:00 am", "09:30 am", "10:00 am", "10:30 am", "02:00 pm", "02:30 pm"],
+              "numberOfSlotsAvailable": 6
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

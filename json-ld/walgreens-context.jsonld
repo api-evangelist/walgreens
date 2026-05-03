@@ -1,0 +1,72 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "wag": "https://developer.walgreens.com/vocab/",
+
+    "Store": "schema:Pharmacy",
+    "storeNumber": "wag:storeNumber",
+    "brand": "schema:brand",
+    "name": "schema:name",
+    "description": "schema:description",
+    "latitude": "schema:latitude",
+    "longitude": "schema:longitude",
+    "distance": "schema:distance",
+    "timeZone": "schema:TimeZone",
+
+    "address": {
+      "@id": "schema:address",
+      "@type": "schema:PostalAddress"
+    },
+    "street": "schema:streetAddress",
+    "city": "schema:addressLocality",
+    "state": "schema:addressRegion",
+    "zip": "schema:postalCode",
+    "county": "schema:addressCountry",
+
+    "phone": {
+      "@id": "schema:telephone",
+      "@type": "schema:ContactPoint"
+    },
+    "areaCode": "wag:areaCode",
+    "faxNumber": "schema:faxNumber",
+
+    "storeOpenTime": "schema:openingHours",
+    "storeCloseTime": "schema:openingHours",
+    "pharmacyOpenTime": "wag:pharmacyOpenTime",
+    "pharmacyCloseTime": "wag:pharmacyCloseTime",
+    "serviceIndicators": "schema:availableService",
+    "npiCode": "wag:npiCode",
+
+    "Appointment": "schema:MedicalProcedure",
+    "engagementId": "wag:engagementId",
+    "appointmentDate": {
+      "@id": "schema:scheduledTime",
+      "@type": "xsd:dateTime"
+    },
+    "engagementType": "wag:engagementType",
+
+    "Vaccine": "schema:Drug",
+    "vaccineCode": "wag:vaccineCode",
+    "vaccineName": "schema:name",
+    "vaccineType": "schema:additionalType",
+    "multiDose": "wag:multiDose",
+    "eligible": "wag:eligible",
+
+    "Patient": "schema:Patient",
+    "firstName": "schema:givenName",
+    "lastName": "schema:familyName",
+    "middleName": "schema:additionalName",
+    "dob": {
+      "@id": "schema:birthDate",
+      "@type": "xsd:date"
+    },
+    "gender": "schema:gender",
+    "smsConsent": "wag:smsConsent",
+
+    "Prescription": "schema:Drug",
+    "rxNo": "wag:prescriptionNumber",
+    "pharmacyNbr": "wag:pharmacyNumber"
+  }
+}

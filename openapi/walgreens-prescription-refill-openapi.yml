@@ -1,0 +1,287 @@
+openapi: 3.0.3
+info:
+  title: Walgreens Prescription Refill API
+  description: >-
+    Enables medication management application developers to process prescription refills
+    and transfers at any Walgreens pharmacy location. Supports barcode scanning for
+    refill initiation and image-based prescription transfers from other pharmacies.
+    Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized
+    WebView checkout flows.
+  version: 1.0.0
+  contact:
+    url: https://developer.walgreens.com
+  termsOfService: https://developer.walgreens.com/terms
+servers:
+  - url: https://services.walgreens.com
+    description: Production
+  - url: https://services-qa.walgreens.com
+    description: Sandbox
+tags:
+  - name: Refills
+    description: Prescription refill operations
+  - name: Transfers
+    description: Prescription transfer operations
+security:
+  - apiKey: []
+paths:
+  /api/util/mweb5url:
+    post:
+      operationId: obtainRefillUrl
+      summary: Obtain Refill URL
+      description: >-
+        Obtains a secure landing URL and token for initiating a prescription refill
+        flow. The returned URL is used in the subsequent Open Refill call to load the
+        Walgreens prescription checkout experience.
+      tags:
+        - Refills
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObtainUrlRequest'
+            example:
+              apiKey: "YOUR_API_KEY"
+              affId: "YOUR_AFFILIATE_ID"
+              transaction: "refillByScan"
+              act: "mweb5Url"
+              view: "mweb5UrlJSON"
+      responses:
+        '200':
+          description: Landing URL and token for refill flow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObtainUrlResponse'
+        '400':
+          description: Malformed request body
+        '403':
+          description: Invalid API key
+        '500':
+          description: Internal server error
+  /api/rx/refill:
+    post:
+      operationId: submitRefill
+      summary: Submit Prescription Refill
+      description: >-
+        Submits a prescription refill request using the prescription number obtained
+        via barcode scan. Requires the token from the Obtain Refill URL step and
+        loads a WebView-based checkout for the patient to complete the refill.
+      tags:
+        - Refills
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefillRequest'
+            example:
+              affId: "YOUR_AFFILIATE_ID"
+              token: "secure_token_from_obtain_step"
+              rxNo: "1234567"
+              appID: "refillByScan"
+              act: "chkExpRx"
+      responses:
+        '200':
+          description: HTML WebView markup for prescription checkout
+          content:
+            text/html:
+              schema:
+                type: string
+        '400':
+          description: Invalid prescription number or parameters
+        '403':
+          description: Unauthorized - invalid token or affiliate
+  /api/rx/transfer:
+    post:
+      operationId: submitTransfer
+      summary: Submit Prescription Transfer
+      description: >-
+        Submits a prescription transfer request using a Base64-encoded image of the
+        prescription label from another pharmacy. Requires the token from the Obtain
+        Transfer URL step. Optionally includes patient demographic information to
+        pre-populate the transfer form.
+      tags:
+        - Transfers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferRequest'
+            example:
+              affId: "YOUR_AFFILIATE_ID"
+              token: "secure_token_from_obtain_step"
+              rxImg: "base64_encoded_prescription_image"
+              appID: "transferByScan"
+              act: "transferRxHome"
+      responses:
+        '200':
+          description: HTML WebView markup for prescription transfer checkout
+          content:
+            text/html:
+              schema:
+                type: string
+        '400':
+          description: Invalid request parameters or image
+        '403':
+          description: Unauthorized - invalid token or affiliate
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: query
+      name: apiKey
+      description: API key obtained from Walgreens Developer Portal
+  schemas:
+    ObtainUrlRequest:
+      type: object
+      required:
+        - apiKey
+        - affId
+        - transaction
+        - act
+        - view
+      properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
+        transaction:
+          type: string
+          enum: ["refillByScan", "transferByScan"]
+          description: Transaction type - refill or transfer
+        act:
+          type: string
+          enum: ["mweb5Url"]
+          description: Action type
+        view:
+          type: string
+          enum: ["mweb5UrlJSON"]
+          description: Response format
+        appVer:
+          type: string
+          description: Application version
+        devInf:
+          type: string
+          description: Device information (e.g. iPhone,13.0)
+    ObtainUrlResponse:
+      type: object
+      properties:
+        landingUrl:
+          type: string
+          description: Secure URL for initiating the checkout flow
+        template:
+          type: string
+          description: UI template identifier
+        token:
+          type: string
+          description: Secure token for the next step in the flow
+        err:
+          type: string
+          description: Error code if applicable
+    RefillRequest:
+      type: object
+      required:
+        - affId
+        - token
+        - rxNo
+        - appID
+        - act
+      properties:
+        affId:
+          type: string
+          description: Your affiliate identifier
+        token:
+          type: string
+          description: Secure token from the Obtain URL response
+        rxNo:
+          type: string
+          description: Prescription number obtained from barcode scan
+        appID:
+          type: string
+          enum: ["refillByScan"]
+          description: Application identifier
+        act:
+          type: string
+          enum: ["chkExpRx"]
+          description: Action type
+        lat:
+          type: number
+          format: double
+          description: Patient latitude for nearest pharmacy lookup
+        lng:
+          type: number
+          format: double
+          description: Patient longitude for nearest pharmacy lookup
+        trackingId:
+          type: string
+          description: Optional tracking identifier for analytics
+        appVer:
+          type: string
+          description: Application version
+        devInf:
+          type: string
+          description: Device information
+    TransferRequest:
+      type: object
+      required:
+        - affId
+        - token
+        - rxImg
+        - appID
+        - act
+      properties:
+        affId:
+          type: string
+          description: Your affiliate identifier
+        token:
+          type: string
+          description: Secure token from the Obtain URL response
+        rxImg:
+          type: string
+          format: byte
+          description: Base64-encoded image of the prescription label
+        appID:
+          type: string
+          enum: ["transferByScan"]
+          description: Application identifier
+        act:
+          type: string
+          enum: ["transferRxHome"]
+          description: Action type
+        fname:
+          type: string
+          description: Patient first name (optional pre-fill)
+        lname:
+          type: string
+          description: Patient last name (optional pre-fill)
+        dob:
+          type: string
+          format: date
+          description: Patient date of birth in MM-DD-YYYY format
+        phoneNbr:
+          type: string
+          description: Patient phone number
+        pharmacyNbr:
+          type: string
+          description: Preferred destination pharmacy number
+        lat:
+          type: number
+          format: double
+          description: Patient latitude for nearest pharmacy lookup
+        lng:
+          type: number
+          format: double
+          description: Patient longitude for nearest pharmacy lookup
+        trackingId:
+          type: string
+          description: Optional tracking identifier for analytics
+        appVer:
+          type: string
+          description: Application version
+        devInf:
+          type: string
+          description: Device information

@@ -1,0 +1,143 @@
+info:
+  title: Walgreens API Vocabulary
+  description: >-
+    Vocabulary and taxonomy for the Walgreens Developer API covering pharmacy,
+    healthcare, vaccine scheduling, store operations, and retail commerce domains.
+  version: 1.0.0
+  created: '2026-05-03'
+  modified: '2026-05-03'
+
+domains:
+  - name: Pharmacy
+    description: Prescription management and pharmaceutical services
+    terms:
+      - term: Prescription
+        definition: A written order from a licensed healthcare provider authorizing the dispensing of a specific medication
+        synonyms: [Rx, Script, Med Order]
+      - term: Refill
+        definition: Re-dispensing a previously filled prescription when remaining doses are consumed
+        synonyms: [Rx Refill, Prescription Refill]
+      - term: Transfer
+        definition: Moving a prescription from one pharmacy to another pharmacy for continued dispensing
+        synonyms: [Rx Transfer, Prescription Transfer]
+      - term: NPI Code
+        definition: National Provider Identifier, a unique 10-digit identification number for covered healthcare providers
+        abbreviation: NPI
+      - term: RxNo
+        definition: The unique prescription number assigned by the dispensing pharmacy
+        synonyms: [Prescription Number, Rx Number]
+
+  - name: Vaccine Scheduling
+    description: Immunization appointment booking terminology
+    terms:
+      - term: Engagement
+        definition: A vaccine appointment booking session identified by a unique engagementId, progressing through hold, patient attachment, and confirmation steps
+      - term: Engagement ID
+        definition: Unique identifier for a vaccine appointment engagement session
+      - term: Eligibility
+        definition: Determination of whether a patient qualifies for a specific vaccine based on age, state, and medical criteria
+      - term: Timeslot
+        definition: A specific available appointment time at a Walgreens location for vaccine administration
+      - term: Hold
+        definition: Temporary reservation of a vaccine timeslot pending patient registration and confirmation
+      - term: Vaccine Code
+        definition: CDC-assigned standardized code identifying a specific vaccine product (e.g. 207 for COVID-19 mRNA)
+      - term: Dose Series
+        definition: The sequence of doses required for a multi-dose vaccine regimen
+      - term: SMS Consent
+        definition: Patient's agreement to receive appointment reminders via text message
+
+  - name: Store Operations
+    description: Retail store and location terminology
+    terms:
+      - term: Store Number
+        definition: Unique numeric identifier assigned to each Walgreens or Duane Reade retail location
+      - term: Affiliate ID
+        definition: Identifier assigned to a third-party API partner by Walgreens Developer Program
+        abbreviation: affId
+      - term: Service Indicator
+        definition: A code indicating an available service type at a specific store location
+      - term: Emergency Status
+        definition: Indicator showing whether a store is operating under emergency conditions affecting hours or services
+      - term: Drive-Thru Pharmacy
+        definition: Pharmacy window accessible by vehicle without entering the store building
+      - term: 24-Hour Pharmacy
+        definition: Pharmacy location with round-the-clock dispensing operations
+      - term: Healthcare Clinic
+        definition: In-store clinical care location offering nurse practitioner and physician assistant services
+
+  - name: Retail Commerce
+    description: Shopping, products, and digital offers terminology
+    terms:
+      - term: Add to Cart
+        definition: API operation enabling third-party applications to place Walgreens.com products into a customer's shopping cart
+      - term: Store Inventory
+        definition: Real-time product availability and stock levels at a specific store location
+      - term: Digital Offer
+        definition: Electronic coupon or promotional discount accessible via the Walgreens API
+      - term: Photo Print
+        definition: Physical print of a digital photo available for same-day pickup at Walgreens stores
+
+vaccine_codes:
+  - code: "03"
+    name: MMR (Measles, Mumps, Rubella)
+  - code: "33"
+    name: Pneumococcal Polysaccharide (PPSV23)
+  - code: "83"
+    name: Hepatitis A (Adult)
+  - code: "88"
+    name: Influenza (Nasal)
+  - code: "93"
+    name: RSV (Adult)
+  - code: "94"
+    name: MMRV (Varicella)
+  - code: "103"
+    name: Meningococcal MCV4
+  - code: "114"
+    name: Meningococcal B
+  - code: "115"
+    name: Tdap (Tetanus, Diphtheria, Pertussis)
+  - code: "140"
+    name: Influenza (Standard Dose)
+  - code: "150"
+    name: Influenza (High Dose)
+  - code: "160"
+    name: Influenza (Adjuvanted)
+  - code: "187"
+    name: Zoster (Shingles) - Recombinant
+  - code: "197"
+    name: HPV 9-valent
+  - code: "207"
+    name: COVID-19 mRNA
+  - code: "213"
+    name: COVID-19 Janssen
+  - code: "217"
+    name: COVID-19 Novavax
+  - code: "317"
+    name: Chikungunya
+
+store_service_codes:
+  - code: t4hr
+    name: 24-Hour Store
+  - code: t4hr_rx
+    name: 24-Hour Pharmacy
+  - code: dt
+    name: Drive-Thru Pharmacy
+  - code: tc
+    name: Healthcare Clinic
+  - code: phi
+    name: Photo Lab
+  - code: cbw
+    name: Beer & Wine
+  - code: evc
+    name: EV Charging Stations
+  - code: fs
+    name: Flu Shots
+  - code: hos
+    name: Optical Services
+  - code: mc
+    name: Medication Compounding
+  - code: hiv
+    name: HIV/AIDS Support Services
+  - code: thsv_ind
+    name: Travel Health Consultations
