@@ -8,152 +8,78 @@ alignedWith:
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 provider: Walgreens
 providerId: walgreens
-publisherName: Walgreens
-serviceCategory: API
+publisherName: Walgreen Co.
+serviceCategory: Retail / Pharmacy Partner API
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - Pharmacy
-  - Healthcare
   - Retail
-  - Prescriptions
-  - Vaccines
+  - Healthcare
   - FinOps
-  - Cost Management
   - FOCUS
-description: FinOps framework definition for the Walgreens API surface. Provides a FOCUS-aligned mapping
-  for cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+description: FinOps view of the Walgreens Developer Program. There is no
+  publicly metered API price; the commercial model is approval-based partner
+  access with a revenue-share commission for the Photo Prints API. FOCUS
+  mapping is partial because no per-call cost surface is exposed - what flows
+  to FinOps is the partner-share settlement.
+sources:
+  - https://developer.walgreens.com/
+  - https://developer.walgreens.com/apis
+notes: No published per-call price; no Walgreens-issued usage / billing API for
+  partners. FOCUS records depend on the partner-share statements issued under
+  the integration agreement.
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
+  pricingCategory: Revenue Share
+  billingFrequency: Per-Invoice
   billingCurrency: USD
   chargeCategories:
-    - Usage
-    - Purchase
-    - Tax
-    - Credit
     - Adjustment
-  chargeFrequency: Recurring
+    - Credit
 focusColumns:
-  ServiceName: Walgreens
-  ServiceCategory: Developer Tools / API
+  ServiceName: Walgreens Developer Program
+  ServiceCategory: Retail / Pharmacy Partner API
   ProviderName: Walgreens
-  PublisherName: Walgreens
-  InvoiceIssuerName: Walgreens
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  PublisherName: Walgreen Co.
+  InvoiceIssuerName: Walgreen Co.
   BillingCurrency: USD
-  ChargeCategory: Usage
+  ChargeCategory: Adjustment
 meters:
-  - name: api_requests
-    description: Count of billable API requests
+  - name: photo_print_orders
+    description: Successful Photo Prints orders eligible for partner
+      revenue-share commission.
+    unit: order
+    aggregation: sum
+    dimensions:
+      - partner
+      - product
+  - name: api_calls
+    description: Successful Walgreens partner-API requests, attributed by API
+      key (used for capacity and audit, not direct billing).
     unit: request
     aggregation: sum
     dimensions:
       - api
-      - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
-    aggregation: sum
-    dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: Walgreens Store Locator API
-    baseURL: https://services.walgreens.com
-    tags:
-      - Store Locator
-      - Retail
-      - Pharmacy
-      - Geolocation
-    serviceName: Walgreens Store Locator API
-    serviceCategory: API
-  - name: Walgreens Prescription Refill API
-    baseURL: https://services.walgreens.com
-    tags:
-      - Pharmacy
-      - Prescriptions
-      - Healthcare
-      - Mobile
-    serviceName: Walgreens Prescription Refill API
-    serviceCategory: API
-  - name: Walgreens Vaccine Scheduling API
-    baseURL: https://services.walgreens.com
-    tags:
-      - Vaccines
-      - Healthcare
-      - Scheduling
-      - Immunizations
-    serviceName: Walgreens Vaccine Scheduling API
-    serviceCategory: API
-  - name: Walgreens Photo Prints API
-    baseURL: https://services.walgreens.com
-    tags:
-      - Photo Printing
-      - Retail
-      - Mobile
-    serviceName: Walgreens Photo Prints API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+      - api_key
+principles:
+  - name: Visibility
+    description: Track Photo Prints order volume and revenue-share statements
+      issued by Walgreens; reconcile partner-side order events against the
+      monthly Walgreens settlement.
+  - name: Allocation
+    description: Attribute partner-share revenue (and any Walgreens-side fees)
+      to the consuming product or storefront via the API key dimension.
+  - name: Optimization
+    description: Optimize conversion on partner integrations (Photo Prints,
+      Add to Cart) to grow share-based earnings; reduce latency on
+      Store Locator / Store Inventory to keep dependent apps inside any
+      negotiated SLA.
+  - name: Accountability
+    description: Partnership / business-development owns the Walgreens
+      revenue-share contract; engineering owns API-key hygiene and
+      throttling-respecting clients.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+    url: https://apievangelist.com
