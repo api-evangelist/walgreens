@@ -1,0 +1,82 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Walgreens Vaccine Scheduling API — Patients
+  description: 'Walgreens Vaccine Scheduling API — Patients. 1 operations. Lead operation: Attach Patient to Appointment.
+    Self-contained Naftiko capability covering one Walgreens business surface.'
+  tags:
+  - Walgreens
+  - Patients
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WALGREENS_API_KEY: WALGREENS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: vaccine-scheduling-patients
+    baseUri: https://services.walgreens.com
+    description: Walgreens Vaccine Scheduling API — Patients business capability. Self-contained, no shared references.
+    resources:
+    - name: api-vaccine-scheduling-patient-v1
+      path: /api/vaccine/scheduling/patient/v1
+      operations:
+      - name: attachpatienttoappointment
+        method: POST
+        description: Attach Patient to Appointment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: apiKey
+      value: '{{env.WALGREENS_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: vaccine-scheduling-patients-rest
+    port: 8080
+    description: REST adapter for Walgreens Vaccine Scheduling API — Patients. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/vaccine/scheduling/patient/v1
+      name: api-vaccine-scheduling-patient-v1
+      description: REST surface for api-vaccine-scheduling-patient-v1.
+      operations:
+      - method: POST
+        name: attachpatienttoappointment
+        description: Attach Patient to Appointment
+        call: vaccine-scheduling-patients.attachpatienttoappointment
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: vaccine-scheduling-patients-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Walgreens Vaccine Scheduling API — Patients. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: attach-patient-appointment
+      description: Attach Patient to Appointment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: vaccine-scheduling-patients.attachpatienttoappointment
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

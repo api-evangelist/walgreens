@@ -1,0 +1,124 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Walgreens Prescription Refill API — Refills
+  description: 'Walgreens Prescription Refill API — Refills. 2 operations. Lead operation: Submit Prescription Refill. Self-contained
+    Naftiko capability covering one Walgreens business surface.'
+  tags:
+  - Walgreens
+  - Refills
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WALGREENS_API_KEY: WALGREENS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: prescription-refill-refills
+    baseUri: https://services.walgreens.com
+    description: Walgreens Prescription Refill API — Refills business capability. Self-contained, no shared references.
+    resources:
+    - name: api-rx-refill
+      path: /api/rx/refill
+      operations:
+      - name: submitrefill
+        method: POST
+        description: Submit Prescription Refill
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-util-mweb5url
+      path: /api/util/mweb5url
+      operations:
+      - name: obtainrefillurl
+        method: POST
+        description: Obtain Refill URL
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: apiKey
+      value: '{{env.WALGREENS_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: prescription-refill-refills-rest
+    port: 8080
+    description: REST adapter for Walgreens Prescription Refill API — Refills. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/rx/refill
+      name: api-rx-refill
+      description: REST surface for api-rx-refill.
+      operations:
+      - method: POST
+        name: submitrefill
+        description: Submit Prescription Refill
+        call: prescription-refill-refills.submitrefill
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/util/mweb5url
+      name: api-util-mweb5url
+      description: REST surface for api-util-mweb5url.
+      operations:
+      - method: POST
+        name: obtainrefillurl
+        description: Obtain Refill URL
+        call: prescription-refill-refills.obtainrefillurl
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: prescription-refill-refills-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Walgreens Prescription Refill API — Refills. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: submit-prescription-refill
+      description: Submit Prescription Refill
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: prescription-refill-refills.submitrefill
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: obtain-refill-url
+      description: Obtain Refill URL
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: prescription-refill-refills.obtainrefillurl
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

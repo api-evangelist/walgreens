@@ -1,0 +1,82 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Walgreens Prescription Refill API — Transfers
+  description: 'Walgreens Prescription Refill API — Transfers. 1 operations. Lead operation: Submit Prescription Transfer.
+    Self-contained Naftiko capability covering one Walgreens business surface.'
+  tags:
+  - Walgreens
+  - Transfers
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WALGREENS_API_KEY: WALGREENS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: prescription-refill-transfers
+    baseUri: https://services.walgreens.com
+    description: Walgreens Prescription Refill API — Transfers business capability. Self-contained, no shared references.
+    resources:
+    - name: api-rx-transfer
+      path: /api/rx/transfer
+      operations:
+      - name: submittransfer
+        method: POST
+        description: Submit Prescription Transfer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: apiKey
+      value: '{{env.WALGREENS_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: prescription-refill-transfers-rest
+    port: 8080
+    description: REST adapter for Walgreens Prescription Refill API — Transfers. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/rx/transfer
+      name: api-rx-transfer
+      description: REST surface for api-rx-transfer.
+      operations:
+      - method: POST
+        name: submittransfer
+        description: Submit Prescription Transfer
+        call: prescription-refill-transfers.submittransfer
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: prescription-refill-transfers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Walgreens Prescription Refill API — Transfers. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: submit-prescription-transfer
+      description: Submit Prescription Transfer
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: prescription-refill-transfers.submittransfer
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
