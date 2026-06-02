@@ -2,13 +2,20 @@
   "repo": "walgreens",
   "feeds": [
     {
-      "source": "https://developer.walgreens.com/blog",
+      "source": "https://developer.walgreens.com/blog/feed/",
       "feed_url": "https://developer.walgreens.com/blog/feed/",
-      "title": "Walgreens Developer Portal blogs",
+      "title": "",
       "saved": 0,
-      "last_error": "req_err:ConnectTimeout"
+      "method": "feed"
+    },
+    {
+      "source": "https://developer.walgreens.com/apis",
+      "feed_url": "https://developer.walgreens.com/apis",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "post_count": 10,
-  "fetched": "2026-05-17T20:20:35Z"
+  "post_count": 19,
+  "fetched": "2026-06-01T23:35:02Z"
 }
