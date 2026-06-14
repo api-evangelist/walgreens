@@ -1,0 +1,826 @@
+# Walgreens GraphQL Schema
+# Conceptual schema representing the Walgreens API surface
+# Source APIs: Store Locator, Prescription Refill, Vaccine Scheduling, Photo Prints
+# Developer Portal: https://developer.walgreens.com/
+
+# ─────────────────────────────────────────
+# Authentication
+# ─────────────────────────────────────────
+
+type APIKey {
+  id: ID!
+  key: String!
+  name: String
+  createdAt: String
+  expiresAt: String
+  scopes: [String!]
+  active: Boolean!
+}
+
+type Token {
+  accessToken: String!
+  tokenType: String!
+  expiresIn: Int
+  refreshToken: String
+  scope: String
+}
+
+type Webhook {
+  id: ID!
+  url: String!
+  events: [String!]!
+  active: Boolean!
+  secret: String
+  createdAt: String
+}
+
+# ─────────────────────────────────────────
+# Store & Location
+# ─────────────────────────────────────────
+
+type StoreAddress {
+  street: String!
+  street2: String
+  city: String!
+  state: String!
+  zip: String!
+  country: String
+}
+
+type StoreCoordinates {
+  latitude: Float!
+  longitude: Float!
+}
+
+type StoreHours {
+  dayOfWeek: String!
+  open: String
+  closed: Boolean
+  openTime: String
+  closeTime: String
+}
+
+type PharmacyHours {
+  dayOfWeek: String!
+  open: String
+  closed: Boolean
+  openTime: String
+  closeTime: String
+}
+
+type StoreServices {
+  hasPharmacy: Boolean!
+  has24HourPharmacy: Boolean!
+  hasDriveThru: Boolean!
+  hasPhotoCenter: Boolean!
+  hasHealthClinic: Boolean!
+  hasMinuteClinic: Boolean!
+  hasVaccineClinic: Boolean!
+  hasOptical: Boolean!
+  hasBeautyConsultation: Boolean!
+  hasFluShots: Boolean!
+  hasCovidTesting: Boolean!
+  hasCurbsidePickup: Boolean!
+  hasSameDelivery: Boolean!
+}
+
+type Store {
+  storeNumber: ID!
+  name: String!
+  address: StoreAddress!
+  coordinates: StoreCoordinates!
+  phone: String
+  fax: String
+  hours: [StoreHours!]!
+  services: StoreServices!
+  distanceMiles: Float
+  open24Hours: Boolean!
+  storeUrl: String
+}
+
+type PharmacyStore {
+  storeNumber: ID!
+  name: String!
+  address: StoreAddress!
+  coordinates: StoreCoordinates!
+  phone: String
+  pharmacyPhone: String
+  pharmacyHours: [PharmacyHours!]!
+  services: StoreServices!
+  ncpdpId: String
+  npiNumber: String
+  distanceMiles: Float
+}
+
+type StoreDetails {
+  storeNumber: ID!
+  store: Store!
+  pharmacyInfo: PharmacyStore
+  photoCenter: PhotoCenter
+  healthClinic: HealthClinic
+  inventory: StoreInventory
+}
+
+# ─────────────────────────────────────────
+# Health Services
+# ─────────────────────────────────────────
+
+type HealthClinic {
+  clinicId: ID!
+  storeNumber: String!
+  name: String!
+  phone: String
+  hours: [StoreHours!]!
+  services: [String!]!
+  acceptsInsurance: Boolean!
+  acceptsWalkIns: Boolean!
+  bookingUrl: String
+}
+
+type MinuteClinic {
+  clinicId: ID!
+  storeNumber: String!
+  name: String!
+  phone: String
+  hours: [StoreHours!]!
+  conditions: [String!]!
+  services: [String!]!
+  waitTimeMinutes: Int
+  acceptsInsurance: Boolean!
+  bookingUrl: String
+}
+
+type VaccineClinic {
+  clinicId: ID!
+  storeNumber: String!
+  vaccines: [String!]!
+  hours: [StoreHours!]!
+  requiresAppointment: Boolean!
+  acceptsWalkIns: Boolean!
+  ageRequirements: String
+}
+
+# ─────────────────────────────────────────
+# Vaccines & Scheduling
+# ─────────────────────────────────────────
+
+type AppointmentSlot {
+  slotId: ID!
+  startTime: String!
+  endTime: String!
+  available: Boolean!
+  storeNumber: String!
+}
+
+type VaccineAppointment {
+  confirmationNumber: ID!
+  appointmentDate: String!
+  appointmentTime: String!
+  status: String!
+  vaccineType: String!
+  store: Store!
+  patient: Patient!
+  notes: String
+}
+
+type VaccineRecord {
+  recordId: ID!
+  vaccineType: String!
+  manufacturer: String
+  lotNumber: String
+  administeredDate: String!
+  administeredBy: String
+  storeNumber: String!
+  nextDoseDate: String
+  vaxStatus: String!
+}
+
+type ImmunizationRecord {
+  recordId: ID!
+  patientId: String!
+  vaccines: [VaccineRecord!]!
+  lastUpdated: String!
+}
+
+type HealthRecord {
+  recordId: ID!
+  patientId: String!
+  prescriptions: [Prescription!]!
+  immunizations: [ImmunizationRecord!]!
+  lastUpdated: String!
+}
+
+type Patient {
+  patientId: ID!
+  firstName: String!
+  lastName: String!
+  dateOfBirth: String!
+  email: String
+  phone: String
+  address: StoreAddress
+  insuranceMember: InsuranceMember
+}
+
+# ─────────────────────────────────────────
+# Insurance
+# ─────────────────────────────────────────
+
+type InsurancePlan {
+  planId: ID!
+  planName: String!
+  insurerName: String!
+  groupNumber: String
+  rxBin: String
+  rxPcn: String
+  coverageType: String!
+}
+
+type InsuranceMember {
+  memberId: ID!
+  firstName: String!
+  lastName: String!
+  dateOfBirth: String!
+  plan: InsurancePlan!
+  membershipNumber: String!
+  effectiveDate: String!
+  terminationDate: String
+  active: Boolean!
+}
+
+type Insurance {
+  insuranceId: ID!
+  patientId: String!
+  plans: [InsurancePlan!]!
+  primaryMember: InsuranceMember!
+  dependents: [InsuranceMember!]
+}
+
+# ─────────────────────────────────────────
+# Prescriptions & Pharmacy
+# ─────────────────────────────────────────
+
+type PrescriptionStatus {
+  code: String!
+  description: String!
+  lastUpdated: String!
+  readyForPickup: Boolean!
+  estimatedReadyDate: String
+}
+
+type Prescription {
+  rxNumber: ID!
+  medicationName: String!
+  genericName: String
+  dosage: String!
+  quantity: Int!
+  daysSupply: Int!
+  refillsRemaining: Int!
+  expirationDate: String!
+  prescriberName: String
+  prescriberPhone: String
+  status: PrescriptionStatus!
+  lastFillDate: String
+  nextRefillDate: String
+  price: Price
+  insurance: Insurance
+}
+
+type RefillRequest {
+  requestId: ID!
+  rxNumber: String!
+  requestDate: String!
+  pickupStoreNumber: String!
+  status: PrescriptionStatus!
+  confirmationNumber: String
+  estimatedReadyDate: String
+}
+
+type PrescriptionOrder {
+  orderId: ID!
+  patientId: String!
+  prescriptions: [Prescription!]!
+  status: PrescriptionStatus!
+  pickupStore: Store
+  orderDate: String!
+  estimatedReadyDate: String
+  totalPrice: Price
+}
+
+type AutoRefill {
+  rxNumber: ID!
+  enabled: Boolean!
+  preferredStoreNumber: String
+  notificationEmail: String
+  notificationPhone: String
+  enrollmentDate: String
+}
+
+type RxTransfer {
+  transferId: ID!
+  rxNumber: String!
+  fromPharmacy: String!
+  toStoreNumber: String!
+  status: String!
+  requestDate: String!
+  completionDate: String
+  confirmationNumber: String
+}
+
+type MailOrder {
+  orderId: ID!
+  rxNumber: String!
+  quantityDays: Int!
+  shippingAddress: StoreAddress!
+  status: String!
+  trackingNumber: String
+  estimatedDeliveryDate: String
+  price: Price
+}
+
+type PBMClaim {
+  claimId: ID!
+  rxNumber: String!
+  claimDate: String!
+  insurancePlanId: String!
+  amountBilled: Float!
+  amountPaid: Float!
+  patientPay: Float!
+  status: String!
+}
+
+# ─────────────────────────────────────────
+# Pricing
+# ─────────────────────────────────────────
+
+type Price {
+  amount: Float!
+  currency: String!
+  formattedPrice: String
+}
+
+type SalePrice {
+  originalPrice: Price!
+  salePrice: Price!
+  savingsAmount: Float!
+  savingsPercent: Float!
+  saleEndDate: String
+}
+
+type ClearancePrice {
+  originalPrice: Price!
+  clearancePrice: Price!
+  savingsAmount: Float!
+  savingsPercent: Float!
+}
+
+# ─────────────────────────────────────────
+# Products & Inventory
+# ─────────────────────────────────────────
+
+type ProductCategory {
+  categoryId: ID!
+  name: String!
+  slug: String!
+  parentCategory: ProductCategory
+  subCategories: [ProductCategory!]
+  productCount: Int
+}
+
+type ProductImage {
+  imageId: ID!
+  url: String!
+  altText: String
+  isPrimary: Boolean!
+  width: Int
+  height: Int
+}
+
+type ProductDetails {
+  productId: ID!
+  sku: String!
+  upc: String
+  name: String!
+  brand: String
+  description: String
+  ingredients: String
+  directions: String
+  warnings: String
+  category: ProductCategory!
+  images: [ProductImage!]!
+  price: Price!
+  salePrice: SalePrice
+  clearancePrice: ClearancePrice
+  inStock: Boolean!
+  quantity: Int
+  size: String
+  unit: String
+}
+
+type StoreInventory {
+  storeNumber: String!
+  lastUpdated: String!
+  products: [ProductInventory!]!
+}
+
+type ProductInventory {
+  productId: ID!
+  storeNumber: String!
+  sku: String!
+  quantityOnHand: Int!
+  inStock: Boolean!
+  price: Price!
+  aisle: String
+  lastUpdated: String!
+}
+
+type HealthProduct {
+  product: ProductDetails!
+  activeIngredients: [String!]
+  dosageForm: String
+  indicatedFor: [String!]
+  ageRange: String
+  prescriptionRequired: Boolean!
+  pharmacistRecommended: Boolean
+}
+
+type BeautyProduct {
+  product: ProductDetails!
+  skinType: [String!]
+  shade: String
+  coverage: String
+  features: [String!]
+  beautyExpertPick: Boolean
+}
+
+type PersonalCareProduct {
+  product: ProductDetails!
+  scent: String
+  formulation: String
+  features: [String!]
+  dermatologistTested: Boolean
+}
+
+type OTCProduct {
+  product: ProductDetails!
+  activeIngredients: [String!]!
+  dosageForm: String!
+  indicatedFor: [String!]!
+  dosageInstructions: String
+  warnings: [String!]
+  drugInteractions: [String!]
+}
+
+type BabyProduct {
+  product: ProductDetails!
+  ageRange: String
+  features: [String!]
+  pediatricianRecommended: Boolean
+  bpaFree: Boolean
+  organicCertified: Boolean
+}
+
+type PetProduct {
+  product: ProductDetails!
+  petType: [String!]!
+  petSize: String
+  features: [String!]
+  veterinarianRecommended: Boolean
+  flavorOptions: [String!]
+}
+
+# ─────────────────────────────────────────
+# Photo Services
+# ─────────────────────────────────────────
+
+type PhotoCenter {
+  storeNumber: String!
+  hasPhotoCenter: Boolean!
+  hours: [StoreHours!]!
+  services: [String!]!
+  sameDayPickup: Boolean!
+}
+
+type Photo {
+  photoId: ID!
+  url: String!
+  thumbnailUrl: String
+  width: Int
+  height: Int
+  fileSize: Int
+  uploadedAt: String!
+}
+
+type PrintOrder {
+  orderId: ID!
+  photos: [Photo!]!
+  quantity: Int!
+  size: String!
+  finish: String
+  price: Price!
+  pickupStoreNumber: String!
+  status: String!
+  estimatedReadyTime: String
+  confirmationNumber: String
+}
+
+type PhotoProduct {
+  productId: ID!
+  name: String!
+  description: String
+  price: Price!
+  turnaroundTime: String!
+  availableSizes: [String!]!
+  availableFinishes: [String!]
+}
+
+type PhotoBook {
+  orderId: ID!
+  photos: [Photo!]!
+  pageCount: Int!
+  coverType: String!
+  size: String!
+  price: Price!
+  pickupStoreNumber: String!
+  status: String!
+  estimatedReadyTime: String
+}
+
+type Photocard {
+  orderId: ID!
+  photo: Photo!
+  design: String!
+  message: String
+  quantity: Int!
+  size: String!
+  price: Price!
+  pickupStoreNumber: String!
+  status: String!
+}
+
+type Canvas {
+  orderId: ID!
+  photo: Photo!
+  size: String!
+  wrapType: String!
+  price: Price!
+  pickupStoreNumber: String!
+  status: String!
+  estimatedReadyTime: String
+}
+
+type Mug {
+  orderId: ID!
+  photo: Photo!
+  mugType: String!
+  capacity: String!
+  price: Price!
+  pickupStoreNumber: String!
+  status: String!
+}
+
+type Ornament {
+  orderId: ID!
+  photo: Photo!
+  shape: String!
+  size: String!
+  price: Price!
+  pickupStoreNumber: String!
+  status: String!
+}
+
+# ─────────────────────────────────────────
+# Loyalty & Rewards
+# ─────────────────────────────────────────
+
+type Balance {
+  amount: Float!
+  currency: String!
+  formattedBalance: String!
+  expiresAt: String
+}
+
+type CashReward {
+  rewardId: ID!
+  amount: Float!
+  earnedDate: String!
+  expirationDate: String!
+  redeemed: Boolean!
+  category: String
+}
+
+type RewardOffer {
+  offerId: ID!
+  title: String!
+  description: String!
+  rewardAmount: Float!
+  minimumPurchase: Float
+  validFrom: String!
+  validTo: String!
+  category: String
+  productIds: [String!]
+  activated: Boolean!
+}
+
+type Coupon {
+  couponId: ID!
+  title: String!
+  description: String!
+  discountType: String!
+  discountValue: Float!
+  minimumPurchase: Float
+  validFrom: String!
+  validTo: String!
+  barcode: String
+}
+
+type PaperCoupon {
+  coupon: Coupon!
+  printable: Boolean!
+  printUrl: String
+}
+
+type DigitalCoupon {
+  coupon: Coupon!
+  activated: Boolean!
+  activatedDate: String
+  usedDate: String
+  clipUrl: String
+}
+
+type WRewards {
+  memberId: ID!
+  points: Int!
+  cashRewardBalance: Balance!
+  tier: String
+  tierProgress: Int
+  tierNextLevel: Int
+  cashRewards: [CashReward!]!
+  rewardOffers: [RewardOffer!]!
+  digitalCoupons: [DigitalCoupon!]!
+  paperCoupons: [PaperCoupon!]!
+}
+
+type MyWalgreens {
+  accountId: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String
+  rewards: WRewards!
+  prescriptions: [Prescription!]!
+  preferredStore: Store
+  savedStores: [Store!]!
+  orderHistory: [PrescriptionOrder!]!
+  photoOrders: [PrintOrder!]!
+}
+
+# ─────────────────────────────────────────
+# Input Types
+# ─────────────────────────────────────────
+
+input StoreSearchInput {
+  latitude: Float
+  longitude: Float
+  address: String
+  zipCode: String
+  radiusMiles: Int
+  maxResults: Int
+  filterByService: String
+}
+
+input RefillRequestInput {
+  rxNumber: String!
+  pickupStoreNumber: String!
+  patientDateOfBirth: String!
+  contactPhone: String
+  contactEmail: String
+}
+
+input RxTransferInput {
+  rxNumber: String!
+  fromPharmacyName: String!
+  fromPharmacyPhone: String!
+  toStoreNumber: String!
+  patientFirstName: String!
+  patientLastName: String!
+  patientDateOfBirth: String!
+}
+
+input VaccineAppointmentInput {
+  storeNumber: String!
+  slotId: String!
+  vaccineType: String!
+  patientFirstName: String!
+  patientLastName: String!
+  patientDateOfBirth: String!
+  patientEmail: String
+  patientPhone: String
+  insuranceMemberId: String
+}
+
+input PhotoOrderInput {
+  photoUrls: [String!]!
+  productType: String!
+  size: String!
+  quantity: Int!
+  finish: String
+  pickupStoreNumber: String!
+}
+
+input PhotoBookInput {
+  photoUrls: [String!]!
+  pageCount: Int!
+  coverType: String!
+  size: String!
+  pickupStoreNumber: String!
+}
+
+# ─────────────────────────────────────────
+# Queries
+# ─────────────────────────────────────────
+
+type Query {
+  # Store Locator
+  storesNearby(input: StoreSearchInput!): [Store!]!
+  store(storeNumber: ID!): Store
+  storeDetails(storeNumber: ID!): StoreDetails
+  pharmacyStore(storeNumber: ID!): PharmacyStore
+  storeInventory(storeNumber: ID!): StoreInventory
+  healthClinics(storeNumber: ID!): [HealthClinic!]!
+  minuteClinics(storeNumber: ID!): [MinuteClinic!]!
+  vaccineClinics(storeNumber: ID!): [VaccineClinic!]!
+
+  # Prescriptions
+  prescription(rxNumber: ID!): Prescription
+  prescriptions(patientId: ID!): [Prescription!]!
+  prescriptionOrder(orderId: ID!): PrescriptionOrder
+  prescriptionStatus(rxNumber: ID!): PrescriptionStatus
+  autoRefillStatus(rxNumber: ID!): AutoRefill
+  mailOrder(orderId: ID!): MailOrder
+  pbmClaim(claimId: ID!): PBMClaim
+
+  # Vaccines & Scheduling
+  vaccineSlots(storeNumber: ID!, vaccineType: String!, date: String!): [AppointmentSlot!]!
+  vaccineAppointment(confirmationNumber: ID!): VaccineAppointment
+  vaccineRecord(patientId: ID!): [VaccineRecord!]!
+  immunizationRecord(patientId: ID!): ImmunizationRecord
+  healthRecord(patientId: ID!): HealthRecord
+
+  # Insurance
+  insurance(patientId: ID!): Insurance
+  insurancePlan(planId: ID!): InsurancePlan
+
+  # Products
+  product(productId: ID!): ProductDetails
+  productsByCategory(categoryId: ID!): [ProductDetails!]!
+  searchProducts(query: String!, storeNumber: ID): [ProductDetails!]!
+  healthProducts(storeNumber: ID): [HealthProduct!]!
+  otcProducts(storeNumber: ID): [OTCProduct!]!
+  beautyProducts(storeNumber: ID): [BeautyProduct!]!
+  babyProducts(storeNumber: ID): [BabyProduct!]!
+  petProducts(storeNumber: ID): [PetProduct!]!
+
+  # Photo
+  photoCenter(storeNumber: ID!): PhotoCenter
+  photoOrder(orderId: ID!): PrintOrder
+  photoOrderHistory(accountId: ID!): [PrintOrder!]!
+  photoProducts(storeNumber: ID!): [PhotoProduct!]!
+
+  # Loyalty & Rewards
+  myWalgreens(accountId: ID!): MyWalgreens
+  rewards(accountId: ID!): WRewards
+  balance(accountId: ID!): Balance
+  digitalCoupons(accountId: ID!): [DigitalCoupon!]!
+  rewardOffers(accountId: ID!): [RewardOffer!]!
+}
+
+# ─────────────────────────────────────────
+# Mutations
+# ─────────────────────────────────────────
+
+type Mutation {
+  # Prescriptions
+  refillPrescription(input: RefillRequestInput!): RefillRequest!
+  transferPrescription(input: RxTransferInput!): RxTransfer!
+  enrollAutoRefill(rxNumber: ID!, storeNumber: ID!): AutoRefill!
+  cancelAutoRefill(rxNumber: ID!): AutoRefill!
+
+  # Vaccines & Scheduling
+  holdVaccineSlot(slotId: ID!, vaccineType: String!): AppointmentSlot!
+  bookVaccineAppointment(input: VaccineAppointmentInput!): VaccineAppointment!
+  cancelVaccineAppointment(confirmationNumber: ID!): VaccineAppointment!
+
+  # Photo
+  placePhotoOrder(input: PhotoOrderInput!): PrintOrder!
+  createPhotoBook(input: PhotoBookInput!): PhotoBook!
+  cancelPhotoOrder(orderId: ID!): PrintOrder!
+
+  # Loyalty & Rewards
+  activateDigitalCoupon(couponId: ID!, accountId: ID!): DigitalCoupon!
+  activateRewardOffer(offerId: ID!, accountId: ID!): RewardOffer!
+  redeemCashReward(rewardId: ID!, accountId: ID!): CashReward!
+
+  # Webhooks
+  registerWebhook(url: String!, events: [String!]!): Webhook!
+  deleteWebhook(id: ID!): Webhook!
+}
