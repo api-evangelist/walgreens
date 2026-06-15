@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Walgreens Vaccine Scheduling API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apiKey",
+      "value": "{{apiKey}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Eligibility",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check Vaccine Eligibility",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.walgreens.com/api/vaccine/scheduling/eligibility/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Determines vaccination eligibility for a patient based on their state and date of birth. Returns a list of eligible and ineligible vaccines with eligibility details, age restrictions, warnings, and any pre-screening questions required before scheduling."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Appointments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Vaccine Timeslots",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.walgreens.com/api/vaccine/scheduling/timeslots/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves available appointment timeslots for specified vaccines at Walgreens locations near a given zip code and coordinates. Returns locations with their available dates and time slots, vaccine product information, and distance from the specified position."
+        },
+        {
+          "info": {
+            "name": "Hold Vaccine Appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.walgreens.com/api/vaccine/scheduling/hold/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reserves a specific vaccine appointment timeslot at a Walgreens location, returning an engagement ID for use in subsequent patient registration and confirmation steps. The hold is temporary and must be confirmed to finalize the booking."
+        },
+        {
+          "info": {
+            "name": "Confirm Vaccine Appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://services.walgreens.com/api/vaccine/scheduling/confirm/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Finalizes a vaccine appointment reservation, converting the held timeslot into a confirmed booking. Must be called after patient information has been attached to the engagement. Returns HTTP 204 on success."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Patients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Attach Patient to Appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.walgreens.com/api/vaccine/scheduling/patient/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers patient personal information (PII) for a held vaccine appointment, linking the patient record to the engagement. Required before confirming the appointment. Supports SMS consent for appointment reminders."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

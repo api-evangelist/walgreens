@@ -1,8 +1,8 @@
-# Walgreens
+# Walgreens (walgreens)
 
-Walgreens is one of the largest pharmacy-led health and wellbeing companies in the United States, operating over 8,000 locations nationwide. The Walgreens Developer Program provides APIs enabling third-party applications to integrate pharmacy prescription management, vaccine scheduling, retail shopping, store locations, and product inventory.
+Walgreens is one of the largest pharmacy-led health and wellbeing companies in the United States, operating over 8,000 locations nationwide. The Walgreens Developer Program provides APIs enabling third-party applications to integrate pharmacy prescription management, vaccine scheduling, retail shopping, store locations, and product inventory. The APIs support seamless healthcare delivery, prescription refills, immunization appointments, and retail e-commerce integrations for mobile and web applications.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/apis.yml)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/apis.yml)
 
 ## Scope
 
@@ -21,71 +21,121 @@ Walgreens is one of the largest pharmacy-led health and wellbeing companies in t
 ## Timestamps
 
 - **Created:** 2025-03-01
-- **Modified:** 2026-05-03
+- **Modified:** 2026-05-19
 
 ## APIs
 
-| API | Description |
-|---|---|
-| [Store Locator API](https://developer.walgreens.com/api/storelocator/rest) | Search 8,000+ Walgreens locations by address, zip, or coordinates with service filtering |
-| [Prescription Refill API](https://developer.walgreens.com/api/rx/rest) | Process prescription refills and transfers via barcode or image scan |
-| [Vaccine Scheduling API](https://developer.walgreens.com/api/scheduling/v1) | Book immunization appointments with eligibility, timeslots, patient registration, and confirmation |
-| [Photo Prints API](https://developer.walgreens.com/api/photoprints/native) | Order same-day photo prints at 8,000+ Walgreens stores |
+### Walgreens Store Locator API
 
-## OpenAPI Specifications
+Returns dynamic store location data and service information for 8,000+ Walgreens and Duane Reade locations across the United States. Supports search by geolocation, address, or zip code with filtering by store services such as 24-hour pharmacy, drive-thru, healthcare clinic, photo lab, flu shots, and immunization services.
 
-- [walgreens-store-locator-openapi.yml](openapi/walgreens-store-locator-openapi.yml) — Store search, details, and number list
-- [walgreens-prescription-refill-openapi.yml](openapi/walgreens-prescription-refill-openapi.yml) — Prescription refill and transfer flows
-- [walgreens-vaccine-scheduling-openapi.yml](openapi/walgreens-vaccine-scheduling-openapi.yml) — Complete 5-step vaccine appointment workflow
+- **Human URL:** [https://developer.walgreens.com/api/storelocator/rest](https://developer.walgreens.com/api/storelocator/rest)
+- **Base URL:** `https://services.walgreens.com`
 
-## JSON Schemas
+#### Tags
 
-- [walgreens-store-schema.json](json-schema/walgreens-store-schema.json) — Walgreens store location data model
-- [walgreens-vaccine-appointment-schema.json](json-schema/walgreens-vaccine-appointment-schema.json) — Vaccine appointment engagement model
+- Store Locator
+- Retail
+- Pharmacy
+- Geolocation
 
-## JSON Structure
+#### Properties
 
-- [walgreens-store-structure.json](json-structure/walgreens-store-structure.json) — Store data structure documentation
+- [Documentation](https://developer.walgreens.com/api/storelocator/rest)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/openapi/walgreens-store-locator-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-store-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [Postman Collection](collections/walgreens-prescription-refill.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/walgreens-prescription-refill.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/walgreens-store-locator.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/walgreens-store-locator.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/walgreens-vaccine-scheduling.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/walgreens-vaccine-scheduling.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-## JSON-LD Context
+### Walgreens Prescription Refill API
 
-- [walgreens-context.jsonld](json-ld/walgreens-context.jsonld) — Linked data context mapping Walgreens vocabulary to schema.org
+Enables medication management application developers to process prescription refills or transfers to any Walgreens pharmacy location. Supports both barcode scanning for refill initiation and image-based prescription transfers. Processes refills from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.
 
-## Examples
+- **Human URL:** [https://developer.walgreens.com/api/rx/rest](https://developer.walgreens.com/api/rx/rest)
+- **Base URL:** `https://services.walgreens.com`
 
-- [walgreens-search-stores-example.json](examples/walgreens-search-stores-example.json) — Search stores by location
-- [walgreens-check-vaccine-eligibility-example.json](examples/walgreens-check-vaccine-eligibility-example.json) — Check vaccine eligibility
-- [walgreens-get-vaccine-timeslots-example.json](examples/walgreens-get-vaccine-timeslots-example.json) — Get available appointment times
-- [walgreens-hold-vaccine-appointment-example.json](examples/walgreens-hold-vaccine-appointment-example.json) — Hold an appointment slot
+#### Tags
 
-## Spectral Rules
+- Pharmacy
+- Prescriptions
+- Healthcare
+- Mobile
 
-- [walgreens-rules.yml](rules/walgreens-rules.yml) — Spectral ruleset enforcing Walgreens API conventions
+#### Properties
 
-## Naftiko Capabilities
+- [Documentation](https://developer.walgreens.com/api/rx/rest)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/openapi/walgreens-prescription-refill-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/walgreens-prescription-refill.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/walgreens-prescription-refill.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/walgreens-store-locator.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/walgreens-store-locator.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/walgreens-vaccine-scheduling.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/walgreens-vaccine-scheduling.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-### Shared Definitions
+### Walgreens Vaccine Scheduling API
 
-- [capabilities/shared/store-locator.yaml](capabilities/shared/store-locator.yaml) — Store Locator API consumed definitions
-- [capabilities/shared/vaccine-scheduling.yaml](capabilities/shared/vaccine-scheduling.yaml) — Vaccine Scheduling API consumed definitions
+Allows developers to integrate vaccine and immunization appointment booking capabilities including eligibility checking, timeslot availability, appointment holds, patient registration, and booking confirmation across all Walgreens locations in the United States and Puerto Rico. Supports 19+ vaccine types including COVID-19, influenza, RSV, and travel immunizations.
 
-### Workflow Capabilities
+- **Human URL:** [https://developer.walgreens.com/api/scheduling/v1](https://developer.walgreens.com/api/scheduling/v1)
+- **Base URL:** `https://services.walgreens.com`
 
-- [capabilities/pharmacy-and-healthcare.yaml](capabilities/pharmacy-and-healthcare.yaml) — Unified pharmacy and healthcare workflow combining store locator and vaccine scheduling (6 REST endpoints, 6 MCP tools)
+#### Tags
 
-## Vocabulary
+- Vaccines
+- Healthcare
+- Scheduling
+- Immunizations
 
-- [walgreens-vocabulary.yml](vocabulary/walgreens-vocabulary.yml) — Pharmacy, vaccine, and retail operations vocabulary
+#### Properties
+
+- [Documentation](https://developer.walgreens.com/api/scheduling/v1)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/openapi/walgreens-vaccine-scheduling-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-vaccine-appointment-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [Postman Collection](collections/walgreens-prescription-refill.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/walgreens-prescription-refill.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/walgreens-store-locator.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/walgreens-store-locator.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/walgreens-vaccine-scheduling.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/walgreens-vaccine-scheduling.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Walgreens Photo Prints API
+
+Enables developers to offer photo printing services at 8,000+ Walgreens and Duane Reade stores for same-day pickup. Supports native JSON API integration with potential revenue share commissions for qualifying partners. Prints can be ordered from mobile and web applications.
+
+- **Human URL:** [https://developer.walgreens.com/api/photoprints/native](https://developer.walgreens.com/api/photoprints/native)
+- **Base URL:** `https://services.walgreens.com`
+
+#### Tags
+
+- Photo Printing
+- Retail
+- Mobile
+
+#### Properties
+
+- [Documentation](https://developer.walgreens.com/api/photoprints/native)
+- [Postman Collection](collections/walgreens-prescription-refill.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/walgreens-prescription-refill.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/walgreens-store-locator.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/walgreens-store-locator.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/walgreens-vaccine-scheduling.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/walgreens-vaccine-scheduling.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ## Common Properties
 
+- [GitHub Organization](https://github.com/Walgreens-LSG)
+- [LinkedIn](https://www.linkedin.com/company/walgreens)
 - [Website](https://www.walgreens.com)
-- [Developer Portal](https://developer.walgreens.com)
-- [API Catalog](https://developer.walgreens.com/apis)
+- [Portal](https://developer.walgreens.com)
+- [Documentation](https://developer.walgreens.com/apis)
 - [Blog](https://developer.walgreens.com/blog)
+- [Sign Up](https://developer.walgreens.com/user/register)
 
 ## Maintainers
 
 **FN:** Kin Lane
-
 **Email:** kin@apievangelist.com
