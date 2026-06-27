@@ -113,7 +113,7 @@ common:
   url: https://developer.walgreens.com/apis
 - type: Blog
   url: https://developer.walgreens.com/blog
-- type: SignUp
+- type: Signup
   url: https://developer.walgreens.com/user/register
 maintainers:
 - FN: Kin Lane
