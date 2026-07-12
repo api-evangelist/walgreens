@@ -1,0 +1,19 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/walgreens-prescription-refill-openapi.yml, openapi/walgreens-store-locator-openapi.yml,
+  openapi/walgreens-vaccine-scheduling-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - query
+schemes:
+- name: apiKey
+  type: apiKey
+  in: query
+  parameter: apiKey
+  description: API key obtained from Walgreens Developer Portal
+  sources:
+  - openapi/walgreens-prescription-refill-openapi.yml
+  - openapi/walgreens-store-locator-openapi.yml
+  - openapi/walgreens-vaccine-scheduling-openapi.yml

@@ -101,6 +101,12 @@ apis:
   - type: Documentation
     url: https://developer.walgreens.com/api/photoprints/native
 common:
+- type: VulnerabilityDisclosure
+  url: security/walgreens-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/walgreens-domain-security.yml
+- type: Authentication
+  url: authentication/walgreens-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/Walgreens-LSG
 - type: LinkedIn
