@@ -101,6 +101,8 @@ apis:
   - type: Documentation
     url: https://developer.walgreens.com/api/photoprints/native
 common:
+- type: AgenticAccess
+  url: agentic-access/walgreens-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/walgreens-vulnerability-disclosure.yml
 - type: DomainSecurity
