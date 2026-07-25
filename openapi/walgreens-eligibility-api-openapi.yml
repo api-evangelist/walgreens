@@ -1,0 +1,187 @@
+openapi: 3.0.3
+info:
+  title: Walgreens Prescription Refill Appointments Eligibility API
+  description: Enables medication management application developers to process prescription refills and transfers at any Walgreens pharmacy location. Supports barcode scanning for refill initiation and image-based prescription transfers from other pharmacies. Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.
+  version: 1.0.0
+  contact:
+    url: https://developer.walgreens.com
+  termsOfService: https://developer.walgreens.com/terms
+servers:
+- url: https://services.walgreens.com
+  description: Production
+- url: https://services-qa.walgreens.com
+  description: Sandbox
+security:
+- apiKey: []
+tags:
+- name: Eligibility
+  description: Vaccine eligibility checking
+paths:
+  /api/vaccine/scheduling/eligibility/v1:
+    post:
+      operationId: checkVaccineEligibility
+      summary: Check Vaccine Eligibility
+      description: Determines vaccination eligibility for a patient based on their state and date of birth. Returns a list of eligible and ineligible vaccines with eligibility details, age restrictions, warnings, and any pre-screening questions required before scheduling.
+      tags:
+      - Eligibility
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EligibilityRequest'
+            example:
+              apiKey: YOUR_API_KEY
+              affId: YOUR_AFFILIATE_ID
+              state: IL
+              dob: '1990-05-15'
+      responses:
+        '200':
+          description: Vaccine eligibility results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EligibilityResponse'
+        '400':
+          description: Malformed request body
+        '403':
+          description: Invalid API key
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    VaccineRestriction:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Restriction code
+        message:
+          type: string
+          description: Restriction message for display
+        vaccineCode:
+          type: string
+          description: Associated vaccine code
+        minimumAge:
+          type: integer
+          description: Minimum age for vaccine eligibility
+        maximumAge:
+          type: integer
+          description: Maximum age for vaccine eligibility
+    EligibilityRequest:
+      type: object
+      required:
+      - apiKey
+      - affId
+      - state
+      - dob
+      properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
+        state:
+          type: string
+          description: Two-character US state code
+          example: IL
+        dob:
+          type: string
+          format: date
+          description: Patient date of birth in YYYY-MM-DD format
+          example: '1990-05-15'
+    VaccineWarning:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Warning code
+        message:
+          type: string
+          description: Warning message for display
+        vaccineCode:
+          type: string
+          description: Associated vaccine code
+        question:
+          type: string
+          description: Screening question text
+        answers:
+          type: array
+          items:
+            type: string
+          description: Acceptable answers to the screening question
+        minimumAge:
+          type: integer
+          description: Minimum age threshold for warning
+        maximumAge:
+          type: integer
+          description: Maximum age threshold for warning
+    EligibilityResponse:
+      type: object
+      properties:
+        state:
+          type: string
+          description: State code from request
+        age:
+          type: integer
+          description: Patient age calculated from DOB
+        dob:
+          type: string
+          description: Date of birth in MM/DD/YYYY format
+        eligibleVaccineList:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineEligibility'
+          description: List of vaccines the patient is eligible for
+        inEligibleVaccineList:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineEligibility'
+          description: List of vaccines the patient is not eligible for
+    VaccineEligibility:
+      type: object
+      properties:
+        vaccineCode:
+          type: string
+          description: Vaccine code identifier
+          example: '207'
+        displayName:
+          type: string
+          description: Human-readable vaccine name
+          example: COVID-19 Vaccine
+        eligible:
+          type: boolean
+          description: Whether patient is eligible for this vaccine
+        vaccineType:
+          type: string
+          description: Category of vaccine
+        vaccineDisplayOrder:
+          type: integer
+          description: Display ordering for UI
+        multiDose:
+          type: boolean
+          description: Whether this vaccine requires multiple doses
+        seriesNumber:
+          type: string
+          description: Series number for multi-dose vaccines
+        group:
+          type: string
+          description: Vaccine group classification
+        serviceId:
+          type: string
+          description: Internal service identifier
+        restrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineRestriction'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineWarning'
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: query
+      name: apiKey
+      description: API key obtained from Walgreens Developer Portal

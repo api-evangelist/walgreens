@@ -1,0 +1,147 @@
+openapi: 3.0.3
+info:
+  title: Walgreens Prescription Refill Appointments Patients API
+  description: Enables medication management application developers to process prescription refills and transfers at any Walgreens pharmacy location. Supports barcode scanning for refill initiation and image-based prescription transfers from other pharmacies. Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.
+  version: 1.0.0
+  contact:
+    url: https://developer.walgreens.com
+  termsOfService: https://developer.walgreens.com/terms
+servers:
+- url: https://services.walgreens.com
+  description: Production
+- url: https://services-qa.walgreens.com
+  description: Sandbox
+security:
+- apiKey: []
+tags:
+- name: Patients
+  description: Patient registration for vaccine appointments
+paths:
+  /api/vaccine/scheduling/patient/v1:
+    post:
+      operationId: attachPatientToAppointment
+      summary: Attach Patient to Appointment
+      description: Registers patient personal information (PII) for a held vaccine appointment, linking the patient record to the engagement. Required before confirming the appointment. Supports SMS consent for appointment reminders.
+      tags:
+      - Patients
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatientRequest'
+            example:
+              apiKey: YOUR_API_KEY
+              affId: YOUR_AFFILIATE_ID
+              engagementId: eng-12345-abc
+              partnerId: MyHealthApp
+              firstName: Jane
+              lastName: Smith
+              dob: '1990-05-15'
+              gender: female
+              contact:
+                phones:
+                - type: Mobile
+                  number: 312-555-0123
+                  smsConsent: Agree
+                emails:
+                - type: Email
+                  address: jane.smith@example.com
+      responses:
+        '201':
+          description: Patient successfully attached to appointment
+        '400':
+          description: Malformed request body
+        '401':
+          description: Request unauthorized
+        '403':
+          description: Invalid API key
+        '409':
+          description: Patient information already exists for this engagement
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    PatientRequest:
+      type: object
+      required:
+      - apiKey
+      - affId
+      - engagementId
+      - partnerId
+      - firstName
+      - lastName
+      - dob
+      - gender
+      - contact
+      properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
+        engagementId:
+          type: string
+          description: Engagement ID from the hold response
+        partnerId:
+          type: string
+          description: Client application name
+        firstName:
+          type: string
+          description: Patient first name
+        middleName:
+          type: string
+          description: Patient middle name (optional)
+        lastName:
+          type: string
+          description: Patient last name
+        dob:
+          type: string
+          format: date
+          description: Patient date of birth in YYYY-MM-DD format
+        gender:
+          type: string
+          enum:
+          - male
+          - female
+          - other
+          - unknown
+          description: Patient gender
+        contact:
+          type: object
+          properties:
+            phones:
+              type: array
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: Mobile
+                  number:
+                    type: string
+                    description: Phone number in
+                  smsConsent:
+                    type: string
+                    enum:
+                    - Agree
+                    - Disagree
+                    description: SMS consent for appointment reminders
+            emails:
+              type: array
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: Email
+                  address:
+                    type: string
+                    format: email
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: query
+      name: apiKey
+      description: API key obtained from Walgreens Developer Portal

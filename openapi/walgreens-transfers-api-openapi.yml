@@ -1,0 +1,119 @@
+openapi: 3.0.3
+info:
+  title: Walgreens Prescription Refill Appointments Transfers API
+  description: Enables medication management application developers to process prescription refills and transfers at any Walgreens pharmacy location. Supports barcode scanning for refill initiation and image-based prescription transfers from other pharmacies. Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.
+  version: 1.0.0
+  contact:
+    url: https://developer.walgreens.com
+  termsOfService: https://developer.walgreens.com/terms
+servers:
+- url: https://services.walgreens.com
+  description: Production
+- url: https://services-qa.walgreens.com
+  description: Sandbox
+security:
+- apiKey: []
+tags:
+- name: Transfers
+  description: Prescription transfer operations
+paths:
+  /api/rx/transfer:
+    post:
+      operationId: submitTransfer
+      summary: Submit Prescription Transfer
+      description: Submits a prescription transfer request using a Base64-encoded image of the prescription label from another pharmacy. Requires the token from the Obtain Transfer URL step. Optionally includes patient demographic information to pre-populate the transfer form.
+      tags:
+      - Transfers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferRequest'
+            example:
+              affId: YOUR_AFFILIATE_ID
+              token: secure_token_from_obtain_step
+              rxImg: base64_encoded_prescription_image
+              appID: transferByScan
+              act: transferRxHome
+      responses:
+        '200':
+          description: HTML WebView markup for prescription transfer checkout
+          content:
+            text/html:
+              schema:
+                type: string
+        '400':
+          description: Invalid request parameters or image
+        '403':
+          description: Unauthorized - invalid token or affiliate
+components:
+  schemas:
+    TransferRequest:
+      type: object
+      required:
+      - affId
+      - token
+      - rxImg
+      - appID
+      - act
+      properties:
+        affId:
+          type: string
+          description: Your affiliate identifier
+        token:
+          type: string
+          description: Secure token from the Obtain URL response
+        rxImg:
+          type: string
+          format: byte
+          description: Base64-encoded image of the prescription label
+        appID:
+          type: string
+          enum:
+          - transferByScan
+          description: Application identifier
+        act:
+          type: string
+          enum:
+          - transferRxHome
+          description: Action type
+        fname:
+          type: string
+          description: Patient first name (optional pre-fill)
+        lname:
+          type: string
+          description: Patient last name (optional pre-fill)
+        dob:
+          type: string
+          format: date
+          description: Patient date of birth in MM-DD-YYYY format
+        phoneNbr:
+          type: string
+          description: Patient phone number
+        pharmacyNbr:
+          type: string
+          description: Preferred destination pharmacy number
+        lat:
+          type: number
+          format: double
+          description: Patient latitude for nearest pharmacy lookup
+        lng:
+          type: number
+          format: double
+          description: Patient longitude for nearest pharmacy lookup
+        trackingId:
+          type: string
+          description: Optional tracking identifier for analytics
+        appVer:
+          type: string
+          description: Application version
+        devInf:
+          type: string
+          description: Device information
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: query
+      name: apiKey
+      description: API key obtained from Walgreens Developer Portal

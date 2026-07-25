@@ -1,0 +1,394 @@
+openapi: 3.0.3
+info:
+  title: Walgreens Prescription Refill Appointments API
+  description: Enables medication management application developers to process prescription refills and transfers at any Walgreens pharmacy location. Supports barcode scanning for refill initiation and image-based prescription transfers from other pharmacies. Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.
+  version: 1.0.0
+  contact:
+    url: https://developer.walgreens.com
+  termsOfService: https://developer.walgreens.com/terms
+servers:
+- url: https://services.walgreens.com
+  description: Production
+- url: https://services-qa.walgreens.com
+  description: Sandbox
+security:
+- apiKey: []
+tags:
+- name: Appointments
+  description: Appointment scheduling and management
+paths:
+  /api/vaccine/scheduling/timeslots/v1:
+    post:
+      operationId: getVaccineTimeslots
+      summary: Get Vaccine Timeslots
+      description: Retrieves available appointment timeslots for specified vaccines at Walgreens locations near a given zip code and coordinates. Returns locations with their available dates and time slots, vaccine product information, and distance from the specified position.
+      tags:
+      - Appointments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeslotsRequest'
+            example:
+              apiKey: YOUR_API_KEY
+              affId: YOUR_AFFILIATE_ID
+              state: IL
+              zipCode: '60601'
+              dob: '1990-05-15'
+              vaccine:
+              - '207'
+              appointmentAvailability:
+                startDateTime: '2026-05-10'
+              position:
+                latitude: 41.8827
+                longitude: -87.6233
+      responses:
+        '200':
+          description: Available vaccine appointment locations and timeslots
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeslotsResponse'
+        '400':
+          description: Malformed request body
+        '403':
+          description: Invalid API key
+        '500':
+          description: Internal server error
+  /api/vaccine/scheduling/hold/v1:
+    post:
+      operationId: holdVaccineAppointment
+      summary: Hold Vaccine Appointment
+      description: Reserves a specific vaccine appointment timeslot at a Walgreens location, returning an engagement ID for use in subsequent patient registration and confirmation steps. The hold is temporary and must be confirmed to finalize the booking.
+      tags:
+      - Appointments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HoldRequest'
+            example:
+              apiKey: YOUR_API_KEY
+              affId: YOUR_AFFILIATE_ID
+              locationId: store-5823
+              appointmentDate: '2026-05-10T09:30:00-05:00'
+              slot: 09:30 am
+              channel: Mobile
+              client: MyHealthApp
+              engagementType: Guest
+              vaccines:
+              - code: '207'
+                productId: covid-moderna-001
+                rxRequired: false
+      responses:
+        '200':
+          description: Appointment hold successful, returns engagement ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoldResponse'
+        '400':
+          description: Malformed request body
+        '401':
+          description: Request unauthorized
+        '403':
+          description: Invalid API key
+        '409':
+          description: Cannot place hold for timeslot - slot unavailable
+        '500':
+          description: Internal server error
+  /api/vaccine/scheduling/confirm/v1:
+    patch:
+      operationId: confirmVaccineAppointment
+      summary: Confirm Vaccine Appointment
+      description: Finalizes a vaccine appointment reservation, converting the held timeslot into a confirmed booking. Must be called after patient information has been attached to the engagement. Returns HTTP 204 on success.
+      tags:
+      - Appointments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmRequest'
+            example:
+              apiKey: YOUR_API_KEY
+              affId: YOUR_AFFILIATE_ID
+              engagementId: eng-12345-abc
+      responses:
+        '204':
+          description: Appointment confirmed successfully
+        '400':
+          description: Malformed request body
+        '401':
+          description: Request unauthorized
+        '403':
+          description: Invalid API key
+        '409':
+          description: Cannot confirm appointment
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    VaccineLocation:
+      type: object
+      properties:
+        locationId:
+          type: string
+          description: Unique location identifier
+        name:
+          type: string
+          description: Store name
+        storenumber:
+          type: string
+          description: Walgreens store number
+        description:
+          type: string
+          description: Store description
+        position:
+          type: object
+          properties:
+            latitude:
+              type: number
+            longitude:
+              type: number
+        address:
+          type: object
+          properties:
+            line1:
+              type: string
+            line2:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            country:
+              type: string
+            zip:
+              type: string
+        phone:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              number:
+                type: string
+        distance:
+          type: number
+          description: Distance in miles from search coordinates
+        timeZone:
+          type: string
+          description: Location timezone
+        appointmentAvailability:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppointmentAvailability'
+    HoldResponse:
+      type: object
+      properties:
+        engagementId:
+          type: string
+          description: Unique engagement identifier for subsequent steps
+    TimeslotsResponse:
+      type: object
+      properties:
+        locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineLocation'
+    TimeslotsRequest:
+      type: object
+      required:
+      - apiKey
+      - affId
+      - state
+      - zipCode
+      - dob
+      - vaccine
+      - appointmentAvailability
+      - position
+      properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
+        state:
+          type: string
+          description: Two-character US state code
+        zipCode:
+          type: string
+          description: Patient or search zip code
+        dob:
+          type: string
+          format: date
+          description: Patient date of birth in YYYY-MM-DD format
+        vaccine:
+          type: array
+          items:
+            type: string
+          maxItems: 4
+          description: Array of up to 4 vaccine code IDs
+        appointmentAvailability:
+          type: object
+          required:
+          - startDateTime
+          properties:
+            startDateTime:
+              type: string
+              format: date
+              description: Start date for available appointments
+            endDateTime:
+              type: string
+              format: date
+              description: Optional end date for appointment range
+        position:
+          type: object
+          required:
+          - latitude
+          - longitude
+          properties:
+            latitude:
+              type: number
+              format: double
+              description: Search latitude coordinate
+            longitude:
+              type: number
+              format: double
+              description: Search longitude coordinate
+    HoldRequest:
+      type: object
+      required:
+      - apiKey
+      - affId
+      - locationId
+      - appointmentDate
+      - slot
+      - channel
+      - client
+      - engagementType
+      - vaccines
+      properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
+        locationId:
+          type: string
+          description: Store location ID from timeslots response
+        appointmentDate:
+          type: string
+          description: ISO format appointment date/time with timezone offset
+          example: '2026-05-10T09:30:00-05:00'
+        slot:
+          type: string
+          description: Time slot to hold
+          example: 09:30 am
+        channel:
+          type: string
+          enum:
+          - Web
+          - Mobile
+          description: Client channel type
+        client:
+          type: string
+          description: Client application identifier
+        engagementType:
+          type: string
+          enum:
+          - Guest
+          description: Engagement type, always Guest
+        vaccines:
+          type: array
+          items:
+            type: object
+            required:
+            - code
+            - productId
+            - rxRequired
+            properties:
+              code:
+                type: string
+                description: Vaccine code
+              productId:
+                type: string
+                description: Vaccine product identifier
+              rxRequired:
+                type: boolean
+                description: Whether a prescription is required
+        userResponses:
+          type: array
+          items:
+            type: object
+            properties:
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    answer:
+                      type: string
+                    question:
+                      type: string
+    ConfirmRequest:
+      type: object
+      required:
+      - apiKey
+      - affId
+      - engagementId
+      properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
+        engagementId:
+          type: string
+          description: Engagement ID from the hold response
+    AppointmentAvailability:
+      type: object
+      properties:
+        manufacturer:
+          type: array
+          items:
+            type: object
+            properties:
+              productId:
+                type: string
+              vaccineCode:
+                type: string
+              vaccineName:
+                type: string
+              category:
+                type: string
+              prescriptionRequired:
+                type: boolean
+        date:
+          type: string
+          format: date
+          description: Available date
+        day:
+          type: string
+          description: Day of week
+        slots:
+          type: array
+          items:
+            type: string
+          description: Available time slots (e.g. "09:30 am")
+        numberOfSlotsAvailable:
+          type: integer
+          description: Total number of open slots for the date
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: query
+      name: apiKey
+      description: API key obtained from Walgreens Developer Portal
