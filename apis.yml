@@ -7,9 +7,22 @@ description: Walgreens is one of the largest pharmacy-led health and wellbeing c
   The APIs support seamless healthcare delivery, prescription refills, immunization
   appointments, and retail e-commerce integrations for mobile and web applications.
 type: Index
+accessModel:
+  pricing: free
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Free · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Producer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/walgreens.png
 tags:
 - Pharmacy
 - Healthcare
@@ -22,75 +35,12 @@ modified: '2026-05-19'
 url: https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-- aid: walgreens:walgreens-store-locator
-  name: Walgreens Store Locator API
-  description: Returns dynamic store location data and service information for 8,000+
-    Walgreens and Duane Reade locations across the United States. Supports search
-    by geolocation, address, or zip code with filtering by store services such as
-    24-hour pharmacy, drive-thru, healthcare clinic, photo lab, flu shots, and immunization
-    services.
-  humanURL: https://developer.walgreens.com/api/storelocator/rest
-  baseURL: https://services.walgreens.com
-  tags:
-  - Store Locator
-  - Retail
-  - Pharmacy
-  - Geolocation
-  properties:
-  - type: Documentation
-    url: https://developer.walgreens.com/api/storelocator/rest
-  - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/openapi/walgreens-store-locator-openapi.yml
-  - type: JSONSchema
-    url: https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-store-schema.json
-  - url: graphql/walgreens-graphql.md
-    type: GraphQL
-- aid: walgreens:walgreens-prescription-refill
-  name: Walgreens Prescription Refill API
-  description: Enables medication management application developers to process prescription
-    refills or transfers to any Walgreens pharmacy location. Supports both barcode
-    scanning for refill initiation and image-based prescription transfers. Processes
-    refills from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout
-    flows.
-  humanURL: https://developer.walgreens.com/api/rx/rest
-  baseURL: https://services.walgreens.com
-  tags:
-  - Pharmacy
-  - Prescriptions
-  - Healthcare
-  - Mobile
-  properties:
-  - type: Documentation
-    url: https://developer.walgreens.com/api/rx/rest
-  - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/openapi/walgreens-prescription-refill-openapi.yml
-- aid: walgreens:walgreens-vaccine-scheduling
-  name: Walgreens Vaccine Scheduling API
-  description: Allows developers to integrate vaccine and immunization appointment
-    booking capabilities including eligibility checking, timeslot availability, appointment
-    holds, patient registration, and booking confirmation across all Walgreens locations
-    in the United States and Puerto Rico. Supports 19+ vaccine types including COVID-19,
-    influenza, RSV, and travel immunizations.
-  humanURL: https://developer.walgreens.com/api/scheduling/v1
-  baseURL: https://services.walgreens.com
-  tags:
-  - Vaccines
-  - Healthcare
-  - Scheduling
-  - Immunizations
-  properties:
-  - type: Documentation
-    url: https://developer.walgreens.com/api/scheduling/v1
-  - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/openapi/walgreens-vaccine-scheduling-openapi.yml
-  - type: JSONSchema
-    url: https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-vaccine-appointment-schema.json
 - aid: walgreens:walgreens-photo-prints
   name: Walgreens Photo Prints API
-  description: Enables developers to offer photo printing services at 8,000+ Walgreens
-    and Duane Reade stores for same-day pickup. Supports native JSON API integration
-    with potential revenue share commissions for qualifying partners. Prints can be
-    ordered from mobile and web applications.
+  description: >-
+    Enables developers to offer photo printing services at 8,000+ Walgreens and Duane Reade stores for
+    same-day pickup. Supports native JSON API integration with potential revenue share commissions for
+    qualifying partners. Prints can be ordered from mobile and web applications.
   humanURL: https://developer.walgreens.com/api/photoprints/native
   baseURL: https://services.walgreens.com
   tags:
@@ -100,6 +50,150 @@ apis:
   properties:
   - type: Documentation
     url: https://developer.walgreens.com/api/photoprints/native
+- aid: walgreens:walgreens-appointments-api
+  name: Walgreens Appointments API
+  description: Appointment scheduling and management
+  humanURL: https://developer.walgreens.com/api/storelocator/rest
+  baseURL: https://services.walgreens.com
+  tags:
+  - Appointments
+  properties:
+  - type: OpenAPI
+    url: openapi/walgreens-appointments-api-openapi.yml
+  - type: Documentation
+    url: https://developer.walgreens.com/api/storelocator/rest
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-store-schema.json
+  - type: GraphQL
+    url: graphql/walgreens-graphql.md
+  - type: Documentation
+    url: https://developer.walgreens.com/api/rx/rest
+  - type: Documentation
+    url: https://developer.walgreens.com/api/scheduling/v1
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-vaccine-appointment-schema.json
+- aid: walgreens:walgreens-eligibility-api
+  name: Walgreens Eligibility API
+  description: Vaccine eligibility checking
+  humanURL: https://developer.walgreens.com/api/storelocator/rest
+  baseURL: https://services.walgreens.com
+  tags:
+  - Eligibility
+  properties:
+  - type: OpenAPI
+    url: openapi/walgreens-eligibility-api-openapi.yml
+  - type: Documentation
+    url: https://developer.walgreens.com/api/storelocator/rest
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-store-schema.json
+  - type: GraphQL
+    url: graphql/walgreens-graphql.md
+  - type: Documentation
+    url: https://developer.walgreens.com/api/rx/rest
+  - type: Documentation
+    url: https://developer.walgreens.com/api/scheduling/v1
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-vaccine-appointment-schema.json
+- aid: walgreens:walgreens-patients-api
+  name: Walgreens Patients API
+  description: Patient registration for vaccine appointments
+  humanURL: https://developer.walgreens.com/api/storelocator/rest
+  baseURL: https://services.walgreens.com
+  tags:
+  - Patients
+  properties:
+  - type: OpenAPI
+    url: openapi/walgreens-patients-api-openapi.yml
+  - type: Documentation
+    url: https://developer.walgreens.com/api/storelocator/rest
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-store-schema.json
+  - type: GraphQL
+    url: graphql/walgreens-graphql.md
+  - type: Documentation
+    url: https://developer.walgreens.com/api/rx/rest
+  - type: Documentation
+    url: https://developer.walgreens.com/api/scheduling/v1
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-vaccine-appointment-schema.json
+- aid: walgreens:walgreens-refills-api
+  name: Walgreens Refills API
+  description: Prescription refill operations
+  humanURL: https://developer.walgreens.com/api/storelocator/rest
+  baseURL: https://services.walgreens.com
+  tags:
+  - Refills
+  properties:
+  - type: OpenAPI
+    url: openapi/walgreens-refills-api-openapi.yml
+  - type: Documentation
+    url: https://developer.walgreens.com/api/storelocator/rest
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-store-schema.json
+  - type: GraphQL
+    url: graphql/walgreens-graphql.md
+  - type: Documentation
+    url: https://developer.walgreens.com/api/rx/rest
+  - type: Documentation
+    url: https://developer.walgreens.com/api/scheduling/v1
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-vaccine-appointment-schema.json
+- aid: walgreens:walgreens-stores-api
+  name: Walgreens Stores API
+  description: Store search and details operations
+  humanURL: https://developer.walgreens.com/api/storelocator/rest
+  baseURL: https://services.walgreens.com
+  tags:
+  - Stores
+  properties:
+  - type: OpenAPI
+    url: openapi/walgreens-stores-api-openapi.yml
+  - type: Documentation
+    url: https://developer.walgreens.com/api/storelocator/rest
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-store-schema.json
+  - type: GraphQL
+    url: graphql/walgreens-graphql.md
+  - type: Documentation
+    url: https://developer.walgreens.com/api/rx/rest
+  - type: Documentation
+    url: https://developer.walgreens.com/api/scheduling/v1
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-vaccine-appointment-schema.json
+- aid: walgreens:walgreens-transfers-api
+  name: Walgreens Transfers API
+  description: Prescription transfer operations
+  humanURL: https://developer.walgreens.com/api/storelocator/rest
+  baseURL: https://services.walgreens.com
+  tags:
+  - Transfers
+  properties:
+  - type: OpenAPI
+    url: openapi/walgreens-transfers-api-openapi.yml
+  - type: Documentation
+    url: https://developer.walgreens.com/api/storelocator/rest
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-store-schema.json
+  - type: GraphQL
+    url: graphql/walgreens-graphql.md
+  - type: Documentation
+    url: https://developer.walgreens.com/api/rx/rest
+  - type: Documentation
+    url: https://developer.walgreens.com/api/scheduling/v1
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-vaccine-appointment-schema.json
 common:
 - type: AgenticAccess
   url: agentic-access/walgreens-agentic-access.yml
