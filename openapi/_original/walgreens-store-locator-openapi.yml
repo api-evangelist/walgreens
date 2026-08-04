@@ -1,0 +1,461 @@
+openapi: 3.0.3
+info:
+  title: Walgreens Store Locator API
+  description: >-
+    Returns dynamic store location data and service information for 8,000+ Walgreens
+    and Duane Reade locations across the United States. Supports search by geolocation,
+    address, or zip code with filtering by store services such as 24-hour pharmacy,
+    drive-thru, healthcare clinic, photo lab, flu shots, and immunization services.
+  version: 2.0.0
+  contact:
+    url: https://developer.walgreens.com
+  termsOfService: https://developer.walgreens.com/terms
+servers:
+  - url: https://services.walgreens.com
+    description: Production
+  - url: https://services-qa.walgreens.com
+    description: Sandbox
+tags:
+  - name: Stores
+    description: Store search and details operations
+security:
+  - apiKey: []
+paths:
+  /api/stores/search/v2:
+    post:
+      operationId: searchStores
+      summary: Search Stores
+      description: >-
+        Search for Walgreens and Duane Reade store locations by geolocation coordinates,
+        street address, or zip code. Returns paginated results with store details,
+        hours, pharmacy hours, services, and emergency status. Supports filtering by
+        service type including 24-hour pharmacy, drive-thru, clinic, flu shots, and
+        immunization services.
+      tags:
+        - Stores
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreSearchRequest'
+            example:
+              apiKey: "YOUR_API_KEY"
+              affId: "YOUR_AFFILIATE_ID"
+              lat: 41.876468
+              lng: -87.639176
+              s: 24
+              p: 1
+              r: 20
+              requestType: "locator"
+      responses:
+        '200':
+          description: Successful store search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreSearchResponse'
+        '400':
+          description: Malformed request body
+        '403':
+          description: Invalid API key
+        '500':
+          description: Internal server error
+  /api/stores/details/v1:
+    post:
+      operationId: getStoreDetails
+      summary: Get Store Details
+      description: >-
+        Retrieve comprehensive details for a specific Walgreens store by store number,
+        including full pharmacy hours, clinic availability, store services, NPI code,
+        and emergency status indicators.
+      tags:
+        - Stores
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreDetailsRequest'
+            example:
+              apiKey: "YOUR_API_KEY"
+              affId: "YOUR_AFFILIATE_ID"
+              storeNo: "4152"
+      responses:
+        '200':
+          description: Store details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreDetails'
+        '400':
+          description: Malformed request body
+        '403':
+          description: Invalid API key
+        '500':
+          description: Internal server error
+  /api/util/storenumber/v1:
+    post:
+      operationId: listStoreNumbers
+      summary: List All Store Numbers
+      description: >-
+        Retrieve a complete list of all Walgreens store numbers. Used for bulk operations
+        and data synchronization. Rate limited to 100 requests per minute.
+      tags:
+        - Stores
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreNumberListRequest'
+            example:
+              apiKey: "YOUR_API_KEY"
+              affId: "YOUR_AFFILIATE_ID"
+              act: "storenumber"
+      responses:
+        '200':
+          description: List of all store numbers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreNumberListResponse'
+        '400':
+          description: Malformed request body
+        '403':
+          description: Invalid API key
+        '500':
+          description: Internal server error
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: query
+      name: apiKey
+      description: API key obtained from Walgreens Developer Portal
+  schemas:
+    StoreSearchRequest:
+      type: object
+      required:
+        - apiKey
+        - affId
+        - s
+        - p
+        - r
+        - requestType
+      properties:
+        apiKey:
+          type: string
+          description: Your unique Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
+        lat:
+          type: number
+          format: double
+          description: Latitude coordinate for location-based search
+          example: 41.876468
+        lng:
+          type: number
+          format: double
+          description: Longitude coordinate for location-based search
+          example: -87.639176
+        address:
+          type: string
+          description: Full street address for address-based search
+          example: "100 S State St, Chicago, IL"
+        zip:
+          type: string
+          description: Zip code for zip-based search
+          example: "60601"
+        s:
+          type: integer
+          description: Number of items per page
+          example: 24
+        p:
+          type: integer
+          description: Current page number
+          example: 1
+        r:
+          type: integer
+          description: Search radius in miles
+          example: 20
+        requestType:
+          type: string
+          description: Channel identifier
+          example: "locator"
+        filterOptions:
+          type: array
+          items:
+            type: string
+            enum:
+              - t4hr
+              - t4hr_rx
+              - dt
+              - tc
+              - phi
+              - cbw
+              - cdr
+              - evc
+              - rb
+              - cpge
+              - fs
+              - hos
+              - mc
+              - hhs
+              - hiv
+              - thsv_ind
+          description: >-
+            Service/feature filters. t4hr=24-hour, t4hr_rx=24-hour pharmacy,
+            dt=drive-thru, tc=clinic, phi=photo lab, fs=flu shots
+        appVer:
+          type: string
+          description: Application version
+        devInf:
+          type: string
+          description: Device information
+    StoreSearchResponse:
+      type: object
+      properties:
+        filter:
+          type: object
+          description: Applied filter criteria
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreSearchResult'
+    StoreSearchResult:
+      type: object
+      properties:
+        storeNumber:
+          type: string
+          description: Unique store identifier
+        latitude:
+          type: string
+          description: Store latitude coordinate
+        longitude:
+          type: string
+          description: Store longitude coordinate
+        distance:
+          type: number
+          description: Distance from search point in miles
+        storeSeoUrl:
+          type: string
+          description: SEO-friendly URL for the store page
+        mapUrl:
+          type: string
+          description: URL to map view for the store
+        photoInd:
+          type: string
+          description: Photo services indicator
+        emerActiveInd:
+          type: string
+          enum: ["Y", "N"]
+          description: Emergency status active indicator
+        emerStatusCode:
+          type: string
+          enum: ["1", "2"]
+          description: Emergency status code
+        emerStatusValue:
+          type: string
+          description: Emergency status description
+        store:
+          $ref: '#/components/schemas/StoreInfo'
+    StoreInfo:
+      type: object
+      properties:
+        storeType:
+          type: string
+          description: Type of store location
+        storeNumber:
+          type: string
+          description: Store number
+        name:
+          type: string
+          description: Store name
+        brand:
+          type: string
+          description: Store brand (Walgreens, Duane Reade)
+        storeBrand:
+          type: string
+          description: Store brand identifier
+        storeOpenTime:
+          type: string
+          description: Store opening time
+        storeCloseTime:
+          type: string
+          description: Store closing time
+        pharmacyOpenTime:
+          type: string
+          description: Pharmacy opening time
+        pharmacyCloseTime:
+          type: string
+          description: Pharmacy closing time
+        timeZone:
+          type: string
+          description: Store timezone
+        address:
+          $ref: '#/components/schemas/StoreAddress'
+        serviceIndicators:
+          type: array
+          items:
+            type: string
+          description: List of available store services
+        phone:
+          $ref: '#/components/schemas/StorePhone'
+    StoreAddress:
+      type: object
+      properties:
+        zip:
+          type: string
+          description: Zip code
+        locationName:
+          type: string
+          description: Location name or landmark
+        city:
+          type: string
+          description: City name
+        street:
+          type: string
+          description: Street address
+        intersection:
+          type: string
+          description: Nearest intersection
+        county:
+          type: string
+          description: County name
+        state:
+          type: string
+          description: Two-letter state code
+    StorePhone:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Phone number
+        areaCode:
+          type: string
+          description: Area code
+        faxNumber:
+          type: string
+          description: Fax number
+        type:
+          type: string
+          description: Phone type
+    StoreDetailsRequest:
+      type: object
+      required:
+        - apiKey
+        - affId
+        - storeNo
+      properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
+        storeNo:
+          type: string
+          description: Store number to query
+        appVer:
+          type: string
+          description: Application version
+        devInf:
+          type: string
+          description: Device information
+    StoreDetails:
+      type: object
+      properties:
+        storeNumber:
+          type: string
+          description: Store number
+        latitude:
+          type: string
+          description: Store latitude
+        longitude:
+          type: string
+          description: Store longitude
+        npiCode:
+          type: string
+          description: National Provider Identifier code
+        clinicId:
+          type: string
+          description: Clinic identifier if clinic is present
+        timeZone:
+          type: string
+          description: Store timezone
+        emerActiveInd:
+          type: string
+          enum: ["Y", "N"]
+          description: Emergency status active indicator
+        pharmacy:
+          $ref: '#/components/schemas/DepartmentHours'
+        storeInfo:
+          $ref: '#/components/schemas/DepartmentHours'
+        clinic:
+          $ref: '#/components/schemas/DepartmentHours'
+        address:
+          $ref: '#/components/schemas/StoreAddress'
+        serviceIndicators:
+          type: object
+          description: Map of service type to availability
+        storeStatus:
+          type: object
+          description: Current store operational status
+    DepartmentHours:
+      type: object
+      properties:
+        avail:
+          type: string
+          description: Availability flag
+        wkdaySameInd:
+          type: string
+          description: Weekday same hours indicator
+        hours:
+          type: array
+          items:
+            type: object
+          description: Weekly hours schedule
+        hrs:
+          type: array
+          items:
+            type: object
+          description: Compressed hours format
+    StoreNumberListRequest:
+      type: object
+      required:
+        - apiKey
+        - affId
+        - act
+      properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
+        act:
+          type: string
+          description: Action type, always set to 'storenumber'
+          enum: ["storenumber"]
+        appVer:
+          type: string
+          description: Application version
+        devInf:
+          type: string
+          description: Device information
+    StoreNumberListResponse:
+      type: object
+      properties:
+        errDesc:
+          type: string
+          description: Error description if applicable
+        errCode:
+          type: string
+          description: Error code if applicable
+        store:
+          type: array
+          items:
+            type: string
+          description: Array of all store numbers

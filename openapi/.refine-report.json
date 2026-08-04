@@ -1,0 +1,24 @@
+{
+  "provider": "walgreens",
+  "sources": [
+    "walgreens-appointments-api-openapi.yml",
+    "walgreens-eligibility-api-openapi.yml",
+    "walgreens-patients-api-openapi.yml",
+    "walgreens-refills-api-openapi.yml",
+    "walgreens-stores-api-openapi.yml",
+    "walgreens-transfers-api-openapi.yml"
+  ],
+  "outputs": [
+    "walgreens-appointments-api-openapi.yml",
+    "walgreens-eligibility-api-openapi.yml",
+    "walgreens-patients-api-openapi.yml",
+    "walgreens-refills-api-openapi.yml",
+    "walgreens-stores-api-openapi.yml",
+    "walgreens-transfers-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
