@@ -1,0 +1,237 @@
+{
+  "item": [
+    {
+      "id": "296e88df-3b97-4898-9090-ee3a99f05eff",
+      "name": "Transfers",
+      "description": {
+        "content": "Prescription transfer operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8df53802-3548-43c8-85a5-07914f0773c7",
+          "name": "Submit Prescription Transfer",
+          "request": {
+            "name": "Submit Prescription Transfer",
+            "description": {
+              "content": "Submits a prescription transfer request using a Base64-encoded image of the prescription label from another pharmacy. Requires the token from the Obtain Transfer URL step. Optionally includes patient demographic information to pre-populate the transfer form.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "rx",
+                "transfer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/html"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"affId\": \"<string>\",\n  \"token\": \"<string>\",\n  \"rxImg\": \"<byte>\",\n  \"appID\": \"<string>\",\n  \"act\": \"<string>\",\n  \"fname\": \"<string>\",\n  \"lname\": \"<string>\",\n  \"dob\": \"<date>\",\n  \"phoneNbr\": \"<string>\",\n  \"pharmacyNbr\": \"<string>\",\n  \"lat\": \"<double>\",\n  \"lng\": \"<double>\",\n  \"trackingId\": \"<string>\",\n  \"appVer\": \"<string>\",\n  \"devInf\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "200227a8-57f6-4875-8fbe-1c839459aa5a",
+              "name": "HTML WebView markup for prescription transfer checkout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "rx",
+                    "transfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"token\": \"secure_token_from_obtain_step\",\n  \"rxImg\": \"base64_encoded_prescription_image\",\n  \"appID\": \"transferByScan\",\n  \"act\": \"transferRxHome\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/html"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3b57ef0f-fabe-4067-9546-a54d041b0865",
+              "name": "Invalid request parameters or image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "rx",
+                    "transfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"token\": \"secure_token_from_obtain_step\",\n  \"rxImg\": \"base64_encoded_prescription_image\",\n  \"appID\": \"transferByScan\",\n  \"act\": \"transferRxHome\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dff0ad63-7f72-4634-880b-bc38d9d02802",
+              "name": "Unauthorized - invalid token or affiliate",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "rx",
+                    "transfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"token\": \"secure_token_from_obtain_step\",\n  \"rxImg\": \"base64_encoded_prescription_image\",\n  \"appID\": \"transferByScan\",\n  \"act\": \"transferRxHome\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://services.walgreens.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apiKey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "eabc6bd9-9879-43ff-8cf2-0469199a9132",
+    "name": "Walgreens Prescription Refill Appointments Transfers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Enables medication management application developers to process prescription refills and transfers at any Walgreens pharmacy location. Supports barcode scanning for refill initiation and image-based prescription transfers from other pharmacies. Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.",
+      "type": "text/plain"
+    }
+  }
+}

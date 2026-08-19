@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Walgreens Prescription Refill Appointments Refills API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apiKey",
+      "value": "{{apiKey}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Refills",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Obtain Refill URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.walgreens.com/api/util/mweb5url",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Obtains a secure landing URL and token for initiating a prescription refill flow. The returned URL is used in the subsequent Open Refill call to load the Walgreens prescription checkout experience."
+        },
+        {
+          "info": {
+            "name": "Submit Prescription Refill",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.walgreens.com/api/rx/refill",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a prescription refill request using the prescription number obtained via barcode scan. Requires the token from the Obtain Refill URL step and loads a WebView-based checkout for the patient to complete the refill."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,469 @@
+{
+  "item": [
+    {
+      "id": "f4d51de7-272c-4552-a097-4fb1aa4e7465",
+      "name": "Refills",
+      "description": {
+        "content": "Prescription refill operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bdb94ffe-49fa-4030-8861-070466bcbb06",
+          "name": "Obtain Refill URL",
+          "request": {
+            "name": "Obtain Refill URL",
+            "description": {
+              "content": "Obtains a secure landing URL and token for initiating a prescription refill flow. The returned URL is used in the subsequent Open Refill call to load the Walgreens prescription checkout experience.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "util",
+                "mweb5url"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiKey\": \"<string>\",\n  \"affId\": \"<string>\",\n  \"transaction\": \"<string>\",\n  \"act\": \"<string>\",\n  \"view\": \"<string>\",\n  \"appVer\": \"<string>\",\n  \"devInf\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4af75115-9473-4472-9b26-2596a3d44d41",
+              "name": "Landing URL and token for refill flow",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "util",
+                    "mweb5url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"transaction\": \"refillByScan\",\n  \"act\": \"mweb5Url\",\n  \"view\": \"mweb5UrlJSON\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"landingUrl\": \"string\",\n  \"template\": \"string\",\n  \"token\": \"string\",\n  \"err\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee16e911-ed6d-42a8-a9fc-f928d5c8b14a",
+              "name": "Malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "util",
+                    "mweb5url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"transaction\": \"refillByScan\",\n  \"act\": \"mweb5Url\",\n  \"view\": \"mweb5UrlJSON\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "279792c1-32c2-4a4b-a317-72011944beb5",
+              "name": "Invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "util",
+                    "mweb5url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"transaction\": \"refillByScan\",\n  \"act\": \"mweb5Url\",\n  \"view\": \"mweb5UrlJSON\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fc8e41af-de08-46d6-b886-7b628712ca36",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "util",
+                    "mweb5url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"transaction\": \"refillByScan\",\n  \"act\": \"mweb5Url\",\n  \"view\": \"mweb5UrlJSON\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49da3cea-d60e-48c9-a563-1f8f4a59c78e",
+          "name": "Submit Prescription Refill",
+          "request": {
+            "name": "Submit Prescription Refill",
+            "description": {
+              "content": "Submits a prescription refill request using the prescription number obtained via barcode scan. Requires the token from the Obtain Refill URL step and loads a WebView-based checkout for the patient to complete the refill.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "rx",
+                "refill"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/html"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"affId\": \"<string>\",\n  \"token\": \"<string>\",\n  \"rxNo\": \"<string>\",\n  \"appID\": \"<string>\",\n  \"act\": \"<string>\",\n  \"lat\": \"<double>\",\n  \"lng\": \"<double>\",\n  \"trackingId\": \"<string>\",\n  \"appVer\": \"<string>\",\n  \"devInf\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b702f54d-3942-4267-97b4-2734cce29ae4",
+              "name": "HTML WebView markup for prescription checkout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "rx",
+                    "refill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"token\": \"secure_token_from_obtain_step\",\n  \"rxNo\": \"1234567\",\n  \"appID\": \"refillByScan\",\n  \"act\": \"chkExpRx\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/html"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cc61a3d3-8825-4360-92ff-7a4991dd24fd",
+              "name": "Invalid prescription number or parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "rx",
+                    "refill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"token\": \"secure_token_from_obtain_step\",\n  \"rxNo\": \"1234567\",\n  \"appID\": \"refillByScan\",\n  \"act\": \"chkExpRx\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9498d31c-6a33-44c8-8808-75f13d5ff455",
+              "name": "Unauthorized - invalid token or affiliate",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "rx",
+                    "refill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"token\": \"secure_token_from_obtain_step\",\n  \"rxNo\": \"1234567\",\n  \"appID\": \"refillByScan\",\n  \"act\": \"chkExpRx\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://services.walgreens.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apiKey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c92f746b-880f-4d30-a3fe-4dc9e2dc6951",
+    "name": "Walgreens Prescription Refill Appointments Refills API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Enables medication management application developers to process prescription refills and transfers at any Walgreens pharmacy location. Supports barcode scanning for refill initiation and image-based prescription transfers from other pharmacies. Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.",
+      "type": "text/plain"
+    }
+  }
+}

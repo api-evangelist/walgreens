@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Walgreens Prescription Refill Appointments API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apiKey",
+      "value": "{{apiKey}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Appointments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Vaccine Timeslots",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.walgreens.com/api/vaccine/scheduling/timeslots/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves available appointment timeslots for specified vaccines at Walgreens locations near a given zip code and coordinates. Returns locations with their available dates and time slots, vaccine product information, and distance from the specified position."
+        },
+        {
+          "info": {
+            "name": "Hold Vaccine Appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.walgreens.com/api/vaccine/scheduling/hold/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reserves a specific vaccine appointment timeslot at a Walgreens location, returning an engagement ID for use in subsequent patient registration and confirmation steps. The hold is temporary and must be confirmed to finalize the booking."
+        },
+        {
+          "info": {
+            "name": "Confirm Vaccine Appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://services.walgreens.com/api/vaccine/scheduling/confirm/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Finalizes a vaccine appointment reservation, converting the held timeslot into a confirmed booking. Must be called after patient information has been attached to the engagement. Returns HTTP 204 on success."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

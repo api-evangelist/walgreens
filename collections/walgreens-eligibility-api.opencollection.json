@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Walgreens Prescription Refill Appointments Eligibility API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apiKey",
+      "value": "{{apiKey}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Eligibility",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check Vaccine Eligibility",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.walgreens.com/api/vaccine/scheduling/eligibility/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Determines vaccination eligibility for a patient based on their state and date of birth. Returns a list of eligible and ineligible vaccines with eligibility details, age restrictions, warnings, and any pre-screening questions required before scheduling."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

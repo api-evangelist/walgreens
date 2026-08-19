@@ -1,0 +1,949 @@
+{
+  "item": [
+    {
+      "id": "a95539e9-c86b-4ec7-a161-c8108e0fa84a",
+      "name": "Appointments",
+      "description": {
+        "content": "Appointment scheduling and management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "403c238f-1d9b-45d5-9a2c-42f6845cb15e",
+          "name": "Get Vaccine Timeslots",
+          "request": {
+            "name": "Get Vaccine Timeslots",
+            "description": {
+              "content": "Retrieves available appointment timeslots for specified vaccines at Walgreens locations near a given zip code and coordinates. Returns locations with their available dates and time slots, vaccine product information, and distance from the specified position.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "vaccine",
+                "scheduling",
+                "timeslots",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiKey\": \"<string>\",\n  \"affId\": \"<string>\",\n  \"state\": \"<string>\",\n  \"zipCode\": \"<string>\",\n  \"dob\": \"<date>\",\n  \"vaccine\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"appointmentAvailability\": {\n    \"startDateTime\": \"<date>\",\n    \"endDateTime\": \"<date>\"\n  },\n  \"position\": {\n    \"latitude\": \"<double>\",\n    \"longitude\": \"<double>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b783b868-8429-406a-a0a7-20694624e32c",
+              "name": "Available vaccine appointment locations and timeslots",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "timeslots",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"state\": \"IL\",\n  \"zipCode\": \"60601\",\n  \"dob\": \"1990-05-15\",\n  \"vaccine\": [\n    \"207\"\n  ],\n  \"appointmentAvailability\": {\n    \"startDateTime\": \"2026-05-10\"\n  },\n  \"position\": {\n    \"latitude\": 41.8827,\n    \"longitude\": -87.6233\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"locations\": [\n    {\n      \"locationId\": \"string\",\n      \"name\": \"string\",\n      \"storenumber\": \"string\",\n      \"description\": \"string\",\n      \"position\": {\n        \"latitude\": 6218.547416299634,\n        \"longitude\": 1851.097926972386\n      },\n      \"address\": {\n        \"line1\": \"string\",\n        \"line2\": \"string\",\n        \"city\": \"string\",\n        \"state\": \"string\",\n        \"country\": \"string\",\n        \"zip\": \"string\"\n      },\n      \"phone\": [\n        {\n          \"type\": \"string\",\n          \"number\": \"string\"\n        },\n        {\n          \"type\": \"string\",\n          \"number\": \"string\"\n        }\n      ],\n      \"distance\": 2468.6897899691194,\n      \"timeZone\": \"string\",\n      \"appointmentAvailability\": [\n        {\n          \"manufacturer\": [\n            {\n              \"productId\": \"string\",\n              \"vaccineCode\": \"string\",\n              \"vaccineName\": \"string\",\n              \"category\": \"string\",\n              \"prescriptionRequired\": true\n            },\n            {\n              \"productId\": \"string\",\n              \"vaccineCode\": \"string\",\n              \"vaccineName\": \"string\",\n              \"category\": \"string\",\n              \"prescriptionRequired\": false\n            }\n          ],\n          \"date\": \"1971-10-22\",\n          \"day\": \"string\",\n          \"slots\": [\n            \"string\",\n            \"string\"\n          ],\n          \"numberOfSlotsAvailable\": 7131\n        },\n        {\n          \"manufacturer\": [\n            {\n              \"productId\": \"string\",\n              \"vaccineCode\": \"string\",\n              \"vaccineName\": \"string\",\n              \"category\": \"string\",\n              \"prescriptionRequired\": true\n            },\n            {\n              \"productId\": \"string\",\n              \"vaccineCode\": \"string\",\n              \"vaccineName\": \"string\",\n              \"category\": \"string\",\n              \"prescriptionRequired\": true\n            }\n          ],\n          \"date\": \"1957-04-30\",\n          \"day\": \"string\",\n          \"slots\": [\n            \"string\",\n            \"string\"\n          ],\n          \"numberOfSlotsAvailable\": 1201\n        }\n      ]\n    },\n    {\n      \"locationId\": \"string\",\n      \"name\": \"string\",\n      \"storenumber\": \"string\",\n      \"description\": \"string\",\n      \"position\": {\n        \"latitude\": 5962.446818763226,\n        \"longitude\": 7387.267270485575\n      },\n      \"address\": {\n        \"line1\": \"string\",\n        \"line2\": \"string\",\n        \"city\": \"string\",\n        \"state\": \"string\",\n        \"country\": \"string\",\n        \"zip\": \"string\"\n      },\n      \"phone\": [\n        {\n          \"type\": \"string\",\n          \"number\": \"string\"\n        },\n        {\n          \"type\": \"string\",\n          \"number\": \"string\"\n        }\n      ],\n      \"distance\": 9733.573318322065,\n      \"timeZone\": \"string\",\n      \"appointmentAvailability\": [\n        {\n          \"manufacturer\": [\n            {\n              \"productId\": \"string\",\n              \"vaccineCode\": \"string\",\n              \"vaccineName\": \"string\",\n              \"category\": \"string\",\n              \"prescriptionRequired\": false\n            },\n            {\n              \"productId\": \"string\",\n              \"vaccineCode\": \"string\",\n              \"vaccineName\": \"string\",\n              \"category\": \"string\",\n              \"prescriptionRequired\": true\n            }\n          ],\n          \"date\": \"2006-03-22\",\n          \"day\": \"string\",\n          \"slots\": [\n            \"string\",\n            \"string\"\n          ],\n          \"numberOfSlotsAvailable\": 3528\n        },\n        {\n          \"manufacturer\": [\n            {\n              \"productId\": \"string\",\n              \"vaccineCode\": \"string\",\n              \"vaccineName\": \"string\",\n              \"category\": \"string\",\n              \"prescriptionRequired\": false\n            },\n            {\n              \"productId\": \"string\",\n              \"vaccineCode\": \"string\",\n              \"vaccineName\": \"string\",\n              \"category\": \"string\",\n              \"prescriptionRequired\": false\n            }\n          ],\n          \"date\": \"2003-11-03\",\n          \"day\": \"string\",\n          \"slots\": [\n            \"string\",\n            \"string\"\n          ],\n          \"numberOfSlotsAvailable\": 1004\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d113d66a-2ae7-4cd6-a664-54e6063f049e",
+              "name": "Malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "timeslots",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"state\": \"IL\",\n  \"zipCode\": \"60601\",\n  \"dob\": \"1990-05-15\",\n  \"vaccine\": [\n    \"207\"\n  ],\n  \"appointmentAvailability\": {\n    \"startDateTime\": \"2026-05-10\"\n  },\n  \"position\": {\n    \"latitude\": 41.8827,\n    \"longitude\": -87.6233\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f52df441-522f-4d5c-a158-6285f2fe2f72",
+              "name": "Invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "timeslots",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"state\": \"IL\",\n  \"zipCode\": \"60601\",\n  \"dob\": \"1990-05-15\",\n  \"vaccine\": [\n    \"207\"\n  ],\n  \"appointmentAvailability\": {\n    \"startDateTime\": \"2026-05-10\"\n  },\n  \"position\": {\n    \"latitude\": 41.8827,\n    \"longitude\": -87.6233\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8820d6a0-800f-4a8a-abc3-c04c16fa654e",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "timeslots",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"state\": \"IL\",\n  \"zipCode\": \"60601\",\n  \"dob\": \"1990-05-15\",\n  \"vaccine\": [\n    \"207\"\n  ],\n  \"appointmentAvailability\": {\n    \"startDateTime\": \"2026-05-10\"\n  },\n  \"position\": {\n    \"latitude\": 41.8827,\n    \"longitude\": -87.6233\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f7372c47-7f34-4ea9-9eed-78936c845990",
+          "name": "Hold Vaccine Appointment",
+          "request": {
+            "name": "Hold Vaccine Appointment",
+            "description": {
+              "content": "Reserves a specific vaccine appointment timeslot at a Walgreens location, returning an engagement ID for use in subsequent patient registration and confirmation steps. The hold is temporary and must be confirmed to finalize the booking.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "vaccine",
+                "scheduling",
+                "hold",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiKey\": \"<string>\",\n  \"affId\": \"<string>\",\n  \"locationId\": \"<string>\",\n  \"appointmentDate\": \"<string>\",\n  \"slot\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"client\": \"<string>\",\n  \"engagementType\": \"<string>\",\n  \"vaccines\": [\n    {\n      \"code\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"rxRequired\": \"<boolean>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"rxRequired\": \"<boolean>\"\n    }\n  ],\n  \"userResponses\": [\n    {\n      \"details\": [\n        {\n          \"answer\": \"<string>\",\n          \"question\": \"<string>\"\n        },\n        {\n          \"answer\": \"<string>\",\n          \"question\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"details\": [\n        {\n          \"answer\": \"<string>\",\n          \"question\": \"<string>\"\n        },\n        {\n          \"answer\": \"<string>\",\n          \"question\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2745493d-3602-4541-b0ec-3abd49f1902c",
+              "name": "Appointment hold successful, returns engagement ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "hold",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"locationId\": \"store-5823\",\n  \"appointmentDate\": \"2026-05-10T09:30:00-05:00\",\n  \"slot\": \"09:30 am\",\n  \"channel\": \"Mobile\",\n  \"client\": \"MyHealthApp\",\n  \"engagementType\": \"Guest\",\n  \"vaccines\": [\n    {\n      \"code\": \"207\",\n      \"productId\": \"covid-moderna-001\",\n      \"rxRequired\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"engagementId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55687367-892a-42d5-8282-39347dde7658",
+              "name": "Malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "hold",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"locationId\": \"store-5823\",\n  \"appointmentDate\": \"2026-05-10T09:30:00-05:00\",\n  \"slot\": \"09:30 am\",\n  \"channel\": \"Mobile\",\n  \"client\": \"MyHealthApp\",\n  \"engagementType\": \"Guest\",\n  \"vaccines\": [\n    {\n      \"code\": \"207\",\n      \"productId\": \"covid-moderna-001\",\n      \"rxRequired\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2293c269-5cb8-4576-9e9f-83d378c3e9d4",
+              "name": "Request unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "hold",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"locationId\": \"store-5823\",\n  \"appointmentDate\": \"2026-05-10T09:30:00-05:00\",\n  \"slot\": \"09:30 am\",\n  \"channel\": \"Mobile\",\n  \"client\": \"MyHealthApp\",\n  \"engagementType\": \"Guest\",\n  \"vaccines\": [\n    {\n      \"code\": \"207\",\n      \"productId\": \"covid-moderna-001\",\n      \"rxRequired\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0da07092-67e0-4fdd-9040-912cfff15814",
+              "name": "Invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "hold",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"locationId\": \"store-5823\",\n  \"appointmentDate\": \"2026-05-10T09:30:00-05:00\",\n  \"slot\": \"09:30 am\",\n  \"channel\": \"Mobile\",\n  \"client\": \"MyHealthApp\",\n  \"engagementType\": \"Guest\",\n  \"vaccines\": [\n    {\n      \"code\": \"207\",\n      \"productId\": \"covid-moderna-001\",\n      \"rxRequired\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d041f04e-840a-4c37-a21e-516ca3f12d34",
+              "name": "Cannot place hold for timeslot - slot unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "hold",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"locationId\": \"store-5823\",\n  \"appointmentDate\": \"2026-05-10T09:30:00-05:00\",\n  \"slot\": \"09:30 am\",\n  \"channel\": \"Mobile\",\n  \"client\": \"MyHealthApp\",\n  \"engagementType\": \"Guest\",\n  \"vaccines\": [\n    {\n      \"code\": \"207\",\n      \"productId\": \"covid-moderna-001\",\n      \"rxRequired\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "058b8c5e-7ccc-4599-a555-d86b11c4b003",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "hold",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"locationId\": \"store-5823\",\n  \"appointmentDate\": \"2026-05-10T09:30:00-05:00\",\n  \"slot\": \"09:30 am\",\n  \"channel\": \"Mobile\",\n  \"client\": \"MyHealthApp\",\n  \"engagementType\": \"Guest\",\n  \"vaccines\": [\n    {\n      \"code\": \"207\",\n      \"productId\": \"covid-moderna-001\",\n      \"rxRequired\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c3a7464-c374-4566-9fdd-94977ff17f79",
+          "name": "Confirm Vaccine Appointment",
+          "request": {
+            "name": "Confirm Vaccine Appointment",
+            "description": {
+              "content": "Finalizes a vaccine appointment reservation, converting the held timeslot into a confirmed booking. Must be called after patient information has been attached to the engagement. Returns HTTP 204 on success.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "vaccine",
+                "scheduling",
+                "confirm",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiKey\": \"<string>\",\n  \"affId\": \"<string>\",\n  \"engagementId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d8bc14b4-cf5d-4b1f-ab9a-2fab188ff6aa",
+              "name": "Appointment confirmed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "confirm",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"engagementId\": \"eng-12345-abc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9636136a-124c-41f4-8b51-dcc71856b6da",
+              "name": "Malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "confirm",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"engagementId\": \"eng-12345-abc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "748bf63c-e58e-44d5-9b9a-586ab29aef57",
+              "name": "Request unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "confirm",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"engagementId\": \"eng-12345-abc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "030f0fec-ef9b-4583-b450-3df6896ba96a",
+              "name": "Invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "confirm",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"engagementId\": \"eng-12345-abc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3f9155ee-a16d-4a35-82d0-65abf090df2b",
+              "name": "Cannot confirm appointment",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "confirm",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"engagementId\": \"eng-12345-abc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ea7bcc1b-4aef-4951-b443-e1f9c6d89386",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "confirm",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"engagementId\": \"eng-12345-abc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://services.walgreens.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apiKey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4be2049e-2d11-41e4-926c-f5415ad32d53",
+    "name": "Walgreens Prescription Refill Appointments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Enables medication management application developers to process prescription refills and transfers at any Walgreens pharmacy location. Supports barcode scanning for refill initiation and image-based prescription transfers from other pharmacies. Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.",
+      "type": "text/plain"
+    }
+  }
+}

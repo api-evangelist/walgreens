@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Walgreens Prescription Refill Appointments Patients API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apiKey",
+      "value": "{{apiKey}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Patients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Attach Patient to Appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.walgreens.com/api/vaccine/scheduling/patient/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers patient personal information (PII) for a held vaccine appointment, linking the patient record to the engagement. Required before confirming the appointment. Supports SMS consent for appointment reminders."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

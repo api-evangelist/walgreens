@@ -1,0 +1,291 @@
+{
+  "item": [
+    {
+      "id": "29790542-7413-4dc6-9b3a-98a63e84b861",
+      "name": "Eligibility",
+      "description": {
+        "content": "Vaccine eligibility checking",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2e301e18-47af-4c34-9f7a-4e0c9a51ee9d",
+          "name": "Check Vaccine Eligibility",
+          "request": {
+            "name": "Check Vaccine Eligibility",
+            "description": {
+              "content": "Determines vaccination eligibility for a patient based on their state and date of birth. Returns a list of eligible and ineligible vaccines with eligibility details, age restrictions, warnings, and any pre-screening questions required before scheduling.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "vaccine",
+                "scheduling",
+                "eligibility",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiKey\": \"<string>\",\n  \"affId\": \"<string>\",\n  \"state\": \"<string>\",\n  \"dob\": \"<date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a20ba71f-9eed-43fb-ade3-0cf4c2df982b",
+              "name": "Vaccine eligibility results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "eligibility",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"state\": \"IL\",\n  \"dob\": \"1990-05-15\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"state\": \"string\",\n  \"age\": 4433,\n  \"dob\": \"string\",\n  \"eligibleVaccineList\": [\n    {\n      \"vaccineCode\": \"207\",\n      \"displayName\": \"COVID-19 Vaccine\",\n      \"eligible\": true,\n      \"vaccineType\": \"string\",\n      \"vaccineDisplayOrder\": 5090,\n      \"multiDose\": true,\n      \"seriesNumber\": \"string\",\n      \"group\": \"string\",\n      \"serviceId\": \"string\",\n      \"restrictions\": [\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"minimumAge\": 8433,\n          \"maximumAge\": 2210\n        },\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"minimumAge\": 4670,\n          \"maximumAge\": 3084\n        }\n      ],\n      \"warnings\": [\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"question\": \"string\",\n          \"answers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"minimumAge\": 475,\n          \"maximumAge\": 1194\n        },\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"question\": \"string\",\n          \"answers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"minimumAge\": 1603,\n          \"maximumAge\": 6746\n        }\n      ]\n    },\n    {\n      \"vaccineCode\": \"207\",\n      \"displayName\": \"COVID-19 Vaccine\",\n      \"eligible\": true,\n      \"vaccineType\": \"string\",\n      \"vaccineDisplayOrder\": 9088,\n      \"multiDose\": true,\n      \"seriesNumber\": \"string\",\n      \"group\": \"string\",\n      \"serviceId\": \"string\",\n      \"restrictions\": [\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"minimumAge\": 5541,\n          \"maximumAge\": 3902\n        },\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"minimumAge\": 343,\n          \"maximumAge\": 1741\n        }\n      ],\n      \"warnings\": [\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"question\": \"string\",\n          \"answers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"minimumAge\": 2139,\n          \"maximumAge\": 7809\n        },\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"question\": \"string\",\n          \"answers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"minimumAge\": 6646,\n          \"maximumAge\": 4332\n        }\n      ]\n    }\n  ],\n  \"inEligibleVaccineList\": [\n    {\n      \"vaccineCode\": \"207\",\n      \"displayName\": \"COVID-19 Vaccine\",\n      \"eligible\": true,\n      \"vaccineType\": \"string\",\n      \"vaccineDisplayOrder\": 4151,\n      \"multiDose\": true,\n      \"seriesNumber\": \"string\",\n      \"group\": \"string\",\n      \"serviceId\": \"string\",\n      \"restrictions\": [\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"minimumAge\": 4972,\n          \"maximumAge\": 9278\n        },\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"minimumAge\": 4967,\n          \"maximumAge\": 9675\n        }\n      ],\n      \"warnings\": [\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"question\": \"string\",\n          \"answers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"minimumAge\": 33,\n          \"maximumAge\": 9094\n        },\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"question\": \"string\",\n          \"answers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"minimumAge\": 3051,\n          \"maximumAge\": 9368\n        }\n      ]\n    },\n    {\n      \"vaccineCode\": \"207\",\n      \"displayName\": \"COVID-19 Vaccine\",\n      \"eligible\": true,\n      \"vaccineType\": \"string\",\n      \"vaccineDisplayOrder\": 2774,\n      \"multiDose\": true,\n      \"seriesNumber\": \"string\",\n      \"group\": \"string\",\n      \"serviceId\": \"string\",\n      \"restrictions\": [\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"minimumAge\": 999,\n          \"maximumAge\": 4231\n        },\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"minimumAge\": 936,\n          \"maximumAge\": 2763\n        }\n      ],\n      \"warnings\": [\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"question\": \"string\",\n          \"answers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"minimumAge\": 735,\n          \"maximumAge\": 3940\n        },\n        {\n          \"code\": \"string\",\n          \"message\": \"string\",\n          \"vaccineCode\": \"string\",\n          \"question\": \"string\",\n          \"answers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"minimumAge\": 7425,\n          \"maximumAge\": 2702\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "037a2e8d-1081-4477-9149-37cc8664ce22",
+              "name": "Malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "eligibility",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"state\": \"IL\",\n  \"dob\": \"1990-05-15\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "50000a5f-c9d9-4f9c-b969-0b782920a439",
+              "name": "Invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "eligibility",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"state\": \"IL\",\n  \"dob\": \"1990-05-15\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d21a3593-d78d-442f-9538-30cee9a408f0",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "eligibility",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"state\": \"IL\",\n  \"dob\": \"1990-05-15\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://services.walgreens.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apiKey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3b87b7fe-dc1c-497f-974c-ac5bf0830dcb",
+    "name": "Walgreens Prescription Refill Appointments Eligibility API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Enables medication management application developers to process prescription refills and transfers at any Walgreens pharmacy location. Supports barcode scanning for refill initiation and image-based prescription transfers from other pharmacies. Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.",
+      "type": "text/plain"
+    }
+  }
+}

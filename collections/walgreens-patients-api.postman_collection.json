@@ -1,0 +1,373 @@
+{
+  "item": [
+    {
+      "id": "711238e2-2148-4029-873c-b325e6f3ec7f",
+      "name": "Patients",
+      "description": {
+        "content": "Patient registration for vaccine appointments",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "66334ac3-7bef-4194-a3f7-be88f9d9b5d2",
+          "name": "Attach Patient to Appointment",
+          "request": {
+            "name": "Attach Patient to Appointment",
+            "description": {
+              "content": "Registers patient personal information (PII) for a held vaccine appointment, linking the patient record to the engagement. Required before confirming the appointment. Supports SMS consent for appointment reminders.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "vaccine",
+                "scheduling",
+                "patient",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiKey\": \"<string>\",\n  \"affId\": \"<string>\",\n  \"engagementId\": \"<string>\",\n  \"partnerId\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"dob\": \"<date>\",\n  \"gender\": \"<string>\",\n  \"contact\": {\n    \"phones\": [\n      {\n        \"type\": \"<string>\",\n        \"number\": \"<string>\",\n        \"smsConsent\": \"<string>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"number\": \"<string>\",\n        \"smsConsent\": \"<string>\"\n      }\n    ],\n    \"emails\": [\n      {\n        \"type\": \"<string>\",\n        \"address\": \"<email>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"address\": \"<email>\"\n      }\n    ]\n  },\n  \"middleName\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9960d666-3d74-412e-a64e-32dd989e013e",
+              "name": "Patient successfully attached to appointment",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "patient",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"engagementId\": \"eng-12345-abc\",\n  \"partnerId\": \"MyHealthApp\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"dob\": \"1990-05-15\",\n  \"gender\": \"female\",\n  \"contact\": {\n    \"phones\": [\n      {\n        \"type\": \"Mobile\",\n        \"number\": \"312-555-0123\",\n        \"smsConsent\": \"Agree\"\n      }\n    ],\n    \"emails\": [\n      {\n        \"type\": \"Email\",\n        \"address\": \"jane.smith@example.com\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4d9f1052-112f-41be-a1a4-1bcc7c244d62",
+              "name": "Malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "patient",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"engagementId\": \"eng-12345-abc\",\n  \"partnerId\": \"MyHealthApp\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"dob\": \"1990-05-15\",\n  \"gender\": \"female\",\n  \"contact\": {\n    \"phones\": [\n      {\n        \"type\": \"Mobile\",\n        \"number\": \"312-555-0123\",\n        \"smsConsent\": \"Agree\"\n      }\n    ],\n    \"emails\": [\n      {\n        \"type\": \"Email\",\n        \"address\": \"jane.smith@example.com\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "392277ef-083d-4614-8f32-c7fa09d5847f",
+              "name": "Request unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "patient",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"engagementId\": \"eng-12345-abc\",\n  \"partnerId\": \"MyHealthApp\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"dob\": \"1990-05-15\",\n  \"gender\": \"female\",\n  \"contact\": {\n    \"phones\": [\n      {\n        \"type\": \"Mobile\",\n        \"number\": \"312-555-0123\",\n        \"smsConsent\": \"Agree\"\n      }\n    ],\n    \"emails\": [\n      {\n        \"type\": \"Email\",\n        \"address\": \"jane.smith@example.com\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "81864656-8205-4563-94c8-1eb615f41e14",
+              "name": "Invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "patient",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"engagementId\": \"eng-12345-abc\",\n  \"partnerId\": \"MyHealthApp\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"dob\": \"1990-05-15\",\n  \"gender\": \"female\",\n  \"contact\": {\n    \"phones\": [\n      {\n        \"type\": \"Mobile\",\n        \"number\": \"312-555-0123\",\n        \"smsConsent\": \"Agree\"\n      }\n    ],\n    \"emails\": [\n      {\n        \"type\": \"Email\",\n        \"address\": \"jane.smith@example.com\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3fa973ed-7ff0-4f50-9eaf-3de848c61f23",
+              "name": "Patient information already exists for this engagement",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "patient",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"engagementId\": \"eng-12345-abc\",\n  \"partnerId\": \"MyHealthApp\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"dob\": \"1990-05-15\",\n  \"gender\": \"female\",\n  \"contact\": {\n    \"phones\": [\n      {\n        \"type\": \"Mobile\",\n        \"number\": \"312-555-0123\",\n        \"smsConsent\": \"Agree\"\n      }\n    ],\n    \"emails\": [\n      {\n        \"type\": \"Email\",\n        \"address\": \"jane.smith@example.com\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ca77a9dd-ab26-4da3-a21e-2ea63b84747a",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "vaccine",
+                    "scheduling",
+                    "patient",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"engagementId\": \"eng-12345-abc\",\n  \"partnerId\": \"MyHealthApp\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"dob\": \"1990-05-15\",\n  \"gender\": \"female\",\n  \"contact\": {\n    \"phones\": [\n      {\n        \"type\": \"Mobile\",\n        \"number\": \"312-555-0123\",\n        \"smsConsent\": \"Agree\"\n      }\n    ],\n    \"emails\": [\n      {\n        \"type\": \"Email\",\n        \"address\": \"jane.smith@example.com\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://services.walgreens.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apiKey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b19edd73-90ff-48c6-91ed-d5aa1cf59ba9",
+    "name": "Walgreens Prescription Refill Appointments Patients API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Enables medication management application developers to process prescription refills and transfers at any Walgreens pharmacy location. Supports barcode scanning for refill initiation and image-based prescription transfers from other pharmacies. Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.",
+      "type": "text/plain"
+    }
+  }
+}

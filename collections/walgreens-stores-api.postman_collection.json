@@ -1,0 +1,760 @@
+{
+  "item": [
+    {
+      "id": "2f08bad3-ef14-4756-9c56-d53a04256862",
+      "name": "Stores",
+      "description": {
+        "content": "Store search and details operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d171662e-9851-469a-8cc9-63818a44e906",
+          "name": "Search Stores",
+          "request": {
+            "name": "Search Stores",
+            "description": {
+              "content": "Search for Walgreens and Duane Reade store locations by geolocation coordinates, street address, or zip code. Returns paginated results with store details, hours, pharmacy hours, services, and emergency status. Supports filtering by service type including 24-hour pharmacy, drive-thru, clinic, flu shots, and immunization services.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "stores",
+                "search",
+                "v2"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiKey\": \"<string>\",\n  \"affId\": \"<string>\",\n  \"s\": \"<integer>\",\n  \"p\": \"<integer>\",\n  \"r\": \"<integer>\",\n  \"requestType\": \"<string>\",\n  \"lat\": \"<double>\",\n  \"lng\": \"<double>\",\n  \"address\": \"<string>\",\n  \"zip\": \"<string>\",\n  \"filterOptions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"appVer\": \"<string>\",\n  \"devInf\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eaecd0ea-f051-4f35-a5f9-4a0ebf93afe6",
+              "name": "Successful store search results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "stores",
+                    "search",
+                    "v2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"lat\": 41.876468,\n  \"lng\": -87.639176,\n  \"s\": 24,\n  \"p\": 1,\n  \"r\": 20,\n  \"requestType\": \"locator\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"filter\": {},\n  \"results\": [\n    {\n      \"storeNumber\": \"string\",\n      \"latitude\": \"string\",\n      \"longitude\": \"string\",\n      \"distance\": 9423.243210137362,\n      \"storeSeoUrl\": \"string\",\n      \"mapUrl\": \"string\",\n      \"photoInd\": \"string\",\n      \"emerActiveInd\": \"N\",\n      \"emerStatusCode\": \"1\",\n      \"emerStatusValue\": \"string\",\n      \"store\": {\n        \"storeType\": \"string\",\n        \"storeNumber\": \"string\",\n        \"name\": \"string\",\n        \"brand\": \"string\",\n        \"storeBrand\": \"string\",\n        \"storeOpenTime\": \"string\",\n        \"storeCloseTime\": \"string\",\n        \"pharmacyOpenTime\": \"string\",\n        \"pharmacyCloseTime\": \"string\",\n        \"timeZone\": \"string\",\n        \"address\": {\n          \"zip\": \"string\",\n          \"locationName\": \"string\",\n          \"city\": \"string\",\n          \"street\": \"string\",\n          \"intersection\": \"string\",\n          \"county\": \"string\",\n          \"state\": \"string\"\n        },\n        \"serviceIndicators\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phone\": {\n          \"number\": \"string\",\n          \"areaCode\": \"string\",\n          \"faxNumber\": \"string\",\n          \"type\": \"string\"\n        }\n      }\n    },\n    {\n      \"storeNumber\": \"string\",\n      \"latitude\": \"string\",\n      \"longitude\": \"string\",\n      \"distance\": 1590.119620066851,\n      \"storeSeoUrl\": \"string\",\n      \"mapUrl\": \"string\",\n      \"photoInd\": \"string\",\n      \"emerActiveInd\": \"N\",\n      \"emerStatusCode\": \"2\",\n      \"emerStatusValue\": \"string\",\n      \"store\": {\n        \"storeType\": \"string\",\n        \"storeNumber\": \"string\",\n        \"name\": \"string\",\n        \"brand\": \"string\",\n        \"storeBrand\": \"string\",\n        \"storeOpenTime\": \"string\",\n        \"storeCloseTime\": \"string\",\n        \"pharmacyOpenTime\": \"string\",\n        \"pharmacyCloseTime\": \"string\",\n        \"timeZone\": \"string\",\n        \"address\": {\n          \"zip\": \"string\",\n          \"locationName\": \"string\",\n          \"city\": \"string\",\n          \"street\": \"string\",\n          \"intersection\": \"string\",\n          \"county\": \"string\",\n          \"state\": \"string\"\n        },\n        \"serviceIndicators\": [\n          \"string\",\n          \"string\"\n        ],\n        \"phone\": {\n          \"number\": \"string\",\n          \"areaCode\": \"string\",\n          \"faxNumber\": \"string\",\n          \"type\": \"string\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3a1e9d8-0f53-46ab-b421-b93c6929db4a",
+              "name": "Malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "stores",
+                    "search",
+                    "v2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"lat\": 41.876468,\n  \"lng\": -87.639176,\n  \"s\": 24,\n  \"p\": 1,\n  \"r\": 20,\n  \"requestType\": \"locator\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3da02135-5a2a-48b1-aec3-df886c911048",
+              "name": "Invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "stores",
+                    "search",
+                    "v2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"lat\": 41.876468,\n  \"lng\": -87.639176,\n  \"s\": 24,\n  \"p\": 1,\n  \"r\": 20,\n  \"requestType\": \"locator\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "76833b2b-e7ff-4dfc-a9b4-717a8afd403c",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "stores",
+                    "search",
+                    "v2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"lat\": 41.876468,\n  \"lng\": -87.639176,\n  \"s\": 24,\n  \"p\": 1,\n  \"r\": 20,\n  \"requestType\": \"locator\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "20879138-5b7d-4c2e-8481-1b100ebd4666",
+          "name": "Get Store Details",
+          "request": {
+            "name": "Get Store Details",
+            "description": {
+              "content": "Retrieve comprehensive details for a specific Walgreens store by store number, including full pharmacy hours, clinic availability, store services, NPI code, and emergency status indicators.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "stores",
+                "details",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiKey\": \"<string>\",\n  \"affId\": \"<string>\",\n  \"storeNo\": \"<string>\",\n  \"appVer\": \"<string>\",\n  \"devInf\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7550cce1-bfba-45d0-9f51-da4c5d24bdf0",
+              "name": "Store details retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "stores",
+                    "details",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"storeNo\": \"4152\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"storeNumber\": \"string\",\n  \"latitude\": \"string\",\n  \"longitude\": \"string\",\n  \"npiCode\": \"string\",\n  \"clinicId\": \"string\",\n  \"timeZone\": \"string\",\n  \"emerActiveInd\": \"Y\",\n  \"pharmacy\": {\n    \"avail\": \"string\",\n    \"wkdaySameInd\": \"string\"\n  },\n  \"storeInfo\": {\n    \"avail\": \"string\",\n    \"wkdaySameInd\": \"string\"\n  },\n  \"clinic\": {\n    \"avail\": \"string\",\n    \"wkdaySameInd\": \"string\"\n  },\n  \"address\": {\n    \"zip\": \"string\",\n    \"locationName\": \"string\",\n    \"city\": \"string\",\n    \"street\": \"string\",\n    \"intersection\": \"string\",\n    \"county\": \"string\",\n    \"state\": \"string\"\n  },\n  \"serviceIndicators\": {},\n  \"storeStatus\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15d10bf3-8db8-4369-b2be-5af164d6cff1",
+              "name": "Malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "stores",
+                    "details",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"storeNo\": \"4152\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "28cac0a4-1fa6-415b-8c58-1c80bac917b3",
+              "name": "Invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "stores",
+                    "details",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"storeNo\": \"4152\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b997f5ce-58ee-41b7-bca4-17fbb231dc3c",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "stores",
+                    "details",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"storeNo\": \"4152\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "880df247-f782-43df-9a23-d28f96664a1d",
+          "name": "List All Store Numbers",
+          "request": {
+            "name": "List All Store Numbers",
+            "description": {
+              "content": "Retrieve a complete list of all Walgreens store numbers. Used for bulk operations and data synchronization. Rate limited to 100 requests per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "util",
+                "storenumber",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiKey\": \"<string>\",\n  \"affId\": \"<string>\",\n  \"act\": \"<string>\",\n  \"appVer\": \"<string>\",\n  \"devInf\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "47d9f75d-8d08-4e56-8c00-3745fe318e4c",
+              "name": "List of all store numbers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "util",
+                    "storenumber",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"act\": \"storenumber\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errDesc\": \"string\",\n  \"errCode\": \"string\",\n  \"store\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1338fd7a-dacb-4637-8040-25bac485a544",
+              "name": "Malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "util",
+                    "storenumber",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"act\": \"storenumber\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f9f67e9f-e206-4df1-b5d0-c12e7d23016d",
+              "name": "Invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "util",
+                    "storenumber",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"act\": \"storenumber\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "96c2ef3b-8648-42e0-a30f-a0739dd03120",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "util",
+                    "storenumber",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiKey\": \"YOUR_API_KEY\",\n  \"affId\": \"YOUR_AFFILIATE_ID\",\n  \"act\": \"storenumber\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://services.walgreens.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "apiKey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "49257b66-9167-43ed-856d-234ba08c6789",
+    "name": "Walgreens Prescription Refill Appointments Stores API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Enables medication management application developers to process prescription refills and transfers at any Walgreens pharmacy location. Supports barcode scanning for refill initiation and image-based prescription transfers from other pharmacies. Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.",
+      "type": "text/plain"
+    }
+  }
+}

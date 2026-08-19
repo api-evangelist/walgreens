@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Walgreens Prescription Refill Appointments Stores API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "apiKey",
+      "value": "{{apiKey}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stores",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Stores",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.walgreens.com/api/stores/search/v2",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search for Walgreens and Duane Reade store locations by geolocation coordinates, street address, or zip code. Returns paginated results with store details, hours, pharmacy hours, services, and emergency status. Supports filtering by service type including 24-hour pharmacy, drive-thru, clinic, flu shots, and immunization services."
+        },
+        {
+          "info": {
+            "name": "Get Store Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.walgreens.com/api/stores/details/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve comprehensive details for a specific Walgreens store by store number, including full pharmacy hours, clinic availability, store services, NPI code, and emergency status indicators."
+        },
+        {
+          "info": {
+            "name": "List All Store Numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://services.walgreens.com/api/util/storenumber/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve a complete list of all Walgreens store numbers. Used for bulk operations and data synchronization. Rate limited to 100 requests per minute."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
