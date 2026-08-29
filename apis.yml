@@ -207,6 +207,9 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-vaccine-appointment-schema.json
 common:
+- type: CapabilityMap
+  url: capabilities/walgreens-capability-edges.yml
+  name: Walgreens Business Capability Map
 - type: AgenticAccess
   url: agentic-access/walgreens-agentic-access.yml
 - type: VulnerabilityDisclosure
