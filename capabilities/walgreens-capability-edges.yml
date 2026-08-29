@@ -18,29 +18,28 @@ edges:
   capability_id: BC-2800.10
   capability_id_l1: BC-2800
   capability_name: Scheduling & Appointment Management
-  confidence: 0.92
-  evidence: POST /api/vaccine/scheduling/timeslots/v1 'Get Vaccine Timeslots', POST .../hold/v1 'Hold
-    Vaccine Appointment', PATCH .../confirm/v1 'Confirm Vaccine Appointment'; schema AppointmentAvailability
-  reason: Despite the title mentioning prescription refills, the operations are unambiguously appointment
-    slot discovery, holding and confirmation for vaccine visits — appointment booking against provider/resource
-    availability.
+  confidence: 0.88
+  evidence: POST /api/vaccine/scheduling/timeslots/v1 'Get Vaccine Timeslots'; 'Hold Vaccine Appointment';
+    'Confirm Vaccine Appointment'; schema AppointmentAvailability
+  reason: Operations book appointment slots at pharmacy locations — appointment/slot availability, hold
+    and confirm — which is scheduling and appointment management within patient access.
 - tag: Refills
   spec_file: walgreens-refills-api-openapi.yml
   capability_id: BC-2850.30
   capability_id_l1: BC-2850
   capability_name: Outpatient & Specialty Pharmacy Operations
   confidence: 0.85
-  evidence: POST /api/rx/refill 'Submit Prescription Refill'; description 'process prescription refills
-    ... at any Walgreens pharmacy location'
-  reason: Operations submit prescription refill requests into retail pharmacy fulfilment (plus a checkout
-    WebView URL helper). This is retail/outpatient pharmacy dispensing operations.
+  evidence: 'POST /api/rx/refill ''Submit Prescription Refill''; description: ''process prescription refills
+    and transfers at any Walgreens pharmacy location'''
+  reason: Operations submit prescription refill requests to retail pharmacy locations, which is outpatient/retail
+    pharmacy dispensing operations.
 - tag: Transfers
   spec_file: walgreens-transfers-api-openapi.yml
   capability_id: BC-2850.30
   capability_id_l1: BC-2850
   capability_name: Outpatient & Specialty Pharmacy Operations
-  confidence: 0.8
-  evidence: POST /api/rx/transfer 'Submit Prescription Transfer'; description 'image-based prescription
-    transfers from other pharmacies'
-  reason: Submits a request to transfer an existing prescription from another pharmacy into a Walgreens
-    retail pharmacy for dispensing — retail/outpatient pharmacy operations.
+  confidence: 0.82
+  evidence: POST /api/rx/transfer 'Submit Prescription Transfer'; 'image-based prescription transfers
+    from other pharmacies'
+  reason: Submits prescription transfers between retail pharmacies, an outpatient/retail pharmacy operational
+    activity.
