@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Walgreens Prescription Refill Appointments Refills API
+  title: Walgreens Prescription Refill Refills API
   description: Enables medication management application developers to process prescription refills and transfers at any Walgreens pharmacy location. Supports barcode scanning for refill initiation and image-based prescription transfers from other pharmacies. Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.
   version: 1.0.0
   contact:
@@ -81,21 +81,6 @@ paths:
           description: Unauthorized - invalid token or affiliate
 components:
   schemas:
-    ObtainUrlResponse:
-      type: object
-      properties:
-        landingUrl:
-          type: string
-          description: Secure URL for initiating the checkout flow
-        template:
-          type: string
-          description: UI template identifier
-        token:
-          type: string
-          description: Secure token for the next step in the flow
-        err:
-          type: string
-          description: Error code if applicable
     ObtainUrlRequest:
       type: object
       required:
@@ -133,6 +118,21 @@ components:
         devInf:
           type: string
           description: Device information (e.g. iPhone,13.0)
+    ObtainUrlResponse:
+      type: object
+      properties:
+        landingUrl:
+          type: string
+          description: Secure URL for initiating the checkout flow
+        template:
+          type: string
+          description: UI template identifier
+        token:
+          type: string
+          description: Secure token for the next step in the flow
+        err:
+          type: string
+          description: Error code if applicable
     RefillRequest:
       type: object
       required:

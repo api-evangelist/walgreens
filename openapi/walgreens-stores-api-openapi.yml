@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Walgreens Prescription Refill Appointments Stores API
-  description: Enables medication management application developers to process prescription refills and transfers at any Walgreens pharmacy location. Supports barcode scanning for refill initiation and image-based prescription transfers from other pharmacies. Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.
-  version: 1.0.0
+  title: Walgreens Store Locator Stores API
+  description: Returns dynamic store location data and service information for 8,000+ Walgreens and Duane Reade locations across the United States. Supports search by geolocation, address, or zip code with filtering by store services such as 24-hour pharmacy, drive-thru, healthcare clinic, photo lab, flu shots, and immunization services.
+  version: 2.0.0
   contact:
     url: https://developer.walgreens.com
   termsOfService: https://developer.walgreens.com/terms
@@ -114,6 +114,81 @@ paths:
           description: Internal server error
 components:
   schemas:
+    StoreNumberListRequest:
+      type: object
+      required:
+      - apiKey
+      - affId
+      - act
+      properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
+        act:
+          type: string
+          description: Action type, always set to 'storenumber'
+          enum:
+          - storenumber
+        appVer:
+          type: string
+          description: Application version
+        devInf:
+          type: string
+          description: Device information
+    StoreSearchResult:
+      type: object
+      properties:
+        storeNumber:
+          type: string
+          description: Unique store identifier
+        latitude:
+          type: string
+          description: Store latitude coordinate
+        longitude:
+          type: string
+          description: Store longitude coordinate
+        distance:
+          type: number
+          description: Distance from search point in miles
+        storeSeoUrl:
+          type: string
+          description: SEO-friendly URL for the store page
+        mapUrl:
+          type: string
+          description: URL to map view for the store
+        photoInd:
+          type: string
+          description: Photo services indicator
+        emerActiveInd:
+          type: string
+          enum:
+          - Y
+          - N
+          description: Emergency status active indicator
+        emerStatusCode:
+          type: string
+          enum:
+          - '1'
+          - '2'
+          description: Emergency status code
+        emerStatusValue:
+          type: string
+          description: Emergency status description
+        store:
+          $ref: '#/components/schemas/StoreInfo'
+    StoreSearchResponse:
+      type: object
+      properties:
+        filter:
+          type: object
+          description: Applied filter criteria
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreSearchResult'
     StoreDetails:
       type: object
       properties:
@@ -174,94 +249,30 @@ components:
           items:
             type: object
           description: Compressed hours format
-    StoreSearchResponse:
+    StoreAddress:
       type: object
       properties:
-        filter:
-          type: object
-          description: Applied filter criteria
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreSearchResult'
-    StoreSearchResult:
-      type: object
-      properties:
-        storeNumber:
+        zip:
           type: string
-          description: Unique store identifier
-        latitude:
+          description: Zip code
+        locationName:
           type: string
-          description: Store latitude coordinate
-        longitude:
+          description: Location name or landmark
+        city:
           type: string
-          description: Store longitude coordinate
-        distance:
-          type: number
-          description: Distance from search point in miles
-        storeSeoUrl:
+          description: City name
+        street:
           type: string
-          description: SEO-friendly URL for the store page
-        mapUrl:
+          description: Street address
+        intersection:
           type: string
-          description: URL to map view for the store
-        photoInd:
+          description: Nearest intersection
+        county:
           type: string
-          description: Photo services indicator
-        emerActiveInd:
+          description: County name
+        state:
           type: string
-          enum:
-          - Y
-          - N
-          description: Emergency status active indicator
-        emerStatusCode:
-          type: string
-          enum:
-          - '1'
-          - '2'
-          description: Emergency status code
-        emerStatusValue:
-          type: string
-          description: Emergency status description
-        store:
-          $ref: '#/components/schemas/StoreInfo'
-    StoreDetailsRequest:
-      type: object
-      required:
-      - apiKey
-      - affId
-      - storeNo
-      properties:
-        apiKey:
-          type: string
-          description: Your Walgreens API key
-        affId:
-          type: string
-          description: Your affiliate identifier
-        storeNo:
-          type: string
-          description: Store number to query
-        appVer:
-          type: string
-          description: Application version
-        devInf:
-          type: string
-          description: Device information
-    StorePhone:
-      type: object
-      properties:
-        number:
-          type: string
-          description: Phone number
-        areaCode:
-          type: string
-          description: Area code
-        faxNumber:
-          type: string
-          description: Fax number
-        type:
-          type: string
-          description: Phone type
+          description: Two-letter state code
     StoreInfo:
       type: object
       properties:
@@ -304,30 +315,35 @@ components:
           description: List of available store services
         phone:
           $ref: '#/components/schemas/StorePhone'
-    StoreAddress:
+    StoreNumberListResponse:
       type: object
       properties:
-        zip:
+        errDesc:
           type: string
-          description: Zip code
-        locationName:
+          description: Error description if applicable
+        errCode:
           type: string
-          description: Location name or landmark
-        city:
+          description: Error code if applicable
+        store:
+          type: array
+          items:
+            type: string
+          description: Array of all store numbers
+    StorePhone:
+      type: object
+      properties:
+        number:
           type: string
-          description: City name
-        street:
+          description: Phone number
+        areaCode:
           type: string
-          description: Street address
-        intersection:
+          description: Area code
+        faxNumber:
           type: string
-          description: Nearest intersection
-        county:
+          description: Fax number
+        type:
           type: string
-          description: County name
-        state:
-          type: string
-          description: Two-letter state code
+          description: Phone type
     StoreSearchRequest:
       type: object
       required:
@@ -406,26 +422,12 @@ components:
         devInf:
           type: string
           description: Device information
-    StoreNumberListResponse:
-      type: object
-      properties:
-        errDesc:
-          type: string
-          description: Error description if applicable
-        errCode:
-          type: string
-          description: Error code if applicable
-        store:
-          type: array
-          items:
-            type: string
-          description: Array of all store numbers
-    StoreNumberListRequest:
+    StoreDetailsRequest:
       type: object
       required:
       - apiKey
       - affId
-      - act
+      - storeNo
       properties:
         apiKey:
           type: string
@@ -433,11 +435,9 @@ components:
         affId:
           type: string
           description: Your affiliate identifier
-        act:
+        storeNo:
           type: string
-          description: Action type, always set to 'storenumber'
-          enum:
-          - storenumber
+          description: Store number to query
         appVer:
           type: string
           description: Application version

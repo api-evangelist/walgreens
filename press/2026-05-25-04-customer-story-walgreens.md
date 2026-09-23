@@ -1,7 +1,9 @@
 ---
 title: 'Customer Story: Walgreens'
 url: https://www.databricks.com/customers/walgreens
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Walgreens" press release artificial intelligence'
 position: 4
 source: serpapi-google

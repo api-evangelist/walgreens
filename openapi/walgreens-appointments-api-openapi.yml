@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Walgreens Prescription Refill Appointments API
-  description: Enables medication management application developers to process prescription refills and transfers at any Walgreens pharmacy location. Supports barcode scanning for refill initiation and image-based prescription transfers from other pharmacies. Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.
+  title: Walgreens Vaccine Scheduling Appointments API
+  description: 'Allows developers to integrate vaccine and immunization appointment booking capabilities across all Walgreens locations in the United States and Puerto Rico. The API provides a complete end-to-end vaccine scheduling workflow: eligibility checking, timeslot availability, appointment holds, patient registration, and booking confirmation. Supports 19+ vaccine types including COVID-19, influenza, RSV, MMR, HPV, and travel immunizations.'
   version: 1.0.0
   contact:
     url: https://developer.walgreens.com
@@ -193,13 +193,6 @@ components:
         engagementId:
           type: string
           description: Unique engagement identifier for subsequent steps
-    TimeslotsResponse:
-      type: object
-      properties:
-        locations:
-          type: array
-          items:
-            $ref: '#/components/schemas/VaccineLocation'
     TimeslotsRequest:
       type: object
       required:
@@ -261,6 +254,39 @@ components:
               type: number
               format: double
               description: Search longitude coordinate
+    AppointmentAvailability:
+      type: object
+      properties:
+        manufacturer:
+          type: array
+          items:
+            type: object
+            properties:
+              productId:
+                type: string
+              vaccineCode:
+                type: string
+              vaccineName:
+                type: string
+              category:
+                type: string
+              prescriptionRequired:
+                type: boolean
+        date:
+          type: string
+          format: date
+          description: Available date
+        day:
+          type: string
+          description: Day of week
+        slots:
+          type: array
+          items:
+            type: string
+          description: Available time slots (e.g. "09:30 am")
+        numberOfSlotsAvailable:
+          type: integer
+          description: Total number of open slots for the date
     HoldRequest:
       type: object
       required:
@@ -353,39 +379,13 @@ components:
         engagementId:
           type: string
           description: Engagement ID from the hold response
-    AppointmentAvailability:
+    TimeslotsResponse:
       type: object
       properties:
-        manufacturer:
+        locations:
           type: array
           items:
-            type: object
-            properties:
-              productId:
-                type: string
-              vaccineCode:
-                type: string
-              vaccineName:
-                type: string
-              category:
-                type: string
-              prescriptionRequired:
-                type: boolean
-        date:
-          type: string
-          format: date
-          description: Available date
-        day:
-          type: string
-          description: Day of week
-        slots:
-          type: array
-          items:
-            type: string
-          description: Available time slots (e.g. "09:30 am")
-        numberOfSlotsAvailable:
-          type: integer
-          description: Total number of open slots for the date
+            $ref: '#/components/schemas/VaccineLocation'
   securitySchemes:
     apiKey:
       type: apiKey

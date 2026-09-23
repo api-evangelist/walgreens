@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Walgreens Prescription Refill Appointments Eligibility API
-  description: Enables medication management application developers to process prescription refills and transfers at any Walgreens pharmacy location. Supports barcode scanning for refill initiation and image-based prescription transfers from other pharmacies. Processes prescriptions from 8,200+ Walgreens pharmacies with mobile-optimized WebView checkout flows.
+  title: Walgreens Vaccine Scheduling Eligibility API
+  description: 'Allows developers to integrate vaccine and immunization appointment booking capabilities across all Walgreens locations in the United States and Puerto Rico. The API provides a complete end-to-end vaccine scheduling workflow: eligibility checking, timeslot availability, appointment holds, patient registration, and booking confirmation. Supports 19+ vaccine types including COVID-19, influenza, RSV, MMR, HPV, and travel immunizations.'
   version: 1.0.0
   contact:
     url: https://developer.walgreens.com
@@ -68,29 +68,28 @@ components:
         maximumAge:
           type: integer
           description: Maximum age for vaccine eligibility
-    EligibilityRequest:
+    EligibilityResponse:
       type: object
-      required:
-      - apiKey
-      - affId
-      - state
-      - dob
       properties:
-        apiKey:
-          type: string
-          description: Your Walgreens API key
-        affId:
-          type: string
-          description: Your affiliate identifier
         state:
           type: string
-          description: Two-character US state code
-          example: IL
+          description: State code from request
+        age:
+          type: integer
+          description: Patient age calculated from DOB
         dob:
           type: string
-          format: date
-          description: Patient date of birth in YYYY-MM-DD format
-          example: '1990-05-15'
+          description: Date of birth in MM/DD/YYYY format
+        eligibleVaccineList:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineEligibility'
+          description: List of vaccines the patient is eligible for
+        inEligibleVaccineList:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineEligibility'
+          description: List of vaccines the patient is not eligible for
     VaccineWarning:
       type: object
       properties:
@@ -117,28 +116,29 @@ components:
         maximumAge:
           type: integer
           description: Maximum age threshold for warning
-    EligibilityResponse:
+    EligibilityRequest:
       type: object
+      required:
+      - apiKey
+      - affId
+      - state
+      - dob
       properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
         state:
           type: string
-          description: State code from request
-        age:
-          type: integer
-          description: Patient age calculated from DOB
+          description: Two-character US state code
+          example: IL
         dob:
           type: string
-          description: Date of birth in MM/DD/YYYY format
-        eligibleVaccineList:
-          type: array
-          items:
-            $ref: '#/components/schemas/VaccineEligibility'
-          description: List of vaccines the patient is eligible for
-        inEligibleVaccineList:
-          type: array
-          items:
-            $ref: '#/components/schemas/VaccineEligibility'
-          description: List of vaccines the patient is not eligible for
+          format: date
+          description: Patient date of birth in YYYY-MM-DD format
+          example: '1990-05-15'
     VaccineEligibility:
       type: object
       properties:

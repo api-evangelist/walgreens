@@ -1,24 +1,34 @@
 {
   "provider": "walgreens",
   "sources": [
-    "walgreens-appointments-api-openapi.yml",
-    "walgreens-eligibility-api-openapi.yml",
-    "walgreens-patients-api-openapi.yml",
-    "walgreens-refills-api-openapi.yml",
-    "walgreens-stores-api-openapi.yml",
-    "walgreens-transfers-api-openapi.yml"
+    "_original/walgreens-prescription-refill-openapi.yml",
+    "_original/walgreens-store-locator-openapi.yml",
+    "_original/walgreens-vaccine-scheduling-openapi.yml"
   ],
   "outputs": [
+    "walgreens-refills-api-openapi.yml",
+    "walgreens-transfers-api-openapi.yml",
+    "walgreens-stores-api-openapi.yml",
     "walgreens-appointments-api-openapi.yml",
     "walgreens-eligibility-api-openapi.yml",
-    "walgreens-patients-api-openapi.yml",
-    "walgreens-refills-api-openapi.yml",
-    "walgreens-stores-api-openapi.yml",
-    "walgreens-transfers-api-openapi.yml"
+    "walgreens-patients-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "walgreens-prescription-refill-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "walgreens-store-locator-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "walgreens-vaccine-scheduling-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "walgreens-appointments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "walgreens-eligibility-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "walgreens-patients-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "walgreens-refills-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "walgreens-stores-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "walgreens-transfers-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
