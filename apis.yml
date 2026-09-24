@@ -78,8 +78,6 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-store-schema.json
-  - type: GraphQL
-    url: graphql/walgreens-graphql.md
   - type: Documentation
     url: https://developer.walgreens.com/api/rx/rest
   - type: Documentation
@@ -102,8 +100,6 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-store-schema.json
-  - type: GraphQL
-    url: graphql/walgreens-graphql.md
   - type: Documentation
     url: https://developer.walgreens.com/api/rx/rest
   - type: Documentation
@@ -126,8 +122,6 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-store-schema.json
-  - type: GraphQL
-    url: graphql/walgreens-graphql.md
   - type: Documentation
     url: https://developer.walgreens.com/api/rx/rest
   - type: Documentation
@@ -150,8 +144,6 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-store-schema.json
-  - type: GraphQL
-    url: graphql/walgreens-graphql.md
   - type: Documentation
     url: https://developer.walgreens.com/api/rx/rest
   - type: Documentation
@@ -174,8 +166,6 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-store-schema.json
-  - type: GraphQL
-    url: graphql/walgreens-graphql.md
   - type: Documentation
     url: https://developer.walgreens.com/api/rx/rest
   - type: Documentation
@@ -198,8 +188,6 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-store-schema.json
-  - type: GraphQL
-    url: graphql/walgreens-graphql.md
   - type: Documentation
     url: https://developer.walgreens.com/api/rx/rest
   - type: Documentation
