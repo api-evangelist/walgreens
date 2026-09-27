@@ -50,46 +50,6 @@ paths:
           description: Internal server error
 components:
   schemas:
-    VaccineRestriction:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Restriction code
-        message:
-          type: string
-          description: Restriction message for display
-        vaccineCode:
-          type: string
-          description: Associated vaccine code
-        minimumAge:
-          type: integer
-          description: Minimum age for vaccine eligibility
-        maximumAge:
-          type: integer
-          description: Maximum age for vaccine eligibility
-    EligibilityResponse:
-      type: object
-      properties:
-        state:
-          type: string
-          description: State code from request
-        age:
-          type: integer
-          description: Patient age calculated from DOB
-        dob:
-          type: string
-          description: Date of birth in MM/DD/YYYY format
-        eligibleVaccineList:
-          type: array
-          items:
-            $ref: '#/components/schemas/VaccineEligibility'
-          description: List of vaccines the patient is eligible for
-        inEligibleVaccineList:
-          type: array
-          items:
-            $ref: '#/components/schemas/VaccineEligibility'
-          description: List of vaccines the patient is not eligible for
     VaccineWarning:
       type: object
       properties:
@@ -179,6 +139,46 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VaccineWarning'
+    VaccineRestriction:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Restriction code
+        message:
+          type: string
+          description: Restriction message for display
+        vaccineCode:
+          type: string
+          description: Associated vaccine code
+        minimumAge:
+          type: integer
+          description: Minimum age for vaccine eligibility
+        maximumAge:
+          type: integer
+          description: Maximum age for vaccine eligibility
+    EligibilityResponse:
+      type: object
+      properties:
+        state:
+          type: string
+          description: State code from request
+        age:
+          type: integer
+          description: Patient age calculated from DOB
+        dob:
+          type: string
+          description: Date of birth in MM/DD/YYYY format
+        eligibleVaccineList:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineEligibility'
+          description: List of vaccines the patient is eligible for
+        inEligibleVaccineList:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineEligibility'
+          description: List of vaccines the patient is not eligible for
   securitySchemes:
     apiKey:
       type: apiKey

@@ -131,6 +131,12 @@ paths:
           description: Internal server error
 components:
   schemas:
+    HoldResponse:
+      type: object
+      properties:
+        engagementId:
+          type: string
+          description: Unique engagement identifier for subsequent steps
     VaccineLocation:
       type: object
       properties:
@@ -187,12 +193,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AppointmentAvailability'
-    HoldResponse:
+    ConfirmRequest:
       type: object
+      required:
+      - apiKey
+      - affId
+      - engagementId
       properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
         engagementId:
           type: string
-          description: Unique engagement identifier for subsequent steps
+          description: Engagement ID from the hold response
     TimeslotsRequest:
       type: object
       required:
@@ -254,39 +270,6 @@ components:
               type: number
               format: double
               description: Search longitude coordinate
-    AppointmentAvailability:
-      type: object
-      properties:
-        manufacturer:
-          type: array
-          items:
-            type: object
-            properties:
-              productId:
-                type: string
-              vaccineCode:
-                type: string
-              vaccineName:
-                type: string
-              category:
-                type: string
-              prescriptionRequired:
-                type: boolean
-        date:
-          type: string
-          format: date
-          description: Available date
-        day:
-          type: string
-          description: Day of week
-        slots:
-          type: array
-          items:
-            type: string
-          description: Available time slots (e.g. "09:30 am")
-        numberOfSlotsAvailable:
-          type: integer
-          description: Total number of open slots for the date
     HoldRequest:
       type: object
       required:
@@ -363,22 +346,6 @@ components:
                       type: string
                     question:
                       type: string
-    ConfirmRequest:
-      type: object
-      required:
-      - apiKey
-      - affId
-      - engagementId
-      properties:
-        apiKey:
-          type: string
-          description: Your Walgreens API key
-        affId:
-          type: string
-          description: Your affiliate identifier
-        engagementId:
-          type: string
-          description: Engagement ID from the hold response
     TimeslotsResponse:
       type: object
       properties:
@@ -386,6 +353,39 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VaccineLocation'
+    AppointmentAvailability:
+      type: object
+      properties:
+        manufacturer:
+          type: array
+          items:
+            type: object
+            properties:
+              productId:
+                type: string
+              vaccineCode:
+                type: string
+              vaccineName:
+                type: string
+              category:
+                type: string
+              prescriptionRequired:
+                type: boolean
+        date:
+          type: string
+          format: date
+          description: Available date
+        day:
+          type: string
+          description: Day of week
+        slots:
+          type: array
+          items:
+            type: string
+          description: Available time slots (e.g. "09:30 am")
+        numberOfSlotsAvailable:
+          type: integer
+          description: Total number of open slots for the date
   securitySchemes:
     apiKey:
       type: apiKey
