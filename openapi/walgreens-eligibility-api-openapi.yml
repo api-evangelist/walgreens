@@ -50,6 +50,68 @@ paths:
           description: Internal server error
 components:
   schemas:
+    EligibilityResponse:
+      type: object
+      properties:
+        state:
+          type: string
+          description: State code from request
+        age:
+          type: integer
+          description: Patient age calculated from DOB
+        dob:
+          type: string
+          description: Date of birth in MM/DD/YYYY format
+        eligibleVaccineList:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineEligibility'
+          description: List of vaccines the patient is eligible for
+        inEligibleVaccineList:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineEligibility'
+          description: List of vaccines the patient is not eligible for
+    VaccineEligibility:
+      type: object
+      properties:
+        vaccineCode:
+          type: string
+          description: Vaccine code identifier
+          example: '207'
+        displayName:
+          type: string
+          description: Human-readable vaccine name
+          example: COVID-19 Vaccine
+        eligible:
+          type: boolean
+          description: Whether patient is eligible for this vaccine
+        vaccineType:
+          type: string
+          description: Category of vaccine
+        vaccineDisplayOrder:
+          type: integer
+          description: Display ordering for UI
+        multiDose:
+          type: boolean
+          description: Whether this vaccine requires multiple doses
+        seriesNumber:
+          type: string
+          description: Series number for multi-dose vaccines
+        group:
+          type: string
+          description: Vaccine group classification
+        serviceId:
+          type: string
+          description: Internal service identifier
+        restrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineRestriction'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineWarning'
     VaccineWarning:
       type: object
       properties:
@@ -99,46 +161,6 @@ components:
           format: date
           description: Patient date of birth in YYYY-MM-DD format
           example: '1990-05-15'
-    VaccineEligibility:
-      type: object
-      properties:
-        vaccineCode:
-          type: string
-          description: Vaccine code identifier
-          example: '207'
-        displayName:
-          type: string
-          description: Human-readable vaccine name
-          example: COVID-19 Vaccine
-        eligible:
-          type: boolean
-          description: Whether patient is eligible for this vaccine
-        vaccineType:
-          type: string
-          description: Category of vaccine
-        vaccineDisplayOrder:
-          type: integer
-          description: Display ordering for UI
-        multiDose:
-          type: boolean
-          description: Whether this vaccine requires multiple doses
-        seriesNumber:
-          type: string
-          description: Series number for multi-dose vaccines
-        group:
-          type: string
-          description: Vaccine group classification
-        serviceId:
-          type: string
-          description: Internal service identifier
-        restrictions:
-          type: array
-          items:
-            $ref: '#/components/schemas/VaccineRestriction'
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/VaccineWarning'
     VaccineRestriction:
       type: object
       properties:
@@ -157,28 +179,6 @@ components:
         maximumAge:
           type: integer
           description: Maximum age for vaccine eligibility
-    EligibilityResponse:
-      type: object
-      properties:
-        state:
-          type: string
-          description: State code from request
-        age:
-          type: integer
-          description: Patient age calculated from DOB
-        dob:
-          type: string
-          description: Date of birth in MM/DD/YYYY format
-        eligibleVaccineList:
-          type: array
-          items:
-            $ref: '#/components/schemas/VaccineEligibility'
-          description: List of vaccines the patient is eligible for
-        inEligibleVaccineList:
-          type: array
-          items:
-            $ref: '#/components/schemas/VaccineEligibility'
-          description: List of vaccines the patient is not eligible for
   securitySchemes:
     apiKey:
       type: apiKey
