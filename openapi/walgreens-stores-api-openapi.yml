@@ -114,47 +114,104 @@ paths:
           description: Internal server error
 components:
   schemas:
-    StoreSearchResult:
+    StoreNumberListResponse:
+      type: object
+      properties:
+        errDesc:
+          type: string
+          description: Error description if applicable
+        errCode:
+          type: string
+          description: Error code if applicable
+        store:
+          type: array
+          items:
+            type: string
+          description: Array of all store numbers
+    DepartmentHours:
+      type: object
+      properties:
+        avail:
+          type: string
+          description: Availability flag
+        wkdaySameInd:
+          type: string
+          description: Weekday same hours indicator
+        hours:
+          type: array
+          items:
+            type: object
+          description: Weekly hours schedule
+        hrs:
+          type: array
+          items:
+            type: object
+          description: Compressed hours format
+    StoreAddress:
+      type: object
+      properties:
+        zip:
+          type: string
+          description: Zip code
+        locationName:
+          type: string
+          description: Location name or landmark
+        city:
+          type: string
+          description: City name
+        street:
+          type: string
+          description: Street address
+        intersection:
+          type: string
+          description: Nearest intersection
+        county:
+          type: string
+          description: County name
+        state:
+          type: string
+          description: Two-letter state code
+    StoreDetails:
       type: object
       properties:
         storeNumber:
           type: string
-          description: Unique store identifier
+          description: Store number
         latitude:
           type: string
-          description: Store latitude coordinate
+          description: Store latitude
         longitude:
           type: string
-          description: Store longitude coordinate
-        distance:
-          type: number
-          description: Distance from search point in miles
-        storeSeoUrl:
+          description: Store longitude
+        npiCode:
           type: string
-          description: SEO-friendly URL for the store page
-        mapUrl:
+          description: National Provider Identifier code
+        clinicId:
           type: string
-          description: URL to map view for the store
-        photoInd:
+          description: Clinic identifier if clinic is present
+        timeZone:
           type: string
-          description: Photo services indicator
+          description: Store timezone
         emerActiveInd:
           type: string
           enum:
           - Y
           - N
           description: Emergency status active indicator
-        emerStatusCode:
-          type: string
-          enum:
-          - '1'
-          - '2'
-          description: Emergency status code
-        emerStatusValue:
-          type: string
-          description: Emergency status description
-        store:
-          $ref: '#/components/schemas/StoreInfo'
+        pharmacy:
+          $ref: '#/components/schemas/DepartmentHours'
+        storeInfo:
+          $ref: '#/components/schemas/DepartmentHours'
+        clinic:
+          $ref: '#/components/schemas/DepartmentHours'
+        address:
+          $ref: '#/components/schemas/StoreAddress'
+        serviceIndicators:
+          type: object
+          description: Map of service type to availability
+        storeStatus:
+          type: object
+          description: Current store operational status
     StoreSearchRequest:
       type: object
       required:
@@ -233,94 +290,6 @@ components:
         devInf:
           type: string
           description: Device information
-    StoreDetailsRequest:
-      type: object
-      required:
-      - apiKey
-      - affId
-      - storeNo
-      properties:
-        apiKey:
-          type: string
-          description: Your Walgreens API key
-        affId:
-          type: string
-          description: Your affiliate identifier
-        storeNo:
-          type: string
-          description: Store number to query
-        appVer:
-          type: string
-          description: Application version
-        devInf:
-          type: string
-          description: Device information
-    StoreDetails:
-      type: object
-      properties:
-        storeNumber:
-          type: string
-          description: Store number
-        latitude:
-          type: string
-          description: Store latitude
-        longitude:
-          type: string
-          description: Store longitude
-        npiCode:
-          type: string
-          description: National Provider Identifier code
-        clinicId:
-          type: string
-          description: Clinic identifier if clinic is present
-        timeZone:
-          type: string
-          description: Store timezone
-        emerActiveInd:
-          type: string
-          enum:
-          - Y
-          - N
-          description: Emergency status active indicator
-        pharmacy:
-          $ref: '#/components/schemas/DepartmentHours'
-        storeInfo:
-          $ref: '#/components/schemas/DepartmentHours'
-        clinic:
-          $ref: '#/components/schemas/DepartmentHours'
-        address:
-          $ref: '#/components/schemas/StoreAddress'
-        serviceIndicators:
-          type: object
-          description: Map of service type to availability
-        storeStatus:
-          type: object
-          description: Current store operational status
-    StoreSearchResponse:
-      type: object
-      properties:
-        filter:
-          type: object
-          description: Applied filter criteria
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreSearchResult'
-    StorePhone:
-      type: object
-      properties:
-        number:
-          type: string
-          description: Phone number
-        areaCode:
-          type: string
-          description: Area code
-        faxNumber:
-          type: string
-          description: Fax number
-        type:
-          type: string
-          description: Phone type
     StoreNumberListRequest:
       type: object
       required:
@@ -345,30 +314,53 @@ components:
         devInf:
           type: string
           description: Device information
-    StoreAddress:
+    StoreDetailsRequest:
+      type: object
+      required:
+      - apiKey
+      - affId
+      - storeNo
+      properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
+        storeNo:
+          type: string
+          description: Store number to query
+        appVer:
+          type: string
+          description: Application version
+        devInf:
+          type: string
+          description: Device information
+    StorePhone:
       type: object
       properties:
-        zip:
+        number:
           type: string
-          description: Zip code
-        locationName:
+          description: Phone number
+        areaCode:
           type: string
-          description: Location name or landmark
-        city:
+          description: Area code
+        faxNumber:
           type: string
-          description: City name
-        street:
+          description: Fax number
+        type:
           type: string
-          description: Street address
-        intersection:
-          type: string
-          description: Nearest intersection
-        county:
-          type: string
-          description: County name
-        state:
-          type: string
-          description: Two-letter state code
+          description: Phone type
+    StoreSearchResponse:
+      type: object
+      properties:
+        filter:
+          type: object
+          description: Applied filter criteria
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreSearchResult'
     StoreInfo:
       type: object
       properties:
@@ -411,39 +403,47 @@ components:
           description: List of available store services
         phone:
           $ref: '#/components/schemas/StorePhone'
-    StoreNumberListResponse:
+    StoreSearchResult:
       type: object
       properties:
-        errDesc:
+        storeNumber:
           type: string
-          description: Error description if applicable
-        errCode:
+          description: Unique store identifier
+        latitude:
           type: string
-          description: Error code if applicable
+          description: Store latitude coordinate
+        longitude:
+          type: string
+          description: Store longitude coordinate
+        distance:
+          type: number
+          description: Distance from search point in miles
+        storeSeoUrl:
+          type: string
+          description: SEO-friendly URL for the store page
+        mapUrl:
+          type: string
+          description: URL to map view for the store
+        photoInd:
+          type: string
+          description: Photo services indicator
+        emerActiveInd:
+          type: string
+          enum:
+          - Y
+          - N
+          description: Emergency status active indicator
+        emerStatusCode:
+          type: string
+          enum:
+          - '1'
+          - '2'
+          description: Emergency status code
+        emerStatusValue:
+          type: string
+          description: Emergency status description
         store:
-          type: array
-          items:
-            type: string
-          description: Array of all store numbers
-    DepartmentHours:
-      type: object
-      properties:
-        avail:
-          type: string
-          description: Availability flag
-        wkdaySameInd:
-          type: string
-          description: Weekday same hours indicator
-        hours:
-          type: array
-          items:
-            type: object
-          description: Weekly hours schedule
-        hrs:
-          type: array
-          items:
-            type: object
-          description: Compressed hours format
+          $ref: '#/components/schemas/StoreInfo'
   securitySchemes:
     apiKey:
       type: apiKey

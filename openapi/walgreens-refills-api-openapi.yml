@@ -81,51 +81,6 @@ paths:
           description: Unauthorized - invalid token or affiliate
 components:
   schemas:
-    RefillRequest:
-      type: object
-      required:
-      - affId
-      - token
-      - rxNo
-      - appID
-      - act
-      properties:
-        affId:
-          type: string
-          description: Your affiliate identifier
-        token:
-          type: string
-          description: Secure token from the Obtain URL response
-        rxNo:
-          type: string
-          description: Prescription number obtained from barcode scan
-        appID:
-          type: string
-          enum:
-          - refillByScan
-          description: Application identifier
-        act:
-          type: string
-          enum:
-          - chkExpRx
-          description: Action type
-        lat:
-          type: number
-          format: double
-          description: Patient latitude for nearest pharmacy lookup
-        lng:
-          type: number
-          format: double
-          description: Patient longitude for nearest pharmacy lookup
-        trackingId:
-          type: string
-          description: Optional tracking identifier for analytics
-        appVer:
-          type: string
-          description: Application version
-        devInf:
-          type: string
-          description: Device information
     ObtainUrlRequest:
       type: object
       required:
@@ -178,6 +133,51 @@ components:
         err:
           type: string
           description: Error code if applicable
+    RefillRequest:
+      type: object
+      required:
+      - affId
+      - token
+      - rxNo
+      - appID
+      - act
+      properties:
+        affId:
+          type: string
+          description: Your affiliate identifier
+        token:
+          type: string
+          description: Secure token from the Obtain URL response
+        rxNo:
+          type: string
+          description: Prescription number obtained from barcode scan
+        appID:
+          type: string
+          enum:
+          - refillByScan
+          description: Application identifier
+        act:
+          type: string
+          enum:
+          - chkExpRx
+          description: Action type
+        lat:
+          type: number
+          format: double
+          description: Patient latitude for nearest pharmacy lookup
+        lng:
+          type: number
+          format: double
+          description: Patient longitude for nearest pharmacy lookup
+        trackingId:
+          type: string
+          description: Optional tracking identifier for analytics
+        appVer:
+          type: string
+          description: Application version
+        devInf:
+          type: string
+          description: Device information
   securitySchemes:
     apiKey:
       type: apiKey

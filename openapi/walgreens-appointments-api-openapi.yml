@@ -131,6 +131,146 @@ paths:
           description: Internal server error
 components:
   schemas:
+    TimeslotsRequest:
+      type: object
+      required:
+      - apiKey
+      - affId
+      - state
+      - zipCode
+      - dob
+      - vaccine
+      - appointmentAvailability
+      - position
+      properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
+        state:
+          type: string
+          description: Two-character US state code
+        zipCode:
+          type: string
+          description: Patient or search zip code
+        dob:
+          type: string
+          format: date
+          description: Patient date of birth in YYYY-MM-DD format
+        vaccine:
+          type: array
+          items:
+            type: string
+          maxItems: 4
+          description: Array of up to 4 vaccine code IDs
+        appointmentAvailability:
+          type: object
+          required:
+          - startDateTime
+          properties:
+            startDateTime:
+              type: string
+              format: date
+              description: Start date for available appointments
+            endDateTime:
+              type: string
+              format: date
+              description: Optional end date for appointment range
+        position:
+          type: object
+          required:
+          - latitude
+          - longitude
+          properties:
+            latitude:
+              type: number
+              format: double
+              description: Search latitude coordinate
+            longitude:
+              type: number
+              format: double
+              description: Search longitude coordinate
+    VaccineLocation:
+      type: object
+      properties:
+        locationId:
+          type: string
+          description: Unique location identifier
+        name:
+          type: string
+          description: Store name
+        storenumber:
+          type: string
+          description: Walgreens store number
+        description:
+          type: string
+          description: Store description
+        position:
+          type: object
+          properties:
+            latitude:
+              type: number
+            longitude:
+              type: number
+        address:
+          type: object
+          properties:
+            line1:
+              type: string
+            line2:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            country:
+              type: string
+            zip:
+              type: string
+        phone:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              number:
+                type: string
+        distance:
+          type: number
+          description: Distance in miles from search coordinates
+        timeZone:
+          type: string
+          description: Location timezone
+        appointmentAvailability:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppointmentAvailability'
+    TimeslotsResponse:
+      type: object
+      properties:
+        locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineLocation'
+    ConfirmRequest:
+      type: object
+      required:
+      - apiKey
+      - affId
+      - engagementId
+      properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
+        engagementId:
+          type: string
+          description: Engagement ID from the hold response
     AppointmentAvailability:
       type: object
       properties:
@@ -164,12 +304,6 @@ components:
         numberOfSlotsAvailable:
           type: integer
           description: Total number of open slots for the date
-    HoldResponse:
-      type: object
-      properties:
-        engagementId:
-          type: string
-          description: Unique engagement identifier for subsequent steps
     HoldRequest:
       type: object
       required:
@@ -246,146 +380,12 @@ components:
                       type: string
                     question:
                       type: string
-    TimeslotsResponse:
+    HoldResponse:
       type: object
       properties:
-        locations:
-          type: array
-          items:
-            $ref: '#/components/schemas/VaccineLocation'
-    TimeslotsRequest:
-      type: object
-      required:
-      - apiKey
-      - affId
-      - state
-      - zipCode
-      - dob
-      - vaccine
-      - appointmentAvailability
-      - position
-      properties:
-        apiKey:
-          type: string
-          description: Your Walgreens API key
-        affId:
-          type: string
-          description: Your affiliate identifier
-        state:
-          type: string
-          description: Two-character US state code
-        zipCode:
-          type: string
-          description: Patient or search zip code
-        dob:
-          type: string
-          format: date
-          description: Patient date of birth in YYYY-MM-DD format
-        vaccine:
-          type: array
-          items:
-            type: string
-          maxItems: 4
-          description: Array of up to 4 vaccine code IDs
-        appointmentAvailability:
-          type: object
-          required:
-          - startDateTime
-          properties:
-            startDateTime:
-              type: string
-              format: date
-              description: Start date for available appointments
-            endDateTime:
-              type: string
-              format: date
-              description: Optional end date for appointment range
-        position:
-          type: object
-          required:
-          - latitude
-          - longitude
-          properties:
-            latitude:
-              type: number
-              format: double
-              description: Search latitude coordinate
-            longitude:
-              type: number
-              format: double
-              description: Search longitude coordinate
-    ConfirmRequest:
-      type: object
-      required:
-      - apiKey
-      - affId
-      - engagementId
-      properties:
-        apiKey:
-          type: string
-          description: Your Walgreens API key
-        affId:
-          type: string
-          description: Your affiliate identifier
         engagementId:
           type: string
-          description: Engagement ID from the hold response
-    VaccineLocation:
-      type: object
-      properties:
-        locationId:
-          type: string
-          description: Unique location identifier
-        name:
-          type: string
-          description: Store name
-        storenumber:
-          type: string
-          description: Walgreens store number
-        description:
-          type: string
-          description: Store description
-        position:
-          type: object
-          properties:
-            latitude:
-              type: number
-            longitude:
-              type: number
-        address:
-          type: object
-          properties:
-            line1:
-              type: string
-            line2:
-              type: string
-            city:
-              type: string
-            state:
-              type: string
-            country:
-              type: string
-            zip:
-              type: string
-        phone:
-          type: array
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-              number:
-                type: string
-        distance:
-          type: number
-          description: Distance in miles from search coordinates
-        timeZone:
-          type: string
-          description: Location timezone
-        appointmentAvailability:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppointmentAvailability'
+          description: Unique engagement identifier for subsequent steps
   securitySchemes:
     apiKey:
       type: apiKey

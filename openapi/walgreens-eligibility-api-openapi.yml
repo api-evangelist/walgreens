@@ -50,28 +50,73 @@ paths:
           description: Internal server error
 components:
   schemas:
-    EligibilityResponse:
+    VaccineWarning:
       type: object
       properties:
+        code:
+          type: string
+          description: Warning code
+        message:
+          type: string
+          description: Warning message for display
+        vaccineCode:
+          type: string
+          description: Associated vaccine code
+        question:
+          type: string
+          description: Screening question text
+        answers:
+          type: array
+          items:
+            type: string
+          description: Acceptable answers to the screening question
+        minimumAge:
+          type: integer
+          description: Minimum age threshold for warning
+        maximumAge:
+          type: integer
+          description: Maximum age threshold for warning
+    VaccineRestriction:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Restriction code
+        message:
+          type: string
+          description: Restriction message for display
+        vaccineCode:
+          type: string
+          description: Associated vaccine code
+        minimumAge:
+          type: integer
+          description: Minimum age for vaccine eligibility
+        maximumAge:
+          type: integer
+          description: Maximum age for vaccine eligibility
+    EligibilityRequest:
+      type: object
+      required:
+      - apiKey
+      - affId
+      - state
+      - dob
+      properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
         state:
           type: string
-          description: State code from request
-        age:
-          type: integer
-          description: Patient age calculated from DOB
+          description: Two-character US state code
+          example: IL
         dob:
           type: string
-          description: Date of birth in MM/DD/YYYY format
-        eligibleVaccineList:
-          type: array
-          items:
-            $ref: '#/components/schemas/VaccineEligibility'
-          description: List of vaccines the patient is eligible for
-        inEligibleVaccineList:
-          type: array
-          items:
-            $ref: '#/components/schemas/VaccineEligibility'
-          description: List of vaccines the patient is not eligible for
+          format: date
+          description: Patient date of birth in YYYY-MM-DD format
+          example: '1990-05-15'
     VaccineEligibility:
       type: object
       properties:
@@ -112,73 +157,28 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VaccineWarning'
-    VaccineWarning:
+    EligibilityResponse:
       type: object
       properties:
-        code:
-          type: string
-          description: Warning code
-        message:
-          type: string
-          description: Warning message for display
-        vaccineCode:
-          type: string
-          description: Associated vaccine code
-        question:
-          type: string
-          description: Screening question text
-        answers:
-          type: array
-          items:
-            type: string
-          description: Acceptable answers to the screening question
-        minimumAge:
-          type: integer
-          description: Minimum age threshold for warning
-        maximumAge:
-          type: integer
-          description: Maximum age threshold for warning
-    EligibilityRequest:
-      type: object
-      required:
-      - apiKey
-      - affId
-      - state
-      - dob
-      properties:
-        apiKey:
-          type: string
-          description: Your Walgreens API key
-        affId:
-          type: string
-          description: Your affiliate identifier
         state:
           type: string
-          description: Two-character US state code
-          example: IL
+          description: State code from request
+        age:
+          type: integer
+          description: Patient age calculated from DOB
         dob:
           type: string
-          format: date
-          description: Patient date of birth in YYYY-MM-DD format
-          example: '1990-05-15'
-    VaccineRestriction:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Restriction code
-        message:
-          type: string
-          description: Restriction message for display
-        vaccineCode:
-          type: string
-          description: Associated vaccine code
-        minimumAge:
-          type: integer
-          description: Minimum age for vaccine eligibility
-        maximumAge:
-          type: integer
-          description: Maximum age for vaccine eligibility
+          description: Date of birth in MM/DD/YYYY format
+        eligibleVaccineList:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineEligibility'
+          description: List of vaccines the patient is eligible for
+        inEligibleVaccineList:
+          type: array
+          items:
+            $ref: '#/components/schemas/VaccineEligibility'
+          description: List of vaccines the patient is not eligible for
   securitySchemes:
     apiKey:
       type: apiKey
