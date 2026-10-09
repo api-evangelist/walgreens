@@ -196,6 +196,12 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/walgreens/refs/heads/main/json-schema/walgreens-vaccine-appointment-schema.json
 common:
+- type: Plans
+  url: plans/walgreens-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/walgreens-rate-limits.yml
+- type: FinOps
+  url: finops/walgreens-finops.yml
 - type: CapabilityMap
   url: capabilities/walgreens-capability-edges.yml
   name: Walgreens Business Capability Map
