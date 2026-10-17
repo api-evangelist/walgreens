@@ -118,21 +118,6 @@ components:
         devInf:
           type: string
           description: Device information (e.g. iPhone,13.0)
-    ObtainUrlResponse:
-      type: object
-      properties:
-        landingUrl:
-          type: string
-          description: Secure URL for initiating the checkout flow
-        template:
-          type: string
-          description: UI template identifier
-        token:
-          type: string
-          description: Secure token for the next step in the flow
-        err:
-          type: string
-          description: Error code if applicable
     RefillRequest:
       type: object
       required:
@@ -178,6 +163,21 @@ components:
         devInf:
           type: string
           description: Device information
+    ObtainUrlResponse:
+      type: object
+      properties:
+        landingUrl:
+          type: string
+          description: Secure URL for initiating the checkout flow
+        template:
+          type: string
+          description: UI template identifier
+        token:
+          type: string
+          description: Secure token for the next step in the flow
+        err:
+          type: string
+          description: Error code if applicable
   securitySchemes:
     apiKey:
       type: apiKey

@@ -114,20 +114,6 @@ paths:
           description: Internal server error
 components:
   schemas:
-    StoreNumberListResponse:
-      type: object
-      properties:
-        errDesc:
-          type: string
-          description: Error description if applicable
-        errCode:
-          type: string
-          description: Error code if applicable
-        store:
-          type: array
-          items:
-            type: string
-          description: Array of all store numbers
     DepartmentHours:
       type: object
       properties:
@@ -147,30 +133,58 @@ components:
           items:
             type: object
           description: Compressed hours format
-    StoreAddress:
+    StoreSearchResponse:
       type: object
       properties:
-        zip:
+        filter:
+          type: object
+          description: Applied filter criteria
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreSearchResult'
+    StoreInfo:
+      type: object
+      properties:
+        storeType:
           type: string
-          description: Zip code
-        locationName:
+          description: Type of store location
+        storeNumber:
           type: string
-          description: Location name or landmark
-        city:
+          description: Store number
+        name:
           type: string
-          description: City name
-        street:
+          description: Store name
+        brand:
           type: string
-          description: Street address
-        intersection:
+          description: Store brand (Walgreens, Duane Reade)
+        storeBrand:
           type: string
-          description: Nearest intersection
-        county:
+          description: Store brand identifier
+        storeOpenTime:
           type: string
-          description: County name
-        state:
+          description: Store opening time
+        storeCloseTime:
           type: string
-          description: Two-letter state code
+          description: Store closing time
+        pharmacyOpenTime:
+          type: string
+          description: Pharmacy opening time
+        pharmacyCloseTime:
+          type: string
+          description: Pharmacy closing time
+        timeZone:
+          type: string
+          description: Store timezone
+        address:
+          $ref: '#/components/schemas/StoreAddress'
+        serviceIndicators:
+          type: array
+          items:
+            type: string
+          description: List of available store services
+        phone:
+          $ref: '#/components/schemas/StorePhone'
     StoreDetails:
       type: object
       properties:
@@ -212,6 +226,81 @@ components:
         storeStatus:
           type: object
           description: Current store operational status
+    StorePhone:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Phone number
+        areaCode:
+          type: string
+          description: Area code
+        faxNumber:
+          type: string
+          description: Fax number
+        type:
+          type: string
+          description: Phone type
+    StoreNumberListResponse:
+      type: object
+      properties:
+        errDesc:
+          type: string
+          description: Error description if applicable
+        errCode:
+          type: string
+          description: Error code if applicable
+        store:
+          type: array
+          items:
+            type: string
+          description: Array of all store numbers
+    StoreAddress:
+      type: object
+      properties:
+        zip:
+          type: string
+          description: Zip code
+        locationName:
+          type: string
+          description: Location name or landmark
+        city:
+          type: string
+          description: City name
+        street:
+          type: string
+          description: Street address
+        intersection:
+          type: string
+          description: Nearest intersection
+        county:
+          type: string
+          description: County name
+        state:
+          type: string
+          description: Two-letter state code
+    StoreDetailsRequest:
+      type: object
+      required:
+      - apiKey
+      - affId
+      - storeNo
+      properties:
+        apiKey:
+          type: string
+          description: Your Walgreens API key
+        affId:
+          type: string
+          description: Your affiliate identifier
+        storeNo:
+          type: string
+          description: Store number to query
+        appVer:
+          type: string
+          description: Application version
+        devInf:
+          type: string
+          description: Device information
     StoreSearchRequest:
       type: object
       required:
@@ -314,95 +403,6 @@ components:
         devInf:
           type: string
           description: Device information
-    StoreDetailsRequest:
-      type: object
-      required:
-      - apiKey
-      - affId
-      - storeNo
-      properties:
-        apiKey:
-          type: string
-          description: Your Walgreens API key
-        affId:
-          type: string
-          description: Your affiliate identifier
-        storeNo:
-          type: string
-          description: Store number to query
-        appVer:
-          type: string
-          description: Application version
-        devInf:
-          type: string
-          description: Device information
-    StorePhone:
-      type: object
-      properties:
-        number:
-          type: string
-          description: Phone number
-        areaCode:
-          type: string
-          description: Area code
-        faxNumber:
-          type: string
-          description: Fax number
-        type:
-          type: string
-          description: Phone type
-    StoreSearchResponse:
-      type: object
-      properties:
-        filter:
-          type: object
-          description: Applied filter criteria
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreSearchResult'
-    StoreInfo:
-      type: object
-      properties:
-        storeType:
-          type: string
-          description: Type of store location
-        storeNumber:
-          type: string
-          description: Store number
-        name:
-          type: string
-          description: Store name
-        brand:
-          type: string
-          description: Store brand (Walgreens, Duane Reade)
-        storeBrand:
-          type: string
-          description: Store brand identifier
-        storeOpenTime:
-          type: string
-          description: Store opening time
-        storeCloseTime:
-          type: string
-          description: Store closing time
-        pharmacyOpenTime:
-          type: string
-          description: Pharmacy opening time
-        pharmacyCloseTime:
-          type: string
-          description: Pharmacy closing time
-        timeZone:
-          type: string
-          description: Store timezone
-        address:
-          $ref: '#/components/schemas/StoreAddress'
-        serviceIndicators:
-          type: array
-          items:
-            type: string
-          description: List of available store services
-        phone:
-          $ref: '#/components/schemas/StorePhone'
     StoreSearchResult:
       type: object
       properties:
